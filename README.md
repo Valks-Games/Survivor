@@ -1,4 +1,4 @@
-[!Preview](https://i.imgur.com/EosBgdk.png)
+![Preview](https://i.imgur.com/EosBgdk.png)
 
 Check out [releases](https://github.com/valkyrienyanko/Survivor/releases).
 
