@@ -6,7 +6,7 @@
 ## New Concepts
 Always consult the leader of the project before introducing new concepts.
 
-## Style
+## C# Style
 - Private variables should start with a `_` and be camelCase.
 - Public variables should follow the PascalFormat
 - Methods should follow PascalFormat
