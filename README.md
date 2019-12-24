@@ -1,10 +1,9 @@
 # Survivor
 ## Setup
-1. Fork this repository
-2. Clone the fork you made
-3. Install `Unity 2019.3.0b9`
-4. Add the Unity project to the Unity Hub
-5. Done
+1. Fork this repository and clone it
+2. Install Unity `2019.3.0b9`
+3. Add the Unity project to Unity Hub
+4. Launch the project
 
 ## Releases
 See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
@@ -12,4 +11,5 @@ See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
 ## Contributing
 See [CONTRIBUTORS.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTORS.md).
 
+## Preview
 ![Preview](preview.gif)
