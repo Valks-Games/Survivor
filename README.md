@@ -1,7 +1,5 @@
 ![Preview](preview.gif)
 
-Check out [releases](https://github.com/valkyrienyanko/Survivor/releases).
-
 Currently working on a worker AI system.
 ```cs
 using System.Collections;
