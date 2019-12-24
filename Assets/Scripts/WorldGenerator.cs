@@ -7,6 +7,7 @@ public class WorldGenerator : MonoBehaviour
     public GameObject Tree;
     public GameObject Colonist;
     public GameObject Base;
+    public GameObject Rock;
 
     public GameObject[,] Grid;
     public int Columns = 10;
@@ -17,7 +18,8 @@ public class WorldGenerator : MonoBehaviour
         SetupGrid();
 
         for (int i = 0; i < 10; i++) {
-            Instantiate(Colonist);
+            var colonist = Instantiate(Colonist);
+            colonist.name = "Colonist " + i;
         }
     }
 
@@ -35,7 +37,14 @@ public class WorldGenerator : MonoBehaviour
             {
                 if (Mathf.PerlinNoise(Random.Range(0f, 1f), Random.Range(0f, 1f)) < 0.3f)
                 {
-                    Grid[i, j] = Tree;
+                    if (Random.Range(0f, 1f) < 0.45f)
+                    {
+                        Grid[i, j] = Tree;
+                    }
+                    else {
+                        Grid[i, j] = Rock;
+                    }
+                    
                 }
             }
         }

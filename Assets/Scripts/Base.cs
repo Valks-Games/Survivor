@@ -1,12 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Base : MonoBehaviour
+public class Base : Structure
 {
-    public int Wood = 0;
+    public int Wood { get; private set; } = 0;
+    public int Stone { get; private set; } = 0;
 
-    public void AddWood(int amount) {
-        Wood += amount;
+    public void DepositResource(string type, int amount) {
+        switch (type) {
+            case "Wood":
+                Wood += amount;
+                break;
+            case "Stone":
+                Stone += amount;
+                break;
+        }
     }
 }

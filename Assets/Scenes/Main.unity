@@ -173,6 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
+  - component: {fileID: 519420030}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   m_Layer: 0
@@ -190,6 +191,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb8673dbfd83174fa8c1e0796da0ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -521,6 +535,7 @@ MonoBehaviour:
   Tree: {fileID: 256078962593769935, guid: d144925b8cbd0f746a6a2dd1ec38e394, type: 3}
   Colonist: {fileID: 486654547508018484, guid: 3a99e0e4c72e2754fb5827409ef6ec5e, type: 3}
   Base: {fileID: 8033619019324210810, guid: 9104b5de8c42eb749a33e575524913cc, type: 3}
+  Rock: {fileID: 4393713345040406628, guid: 70c98040dc9d86845854a34625b51d66, type: 3}
   Columns: 10
   Rows: 10
 --- !u!4 &1905524197
