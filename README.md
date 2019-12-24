@@ -9,7 +9,7 @@
 See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
 
 ## Contributing
-See [CONTRIBUTORS.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTORS.md).
+See [CONTRIBUTORS.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTORS.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
 
 ## Preview
 ![Preview](preview.gif)
