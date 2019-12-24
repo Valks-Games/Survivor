@@ -9,6 +9,8 @@
 See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
 
 ## Contributing
+Please talk to me on discord at **valk#3277**.
+
 See [CONTRIBUTORS.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTORS.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
 
 ## Preview
