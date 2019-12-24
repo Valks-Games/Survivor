@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8371400681858849495}
   - component: {fileID: 8825209240703620056}
+  - component: {fileID: 9182668166562964723}
   - component: {fileID: 8761293913880546786}
   m_Layer: 0
   m_Name: Rock
-  m_TagString: Untagged
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,6 +83,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &9182668166562964723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393713345040406628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73ed2625ba819e14a889e25c635b5794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!58 &8761293913880546786
 CircleCollider2D:
   m_ObjectHideFlags: 0

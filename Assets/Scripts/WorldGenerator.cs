@@ -16,11 +16,6 @@ public class WorldGenerator : MonoBehaviour
     private void Start()
     {
         SetupGrid();
-
-        for (int i = 0; i < 10; i++) {
-            var colonist = Instantiate(Colonist);
-            colonist.name = "Colonist " + i;
-        }
     }
 
     private void SetupGrid() {
@@ -42,12 +37,22 @@ public class WorldGenerator : MonoBehaviour
                         Grid[i, j] = Tree;
                     }
                     else {
-                        Grid[i, j] = Rock;
+                        if (Random.Range(0f, 1f) < 0.05f)
+                        {
+                            Grid[i, j] = Colonist;
+                        }
+                        else {
+                            Grid[i, j] = Rock;
+                        }
+                        
                     }
                     
                 }
             }
         }
+
+        GameObject theBase = Base;
+        theBase.GetComponent<Base>().Team = 1;
 
         Grid[Columns / 2, Rows / 2] = Base;
     }
@@ -65,8 +70,18 @@ public class WorldGenerator : MonoBehaviour
     private void SpawnObject(GameObject theObject, int x, int y) {
         if (theObject != null) {
             var go = Instantiate(theObject, new Vector2(x, y), Quaternion.identity);
-            go.transform.parent = transform;
+
+            switch (go.tag) {
+                case "Tree":
+                    go.transform.parent = transform.Find("Trees");
+                    break;
+                case "Rock":
+                    go.transform.parent = transform.Find("Rocks");
+                    break;
+                case "Base":
+                    go.transform.parent = transform.Find("Bases");
+                    break;
+            }
         }
-        
     }
 }

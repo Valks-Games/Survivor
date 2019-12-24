@@ -5,77 +5,81 @@ using UnityEngine.UI;
 
 public class ColonistAI : MonoBehaviour
 {
-    private GameObject _world;
     public GameObject Tree;
-    private GameObject _base;
-    private Base _baseScript;
-
-    private Text _textWood;
-
-    public float Speed = 10.0f;
-    public float InteractionRange = 1.5f;
-
-    private Rigidbody2D _rb;
-    public bool _findClosestTarget = true;
-    private string _job = "MineTree";
-    private bool _atTarget = false;
-
-    private int _wood = 0;
-    private int _axePower = 10;
-    private int _inventoryCapacity = 3;
 
     private List<Transform> _trees = new List<Transform>();
     private List<Transform> _rocks = new List<Transform>();
     private List<Transform> _bases = new List<Transform>();
+    private GameObject _world;
+    private GameObject _base;
+    private Base _baseScript;
+    private Rigidbody2D _rb;
 
-    public Transform _closestTarget;
+    [Header("Behaviour")]
+    [SerializeField] private Transform _closestTarget;
+    [SerializeField] private string _job = "MineStone";
+    [SerializeField] private bool _findClosestTarget = true;
+    [SerializeField] private bool _atTarget = false;
+
+    [Header("Stats")]
+    [SerializeField] private float _speed = 10.0f;
+    [SerializeField] private float _interactionRange = 1.5f;
+    [SerializeField] private int _axePower = 10;
+    [SerializeField] private int _inventoryCapacity = 3;
+    [SerializeField] private int _health;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _team;
+
+    [Header("Resources")]
+    [SerializeField] private int _wood = 0;
+    [SerializeField] private int _stone = 0;
 
     private void Start()
     {
+        _health = 10 + Random.Range(0, 5);
+        _damage = 1 + Random.Range(0, 3);
+        _team = Random.Range(1, 3);
+
         _world = GameObject.Find("World");
         _base = GameObject.Find("Base(Clone)");
         _baseScript = _base.GetComponent<Base>();
         _bases.Add(_base.transform);
         _rb = GetComponent<Rigidbody2D>();
-        _textWood = GameObject.Find("Wood").GetComponent<Text>();
 
-        UpdateList(_trees, "Tree");
-        UpdateList(_rocks, "Rock");
+        UpdateList(_trees, "Trees");
+        UpdateList(_rocks, "Rocks");
     }
 
     private void UpdateList(List<Transform> list, string type) {
         list.Clear();
-        foreach (Transform child in _world.transform)
+        foreach (Transform child in _world.transform.Find(type))
         {
-            if (child.tag.Equals(type))
-            {
-                list.Add(child);
-            }
+            list.Add(child);
         }
     }
 
     private void Update()
     {
         switch (_job) {
-            case "MineTree":
-                Job(_trees, "Tree", MineTree());
+            case "CreateBase":
                 break;
-            case "MineRock":
+            case "GroupUp":
+                break;
+            case "MineTree":
+                JobStructure(_trees, "Trees", MineWood());
+                break;
+            case "MineStone":
+                JobStructure(_rocks, "Rocks", MineStone());
                 break;
             case "DropOffResources":
-                if (_wood > 0)
-                {
-                    Job(_bases, "Base", DropOffResources());
-                }
-                else
-                {
-                    _job = "MineTree";
-                }
+                JobStructure(_bases, "Bases", DropOffResources());
+                break;
+            case "FindFight":
                 break;
         }
     }
 
-    private IEnumerator MineTree()
+    private IEnumerator MineWood()
     {
         yield return new WaitForSeconds(1);
 
@@ -84,17 +88,39 @@ public class ColonistAI : MonoBehaviour
             AssignJob("DropOffResources");
         }
         else {
-            Tree treeScript = _closestTarget.gameObject.GetComponent<Tree>();
-            _wood += treeScript.ChopWood(_axePower, _wood, _inventoryCapacity);
+            Structure structureScript = _closestTarget.gameObject.GetComponent<Structure>();
+            _wood += structureScript.GatherResource(_axePower, _wood, _inventoryCapacity);
 
             if (_wood <= _inventoryCapacity - 1)
             {
-                Debug.Log(name + ": Mining another tree.");
-                StartCoroutine(MineTree());
+                StartCoroutine(MineWood());
             }
             else
             {
-                Debug.Log(name + ": Dropping off resources.");
+                AssignJob("DropOffResources");
+            }
+        }
+    }
+
+    private IEnumerator MineStone()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (_closestTarget == null)
+        {
+            AssignJob("DropOffResources");
+        }
+        else
+        {
+            Structure structureScript = _closestTarget.gameObject.GetComponent<Structure>();
+            _stone += structureScript.GatherResource(_axePower, _stone, _inventoryCapacity);
+
+            if (_stone <= _inventoryCapacity - 1)
+            {
+                StartCoroutine(MineStone());
+            }
+            else
+            {
                 AssignJob("DropOffResources");
             }
         }
@@ -109,14 +135,60 @@ public class ColonistAI : MonoBehaviour
     private IEnumerator DropOffResources()
     {
         yield return new WaitForSeconds(1);
+
+        _baseScript.DepositResource("Stone", _stone);
+        _stone = 0;
+
+
         _baseScript.DepositResource("Wood", _wood);
         _wood = 0;
-        _textWood.text = "Wood: " + (_baseScript.Wood);
 
-        AssignJob("MineTree");
+        if (!_baseScript.CanUpgrade())
+        {
+            List<Resource> reqResources = _baseScript.ResourcesRequired();
+
+            int goalWood = 0;
+            int goalStone = 0;
+
+            foreach (Resource resource in reqResources)
+            {
+                if (resource is Wood)
+                {
+                    goalWood++;
+                }
+
+                if (resource is Stone)
+                {
+                    goalStone++;
+                }
+            }
+
+            if (goalWood > goalStone)
+            {
+                AssignJob("MineTree");
+            }
+            else
+            {
+                AssignJob("MineStone");
+            }
+        }
+        else
+        {
+            _baseScript.Upgrade();
+            AssignJob("DropOffResources");
+        }
     }
 
-    public void Job(List<Transform> targets, string type, IEnumerator task) {
+    public void JobAttack(List<Transform> targets) {
+        if (_atTarget)
+            return;
+
+        if (_findClosestTarget) {
+
+        }
+    }
+
+    public void JobStructure(List<Transform> targets, string type, IEnumerator task) {
         if (_atTarget) {
             return;
         }
@@ -124,7 +196,7 @@ public class ColonistAI : MonoBehaviour
         if (_findClosestTarget)
         {
             UpdateList(targets, type);
-            _closestTarget = GetClosestTarget(targets);
+            _closestTarget = GetClosestStructure(targets);
             if (_closestTarget != null) {
                 _closestTarget.GetComponent<Structure>().Workers += 1;
                 _findClosestTarget = false;
@@ -152,15 +224,32 @@ public class ColonistAI : MonoBehaviour
         direction.Normalize();
 
         _rb.drag = 1.0f;
-        _rb.AddForce(direction * Speed * Time.deltaTime);
+        _rb.AddForce(direction * _speed * Time.deltaTime);
     }
 
     public bool AtTarget(Transform target) {
         _rb.drag = 1.6f;
-        return Vector2.Distance(transform.position, target.position) < InteractionRange;
+        return Vector2.Distance(transform.position, target.position) < _interactionRange;
     }
 
-    private Transform GetClosestTarget(List<Transform> targets) {
+    private Transform FindClosestTeammate(List<Transform> targets) {
+        Transform closestTransform = null;
+        float minDist = Mathf.Infinity;
+        Vector2 currentPos = transform.position;
+        foreach (Transform t in targets) {
+            if (t.gameObject.GetComponent<ColonistAI>()._team == _team) {
+                float dist = Vector2.Distance(t.position, currentPos);
+                if (dist < minDist) {
+                    closestTransform = t;
+                    minDist = dist;
+                }
+            }
+        }
+
+        return closestTransform;
+    }
+
+    private Transform GetClosestStructure(List<Transform> targets) {
         Transform closestTransform = null;
         float minDist = Mathf.Infinity;
         Vector2 currentPos = transform.position;
