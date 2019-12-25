@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Base : Structure
 {
+    public static int id = 0;
     private Text _textWood;
     private Text _textStone;
 
@@ -14,8 +15,17 @@ public class Base : Structure
     public int Wood { get; private set; } = 0;
     public int Stone { get; private set; } = 0;
 
-    public void Start()
+    public override void Awake()
     {
+        base.Awake();
+        id++;
+        SetName("Base " + id);
+        SetParent("Bases");
+    }
+
+    public override void Start()
+    {
+        base.Start();
         _textWood = GameObject.Find("Wood").GetComponent<Text>();
         _textStone = GameObject.Find("Stone").GetComponent<Text>();
     }
@@ -44,29 +54,28 @@ public class Base : Structure
     }
 
     public bool CanUpgrade() {
-        List<Resource> reqResources = ResourcesRequired();
+        Dictionary<string, int> reqResources = ResourcesRequired();
 
-        return reqResources.Count <= 0;
+        return reqResources["Wood"] == 0 && reqResources["Stone"] == 0;
     }
 
-    public List<Resource> ResourcesRequired() {
-        List<Resource> reqResources = new List<Resource>();
+    public Dictionary<string, int> ResourcesRequired() {
+        Dictionary<string, int> reqResources = new Dictionary<string, int>();
 
         int reqWood = tier * costMultiplier;
         int reqStone = tier * costMultiplier;
 
+        reqResources.Add("Wood", 0);
+        reqResources.Add("Stone", 0);
+
         int woodNeeded = Wood - reqWood;
         if (woodNeeded < 0) {
-            for (int i = 0; i < Mathf.Abs(woodNeeded); i++) {
-                reqResources.Add(new Wood());
-            }
+            reqResources["Wood"] = Mathf.Abs(woodNeeded);
         }
 
         int stoneNeeded = Stone - reqStone;
         if (stoneNeeded < 0) {
-            for (int i = 0; i < Mathf.Abs(stoneNeeded); i++) {
-                reqResources.Add(new Stone());
-            }
+            reqResources["Stone"] = Mathf.Abs(stoneNeeded);
         }
 
         return reqResources;

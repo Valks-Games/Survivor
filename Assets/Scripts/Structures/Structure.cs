@@ -2,10 +2,35 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour
 {
+    private GameObject world;
     public int Resource { get; private set; } = 3;
     public string Type { get; set; } = "None";
     public int Workers { get; set; } = 0;
     public int Team { get; set; } = 0;
+
+    public virtual void Awake() {
+        world = GameObject.Find("World");
+
+        SetName("Structure");
+        SetTeam(1);
+    }
+
+    public virtual void Start()
+    {
+        transform.parent = transform;
+    }
+
+    public void SetParent(string parent) {
+        transform.parent = world.transform.Find(parent);
+    }
+
+    public void SetName(string name) {
+        transform.name = name;
+    }
+
+    public void SetTeam(int team) {
+        Team = team;
+    }
 
     public int GatherResource(int toolPower, int colonistResource, int colonistInvCapacity)
     {

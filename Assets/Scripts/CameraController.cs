@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     private Camera _cam;
+    private WorldGenerator _worldGenerator;
 
     public float Speed = 100f;
     public float ScrollSpeed = 500f;
@@ -17,12 +18,13 @@ public class CameraController : MonoBehaviour
     private float _zoom = 0f;
     private float _currentZoom = 0f;
 
-    private void Start()
+    public void Start()
     {
         _cam = GetComponent<Camera>();
+        _worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
     }
 
-    private void Update()
+    public void Update()
     {
         HandleCamera();   
     }

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Hotkeys : MonoBehaviour
 {
-    private void Update()
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Application.Quit();

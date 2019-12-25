@@ -4,23 +4,32 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
-    public GameObject Tree;
-    public GameObject Colonist;
-    public GameObject Base;
-    public GameObject Rock;
+    private GameObject _tree;
+    private GameObject _colonist;
+    private GameObject _rock;
+    private GameObject _base;
 
     public GameObject[,] Grid;
     public int Columns = 10;
     public int Rows = 10;
+    public bool GeneratingWorld = true;
 
-    private void Start()
+    public void Awake()
     {
-        SetupGrid();
+        _tree = Resources.Load("Prefabs/Tree") as GameObject;
+        _colonist = Resources.Load("Prefabs/Colonist") as GameObject;
+        _rock = Resources.Load("Prefabs/Rock") as GameObject;
+        _base = Resources.Load("Prefabs/Base") as GameObject;
     }
 
-    private void SetupGrid() {
+    public void Start()
+    {
         PopulateGrid();
+        AddFactions();
+
         InstantiateGrid();
+
+        GeneratingWorld = false;
     }
 
     private void PopulateGrid() {
@@ -34,27 +43,20 @@ public class WorldGenerator : MonoBehaviour
                 {
                     if (Random.Range(0f, 1f) < 0.45f)
                     {
-                        Grid[i, j] = Tree;
+                        Grid[i, j] = _tree;
                     }
                     else {
-                        if (Random.Range(0f, 1f) < 0.05f)
-                        {
-                            Grid[i, j] = Colonist;
-                        }
-                        else {
-                            Grid[i, j] = Rock;
-                        }
-                        
+                        Grid[i, j] = _rock;
                     }
                     
                 }
             }
         }
+    }
 
-        GameObject theBase = Base;
-        theBase.GetComponent<Base>().Team = 1;
-
-        Grid[Columns / 2, Rows / 2] = Base;
+    private void AddFactions() {
+        Grid[0, 0] = _base;
+        Grid[Rows - 1, Columns - 1] = _base;
     }
 
     private void InstantiateGrid() {
@@ -69,19 +71,15 @@ public class WorldGenerator : MonoBehaviour
 
     private void SpawnObject(GameObject theObject, int x, int y) {
         if (theObject != null) {
-            var go = Instantiate(theObject, new Vector2(x, y), Quaternion.identity);
+            Instantiate(theObject, new Vector2(x, y), Quaternion.identity);
+        }
+    }
 
-            switch (go.tag) {
-                case "Tree":
-                    go.transform.parent = transform.Find("Trees");
-                    break;
-                case "Rock":
-                    go.transform.parent = transform.Find("Rocks");
-                    break;
-                case "Base":
-                    go.transform.parent = transform.Find("Bases");
-                    break;
-            }
+    private IEnumerator WaitForWorldGeneration()
+    {
+        while (GeneratingWorld)
+        {
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

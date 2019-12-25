@@ -34,7 +34,7 @@ public class ColonistAI : MonoBehaviour
     [SerializeField] private int _wood = 0;
     [SerializeField] private int _stone = 0;
 
-    private void Start()
+    public void Start()
     {
         _health = 10 + Random.Range(0, 5);
         _damage = 1 + Random.Range(0, 3);
@@ -58,7 +58,7 @@ public class ColonistAI : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Update()
     {
         switch (_job) {
             case "CreateBase":
@@ -145,25 +145,9 @@ public class ColonistAI : MonoBehaviour
 
         if (!_baseScript.CanUpgrade())
         {
-            List<Resource> reqResources = _baseScript.ResourcesRequired();
+            Dictionary<string, int> reqResources = _baseScript.ResourcesRequired();
 
-            int goalWood = 0;
-            int goalStone = 0;
-
-            foreach (Resource resource in reqResources)
-            {
-                if (resource is Wood)
-                {
-                    goalWood++;
-                }
-
-                if (resource is Stone)
-                {
-                    goalStone++;
-                }
-            }
-
-            if (goalWood > goalStone)
+            if (reqResources["Wood"] > reqResources["Stone"])
             {
                 AssignJob("MineTree");
             }
