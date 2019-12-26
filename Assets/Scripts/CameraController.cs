@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private GameObject _canvas;
     private Camera _cam;
     private WorldGenerator _worldGenerator;
 
@@ -25,6 +26,7 @@ public class CameraController : MonoBehaviour
         _cam = GetComponent<Camera>();
         _worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
         _lastTimeClicked = Time.time;
+        _canvas = GameObject.Find("World Canvas");
     }
 
     public void Update()
@@ -42,6 +44,7 @@ public class CameraController : MonoBehaviour
         HandleZoom(inputScroll);
         HandleDrag();
         HandleClicking();
+        HandleUIPopUps();
     }
 
     private void HandleMoveKeys(float inputHorz, float inputVert) {
@@ -74,6 +77,25 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
+    private void HandleUIPopUps() {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+
+            if (hit.collider != null)
+            {
+                if (hit.collider.tag.Equals("Base"))
+                {
+                    var panel = Resources.Load("Prefabs/PanelBaseInfo");
+                    Instantiate(panel, _canvas.transform);
+                }
+            }
+        }
+    }
+
     private void HandleTracking(float inputHorz, float inputVert) {
         if (inputHorz != 0 || inputVert != 0)
             _trackingTarget = null;
@@ -86,6 +108,7 @@ public class CameraController : MonoBehaviour
 
             if (hit.collider != null)
             {
+                
                 _trackingTarget = hit.collider.transform;
                 StartCoroutine(SlowDownLerp());
                 _zoom = 0;

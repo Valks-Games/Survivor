@@ -16,6 +16,6 @@ public class PanelBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _rt.anchoredPosition = _baseOne.transform.position;
+        
     }
 }

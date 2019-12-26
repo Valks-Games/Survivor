@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour
 {
-    private GameObject _canvas;
     private GameObject world;
     public int Resource { get; private set; } = 3;
     public string Type { get; set; } = "None";
@@ -18,34 +17,6 @@ public class Structure : MonoBehaviour
     {
         transform.parent = transform;
         world = GameObject.Find("World");
-        _canvas = GameObject.Find("World Canvas");
-    }
-
-    public virtual void Update()
-    {
-        ClickedStructureListener();
-    }
-
-    private void ClickedStructureListener()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-
-            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-
-            if (hit.collider != null)
-            {
-                if (hit.collider.tag.Equals("Base"))
-                {
-                    //var panel = Resources.Load("Prefabs/PanelBaseInfo");
-                    //Instantiate(panel, _canvas.transform);
-
-                    Debug.Log("Yes");
-                }
-            }
-        }
     }
 
     public void SetParent(string parent) {
@@ -72,8 +43,6 @@ public class Structure : MonoBehaviour
 
         return gathered;
     }
-
-    
 
     public void Destroy() {
         Destroy(gameObject);
