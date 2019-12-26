@@ -1,5 +1,5 @@
 ﻿public enum Material
 {
-    Wood,
-    Stone
+    WOOD,
+    STONE
 }
