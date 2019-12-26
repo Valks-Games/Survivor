@@ -12,10 +12,6 @@ public struct Resource {
 
 }
 
-public enum Material {
-    WOOD, STONE
-}
-
 //Not sure if there's a better way of doing this, but oh well
 public static class MaterialExtension 
 {

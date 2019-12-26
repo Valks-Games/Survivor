@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Tree : Structure
 {
     public static int id = 0;
