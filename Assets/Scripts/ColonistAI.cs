@@ -10,6 +10,7 @@ public class ColonistAI : MonoBehaviour
     private readonly List<Transform> _trees = new List<Transform>();
     private readonly List<Transform> _rocks = new List<Transform>();
     private List<Transform> _bases = new List<Transform>();
+
     private GameObject _world;
     private GameObject _base;
     private Rigidbody2D _rb;
@@ -23,21 +24,21 @@ public class ColonistAI : MonoBehaviour
     [Header("Stats")]
     [SerializeField] public int axePower = 10;
     [SerializeField] public int inventoryCapacity = 3;
-    [SerializeField] private readonly float _speed = 10.0f;
-    [SerializeField] private readonly float _interactionRange = 1.5f;
+    [SerializeField] private float _speed = 100.0f;
+    [SerializeField] private float _interactionRange = 0.5f;
     [SerializeField] private int _health;
     [SerializeField] private int _damage;
     [SerializeField] private int _team;
 
     [Header("Resources")]
     [SerializeField]
-    public Dictionary<Material, int> inventory = new Dictionary<Material, int>();
+    public Dictionary<Material, int> Inventory = new Dictionary<Material, int>();
 
     public void Start()
     {
         foreach (Material resource in System.Enum.GetValues(typeof(Material)))
         {
-            inventory.Add(resource, 0);
+            Inventory.Add(resource, 0);
         }
 
         _task = new GatherResourceTask(this, Material.Stone);
@@ -48,11 +49,9 @@ public class ColonistAI : MonoBehaviour
         _world = GameObject.Find("World");
         _base = GameObject.Find("Base 1");
         BaseScript = _base.GetComponent<Base>();
-        _bases.Add(_base.transform);
         _rb = GetComponent<Rigidbody2D>();
 
-        UpdateList(_trees, "Trees");
-        UpdateList(_rocks, "Rocks");
+
     }
 
     public void UpdateList(List<Transform> list, string type)

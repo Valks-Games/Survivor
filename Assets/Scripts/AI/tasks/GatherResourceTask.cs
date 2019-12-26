@@ -22,9 +22,9 @@ public class GatherResourceTask : AITask
         else
         {
             Structure structureComponent = _colonist.GetClosestTarget().gameObject.GetComponent<Structure>();
-            _colonist.inventory[_type] += structureComponent.GatherResource(_colonist.axePower, _colonist.inventory[_type], _colonist.inventoryCapacity);
-
-            if (_colonist.inventory[_type] <= _colonist.inventoryCapacity - 1)
+            _colonist.Inventory[_type] += structureComponent.GatherResource(_colonist.axePower, _colonist.Inventory[_type], _colonist.inventoryCapacity);
+            
+            if (_colonist.Inventory[_type] <= _colonist.inventoryCapacity - 1)
             {
                 _colonist.StartCoroutine(RunTask());
             }
