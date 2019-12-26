@@ -44,8 +44,8 @@ public class Base : Structure
     {
         if (CanUpgrade())
         {
-            Resources[Material.WOOD] -= tier * costMultiplier;
-            Resources[Material.STONE] -= tier * costMultiplier;
+            Resources[Material.Wood] -= tier * costMultiplier;
+            Resources[Material.Stone] -= tier * costMultiplier;
 
             tier++;
             Debug.Log("Upgraded base to tier " + tier);
@@ -73,11 +73,11 @@ public class Base : Structure
     {
         Dictionary<Material, int> reqResources = new Dictionary<Material, int>();
 
-        int reqWood = (tier * costMultiplier) - Resources[Material.WOOD];
-        int reqStone = (tier * costMultiplier) - Resources[Material.STONE];
+        int reqWood = (tier * costMultiplier) - Resources[Material.Wood];
+        int reqStone = (tier * costMultiplier) - Resources[Material.Stone];
 
-        reqResources.Add(Material.WOOD, reqWood);
-        reqResources.Add(Material.STONE, reqStone);
+        reqResources.Add(Material.Wood, reqWood);
+        reqResources.Add(Material.Stone, reqStone);
 
         return reqResources;
     }

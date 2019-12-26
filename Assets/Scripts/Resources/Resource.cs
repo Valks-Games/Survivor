@@ -18,8 +18,8 @@ public static class MaterialExtension
     private static Dictionary<Material, string> associatedStructureName = new Dictionary<Material, string>();
     static MaterialExtension()
     {
-        associatedStructureName.Add(Material.WOOD, "Trees");
-        associatedStructureName.Add(Material.STONE, "Rocks");
+        associatedStructureName.Add(Material.Wood, "Trees");
+        associatedStructureName.Add(Material.Stone, "Rocks");
     }
 
     public static string GetResourceSource(this Material m)

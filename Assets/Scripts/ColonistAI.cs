@@ -42,7 +42,7 @@ public class ColonistAI : MonoBehaviour
             inventory.Add(resource, 0);
         }
 
-        _task = new GatherResourceTask(this, Material.STONE);
+        _task = new GatherResourceTask(this, Material.Stone);
         _health = 10 + Random.Range(0, 5);
         _damage = 1 + Random.Range(0, 3);
         _team = Random.Range(1, 3);
@@ -70,10 +70,6 @@ public class ColonistAI : MonoBehaviour
         List<Transform> list = new List<Transform>();
 
 
-        
-        if (_world == null) Debug.Log("world is null");
-        if (_world.transform == null) Debug.Log("transform is null");
-        if (_world.transform.Find(type) == null) Debug.Log("Transform found for " + type + " is null");
 
         foreach (Transform child in _world.transform.Find(type))
         {

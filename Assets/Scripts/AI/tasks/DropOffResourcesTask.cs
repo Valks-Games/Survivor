@@ -26,13 +26,13 @@ public class DropOffResourcesTask : AITask {
 
             Dictionary<Material, int> reqResources = _ai.BaseScript.ResourcesRequired();
 
-            if (reqResources[Material.WOOD] > reqResources[Material.STONE])
+            if (reqResources[Material.Wood] > reqResources[Material.Stone])
             {
-                _ai.AssignTask(new GatherResourceTask(_ai, Material.WOOD));
+                _ai.AssignTask(new GatherResourceTask(_ai, Material.Wood));
             }
             else
             {
-                _ai.AssignTask(new GatherResourceTask(_ai, Material.STONE));
+                _ai.AssignTask(new GatherResourceTask(_ai, Material.Stone));
             }
         }
         else
