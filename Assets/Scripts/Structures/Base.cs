@@ -51,7 +51,7 @@ public class Base : Structure
 
     public bool CanUpgrade() {
         Dictionary<Material, int> reqResources = ResourcesRequired();
-        Debug.Log(reqResources.ToString());
+        //Debug.Log(reqResources.ToString());
 
         //TODO: See if there's any faster way to do this
         List<Material> keys = new List<Material>(reqResources.Keys);
@@ -62,11 +62,7 @@ public class Base : Structure
         }
 
         return true;
-
-
     }
-
-
 
     public Dictionary<Material, int> ResourcesRequired() {
         Dictionary<Material, int> reqResources = new Dictionary<Material, int>();
@@ -84,6 +80,4 @@ public class Base : Structure
     private string ToTitleCase(string s)  {
         return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
     }
-
-    
 }
