@@ -12,12 +12,12 @@ public class DropOffResourcesTask : AITask {
     {
         yield return new WaitForSeconds(1);
 
-        List<Material> keys = new List<Material> (_ai.inventory.Keys);
+        List<Material> keys = new List<Material> (_ai.Inventory.Keys);
 
         foreach (Material key in keys)
         {
-            _ai.BaseScript.DepositResource(key, _ai.inventory[key]);
-            _ai.inventory[key] = 0;
+            _ai.BaseScript.DepositResource(key, _ai.Inventory[key]);
+            _ai.Inventory[key] = 0;
         }
 
         if (!_ai.BaseScript.CanUpgrade())

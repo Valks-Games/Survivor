@@ -21,9 +21,9 @@ public class GatherResourceTask : AITask {
         } else 
         {
             Structure structureComponent = _ai.GetClosestTarget().gameObject.GetComponent<Structure>();
-            _ai.inventory[_type] += structureComponent.GatherResource(_ai.axePower, _ai.inventory[_type], _ai.inventoryCapacity);
+            _ai.Inventory[_type] += structureComponent.GatherResource(_ai.axePower, _ai.Inventory[_type], _ai.inventoryCapacity);
             
-            if (_ai.inventory[_type] <= _ai.inventoryCapacity - 1)
+            if (_ai.Inventory[_type] <= _ai.inventoryCapacity - 1)
             {
                 _ai.StartCoroutine(RunTask());
             }

@@ -7,9 +7,6 @@ public class ColonistAI : MonoBehaviour
 {
     public GameObject Tree;
 
-    private List<Transform> _trees = new List<Transform>();
-    private List<Transform> _rocks = new List<Transform>();
-    private List<Transform> _bases = new List<Transform>();
     private GameObject _world;
     private GameObject _base;
     public Base BaseScript;
@@ -33,13 +30,13 @@ public class ColonistAI : MonoBehaviour
     [Header("Resources")]
 
     [SerializeField]
-    public Dictionary<Material, int> inventory = new Dictionary<Material, int>();
+    public Dictionary<Material, int> Inventory = new Dictionary<Material, int>();
 
     public void Start()
     {
 
         foreach (Material resource in System.Enum.GetValues(typeof(Material))) {
-            inventory.Add(resource, 0);
+            Inventory.Add(resource, 0);
         }
 
         _task = new GatherResourceTask(this, Material.Stone);
@@ -50,11 +47,9 @@ public class ColonistAI : MonoBehaviour
         _world = GameObject.Find("World");
         _base = GameObject.Find("Base 1");
         BaseScript = _base.GetComponent<Base>();
-        _bases.Add(_base.transform);
         _rb = GetComponent<Rigidbody2D>();
 
-        UpdateList(_trees, "Trees");
-        UpdateList(_rocks, "Rocks");
+
     }
 
     public void UpdateList(List<Transform> list, string type) {
@@ -99,37 +94,6 @@ public class ColonistAI : MonoBehaviour
 
         if (_findClosestTarget) {
 
-        }
-    }
-
-    public void JobStructure(List<Transform> targets, string type, IEnumerator task) {
-        if (_atTarget) {
-            return;
-        }
-
-        if (_findClosestTarget)
-        {
-            UpdateList(targets, type);
-            _closestTarget = GetClosestStructure(targets);
-            if (_closestTarget != null) {
-                _closestTarget.GetComponent<Structure>().Workers += 1;
-                _findClosestTarget = false;
-            }
-        }
-
-        if (_closestTarget == null)
-        {
-            _findClosestTarget = true;
-        }
-        else {
-            WalkTowardsTarget(_closestTarget);
-
-            if (AtTarget(_closestTarget))
-            {
-                _atTarget = true;
-                _findClosestTarget = true;
-                StartCoroutine(task);
-            }
         }
     }
 
