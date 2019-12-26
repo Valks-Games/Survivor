@@ -20,11 +20,16 @@ public class CameraController : MonoBehaviour
     private float _zoom = 0f;
     private float _currentZoom = 0f;
 
+    private float _lastTimeClicked;
+
+
+
     public void Start()
     {
         _cam = GetComponent<Camera>();
         _worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
         _canvas = GameObject.Find("Canvas");
+        _lastTimeClicked = Time.time;
     }
 
     public void Update()
@@ -41,6 +46,7 @@ public class CameraController : MonoBehaviour
         HandleTracking(inputHorz, inputVert);
         HandleZoom(inputScroll);
         HandleDrag();
+        HandleClicking();
     }
 
     private void HandleMoveKeys(float inputHorz, float inputVert) {
@@ -98,6 +104,16 @@ public class CameraController : MonoBehaviour
 
         if (_trackingTarget != null) {
             transform.position = Vector3.Lerp(transform.position, new Vector3(_trackingTarget.position.x, _trackingTarget.position.y, -10), TrackingLerp);
+        }
+    }
+
+    private void HandleClicking() {
+        if (Input.GetMouseButtonDown(0)) {
+            if (Time.time - _lastTimeClicked < 0.2f) {
+                //Double click logic here
+            }
+
+            _lastTimeClicked = Time.time;
         }
     }
 
