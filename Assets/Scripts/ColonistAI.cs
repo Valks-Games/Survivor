@@ -31,11 +31,16 @@ public class ColonistAI : MonoBehaviour
     [SerializeField] private int _team;
 
     [Header("Resources")]
-    [SerializeField] private int _wood = 0;
-    [SerializeField] private int _stone = 0;
+
+    [SerializeField]
+    private Dictionary<Material, int> inventory = new Dictionary<Material, int>();
 
     public void Start()
     {
+        foreach (Material resource in System.Enum.GetValues(typeof(Material))) {
+            inventory.Add(resource, 0);
+        }
+
         _health = 10 + Random.Range(0, 5);
         _damage = 1 + Random.Range(0, 3);
         _team = Random.Range(1, 3);
@@ -66,10 +71,10 @@ public class ColonistAI : MonoBehaviour
             case "GroupUp":
                 break;
             case "MineTree":
-                JobStructure(_trees, "Trees", MineWood());
+                JobStructure(_trees, "Trees", GatherResource(Material.WOOD));
                 break;
             case "MineStone":
-                JobStructure(_rocks, "Rocks", MineStone());
+                JobStructure(_rocks, "Rocks", GatherResource(Material.STONE));
                 break;
             case "DropOffResources":
                 JobStructure(_bases, "Bases", DropOffResources());
@@ -79,45 +84,21 @@ public class ColonistAI : MonoBehaviour
         }
     }
 
-    private IEnumerator MineWood()
+    private IEnumerator GatherResource(Material type) 
     {
         yield return new WaitForSeconds(1);
 
         if (_closestTarget == null)
         {
             AssignJob("DropOffResources");
-        }
-        else {
-            Structure structureScript = _closestTarget.gameObject.GetComponent<Structure>();
-            _wood += structureScript.GatherResource(_axePower, _wood, _inventoryCapacity);
-
-            if (_wood <= _inventoryCapacity - 1)
-            {
-                StartCoroutine(MineWood());
-            }
-            else
-            {
-                AssignJob("DropOffResources");
-            }
-        }
-    }
-
-    private IEnumerator MineStone()
-    {
-        yield return new WaitForSeconds(1);
-
-        if (_closestTarget == null)
+        } else 
         {
-            AssignJob("DropOffResources");
-        }
-        else
-        {
-            Structure structureScript = _closestTarget.gameObject.GetComponent<Structure>();
-            _stone += structureScript.GatherResource(_axePower, _stone, _inventoryCapacity);
-
-            if (_stone <= _inventoryCapacity - 1)
+            Structure structureComponent = _closestTarget.gameObject.GetComponent<Structure>();
+            inventory[type] += structureComponent.GatherResource(_axePower, inventory[type], _inventoryCapacity);
+            
+            if (inventory[type] <= _inventoryCapacity - 1)
             {
-                StartCoroutine(MineStone());
+                StartCoroutine(GatherResource(type));
             }
             else
             {
@@ -136,18 +117,21 @@ public class ColonistAI : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        _baseScript.DepositResource("Stone", _stone);
-        _stone = 0;
+        List<Material> keys = new List<Material> (inventory.Keys);
 
-
-        _baseScript.DepositResource("Wood", _wood);
-        _wood = 0;
+        foreach (Material key in keys)
+        {
+            _baseScript.DepositResource(key, inventory[key]);
+            inventory[key] = 0;
+        }
 
         if (!_baseScript.CanUpgrade())
         {
-            Dictionary<string, int> reqResources = _baseScript.ResourcesRequired();
 
-            if (reqResources["Wood"] > reqResources["Stone"])
+
+            Dictionary<Material, int> reqResources = _baseScript.ResourcesRequired();
+
+            if (reqResources[Material.WOOD] > reqResources[Material.STONE])
             {
                 AssignJob("MineTree");
             }
@@ -249,6 +233,28 @@ public class ColonistAI : MonoBehaviour
             }
         }
 
+
         return closestTransform;
     }
+
+    private Transform GetClosestObject(System.Func<GameObject, bool> condition, List<Transform> targets) {
+        Transform closestTransform = null;
+        float minDist = Mathf.Infinity;
+        Vector2 currentPos = transform.position;
+        foreach (Transform t in targets) {
+            if (condition(t.gameObject)) {
+                float dist = Vector2.Distance(t.position, currentPos);
+                if (dist < minDist) {
+                    closestTransform = t;
+                    minDist = dist;
+                };
+            }
+
+
+        }
+
+        return closestTransform;
+    }
+
+    
 }

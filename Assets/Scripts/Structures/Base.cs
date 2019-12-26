@@ -1,19 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+
 
 public class Base : Structure
 {
     public static int id = 0;
-    private Text _textWood;
-    private Text _textStone;
 
     public int costMultiplier = 10;
 
     private int tier = 1;
 
-    public int Wood { get; private set; } = 0;
-    public int Stone { get; private set; } = 0;
+    public Dictionary<Material, int> Resources = new Dictionary<Material, int>();
 
     public override void Awake()
     {
@@ -24,29 +23,26 @@ public class Base : Structure
 
     public override void Start()
     {
+        foreach (Material resource in Enum.GetValues(typeof(Material))) {
+            Resources.Add(resource, 0);
+        }
+
+
         base.Start();
-        _textWood = GameObject.Find("Wood").GetComponent<Text>();
-        _textStone = GameObject.Find("Stone").GetComponent<Text>();
         SetParent("Bases");
     }
 
-    public void DepositResource(string type, int amount) {
-        switch (type) {
-            case "Wood":
-                Wood += amount;
-                _textWood.text = "Wood: " + Wood;
-                break;
-            case "Stone":
-                Stone += amount;
-                _textStone.text = "Stone: " + Stone;
-                break;
-        }
+    public void DepositResource(Material type, int amount) {
+        Resources[type] += amount;
+        
+
+        GameObject.Find(ToTitleCase(type.ToString().ToLower())).GetComponent<Text>().text = "" + ToTitleCase(type.ToString().ToLower()) + ": " + Resources[type];
     }
 
     public void Upgrade() {
         if (CanUpgrade()) {
-            Wood -= tier * costMultiplier;
-            Stone -= tier * costMultiplier;
+           Resources[Material.WOOD] -= tier * costMultiplier;
+           Resources[Material.STONE] -= tier * costMultiplier;
 
             tier++;
             Debug.Log("Upgraded base to tier " + tier);
@@ -54,30 +50,40 @@ public class Base : Structure
     }
 
     public bool CanUpgrade() {
-        Dictionary<string, int> reqResources = ResourcesRequired();
+        Dictionary<Material, int> reqResources = ResourcesRequired();
+        Debug.Log(reqResources.ToString());
 
-        return reqResources["Wood"] == 0 && reqResources["Stone"] == 0;
+        //TODO: See if there's any faster way to do this
+        List<Material> keys = new List<Material>(reqResources.Keys);
+
+        foreach (Material key in keys) {
+
+            if (reqResources[key] != 0) return false;
+        }
+
+        return true;
+
+
     }
 
-    public Dictionary<string, int> ResourcesRequired() {
-        Dictionary<string, int> reqResources = new Dictionary<string, int>();
 
-        int reqWood = tier * costMultiplier;
-        int reqStone = tier * costMultiplier;
 
-        reqResources.Add("Wood", 0);
-        reqResources.Add("Stone", 0);
+    public Dictionary<Material, int> ResourcesRequired() {
+        Dictionary<Material, int> reqResources = new Dictionary<Material, int>();
 
-        int woodNeeded = Wood - reqWood;
-        if (woodNeeded < 0) {
-            reqResources["Wood"] = Mathf.Abs(woodNeeded);
-        }
+        int reqWood = (tier * costMultiplier) - Resources[Material.WOOD];
+        int reqStone = (tier * costMultiplier) - Resources[Material.STONE];
 
-        int stoneNeeded = Stone - reqStone;
-        if (stoneNeeded < 0) {
-            reqResources["Stone"] = Mathf.Abs(stoneNeeded);
-        }
+        reqResources.Add(Material.WOOD, reqWood);
+        reqResources.Add(Material.STONE, reqStone);
 
         return reqResources;
     }
+
+    //Utility method for text
+    private string ToTitleCase(string s)  {
+        return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
+    }
+
+    
 }
