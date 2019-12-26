@@ -55,7 +55,7 @@ public class Base : Structure
     public bool CanUpgrade()
     {
         Dictionary<Material, int> reqResources = ResourcesRequired();
-        Debug.Log(reqResources.ToString());
+        //Debug.Log(reqResources.ToString());
 
         //TODO: See if there's any faster way to do this
         List<Material> keys = new List<Material>(reqResources.Keys);
