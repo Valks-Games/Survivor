@@ -15,20 +15,15 @@ public class CameraController : MonoBehaviour
     private Transform _trackingTarget = null;
     private Vector3 _dragOrigin;
 
-    private GameObject _canvas;
-
     private float _zoom = 0f;
     private float _currentZoom = 0f;
 
     private float _lastTimeClicked;
 
-
-
     public void Start()
     {
         _cam = GetComponent<Camera>();
         _worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
-        _canvas = GameObject.Find("Canvas");
         _lastTimeClicked = Time.time;
     }
 
@@ -94,11 +89,6 @@ public class CameraController : MonoBehaviour
                 _trackingTarget = hit.collider.transform;
                 StartCoroutine(SlowDownLerp());
                 _zoom = 0;
-
-                if (hit.collider.tag.Equals("Base")) {
-                    var panel = Resources.Load("Prefabs/PanelBaseInfo");
-                    Instantiate(panel, _canvas.transform);
-                }
             }
         }
 
