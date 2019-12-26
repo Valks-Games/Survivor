@@ -1,11 +1,6 @@
-public enum StructureType 
+public enum StructureType
 {
     BASE,
     ROCK,
     TREE
-
-
-
-
-
 }

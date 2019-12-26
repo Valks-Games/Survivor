@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,13 +6,11 @@ public class UIListener : MonoBehaviour
     private bool _baseUICreated;
     private GameObject _canvas;
 
-    // Start is called before the first frame update
     public void Start()
     {
         _canvas = GameObject.Find("World Canvas");
     }
 
-    // Update is called once per frame
     public void Update()
     {
         HandleUIPopUps();
@@ -45,7 +41,7 @@ public class UIListener : MonoBehaviour
 
                         stone.GetComponent<TextMeshPro>().text = "Stone: " + 1;
                         wood.GetComponent<TextMeshPro>().text = "Wood: " + 1;
-                        
+
                         _baseUICreated = true;
                     }
                 }

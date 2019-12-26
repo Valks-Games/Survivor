@@ -1,4 +1,4 @@
-﻿public enum Material
+public enum Material
 {
     Wood,
     Stone

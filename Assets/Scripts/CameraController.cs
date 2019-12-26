@@ -79,7 +79,8 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
-    private void HandleTracking(float inputHorz, float inputVert) {
+    private void HandleTracking(float inputHorz, float inputVert)
+    {
         if (inputHorz != 0 || inputVert != 0)
             _trackingTarget = null;
 

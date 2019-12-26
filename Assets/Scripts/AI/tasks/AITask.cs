@@ -1,23 +1,22 @@
-using UnityEngine;
 using System.Collections;
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-public abstract class AITask {
+public abstract class AITask
+{
 
-    private string _name;
-    protected ColonistAI _ai;
-    private string _target;
-    public AITask(ColonistAI ai, string target, string name)
+    private readonly string _name;
+    protected ColonistAI _colonist;
+    private readonly string _target;
+    public AITask(ColonistAI colonist, string target, string name)
     {
-        this._ai = ai;
+        this._colonist = colonist;
         this._name = name;
         this._target = target;
-
     }
 
 
-    public void Update(List<Transform> targets) 
+    public void Update(List<Transform> targets)
     {
         TaskLoop(targets);
     }
@@ -26,35 +25,37 @@ public abstract class AITask {
 
     private void TaskLoop(List<Transform> targets)
     {
-        if (_ai.IsAtTarget())
+        if (_colonist.IsAtTarget())
         {
             return;
         }
 
-        if (_ai.InSearchMode())
+        if (_colonist.InSearchMode())
         {
-            _ai.UpdateList(targets, _target);
-            _ai.SetClosestTarget(_ai.GetClosestStructure(targets)); 
-            if (_ai.GetClosestTarget() != null) {
-                _ai.GetClosestTarget().GetComponent<Structure>().Workers += 1;
-                 _ai.SetSearchMode(false);
+            _colonist.UpdateList(targets, _target);
+            _colonist.SetClosestTarget(_colonist.GetClosestStructure(targets));
+            if (_colonist.GetClosestTarget() != null)
+            {
+                _colonist.GetClosestTarget().GetComponent<Structure>().Workers += 1;
+                _colonist.SetSearchMode(false);
             }
         }
 
-        if (_ai.GetClosestTarget() == null)
+        if (_colonist.GetClosestTarget() == null)
         {
-            _ai.SetSearchMode(true);
+            _colonist.SetSearchMode(true);
         }
-        else {
-            _ai.WalkTowardsTarget(_ai.GetClosestTarget());
+        else
+        {
+            _colonist.WalkTowardsTarget(_colonist.GetClosestTarget());
 
-            if (_ai.AtTarget(_ai.GetClosestTarget()))
+            if (_colonist.AtTarget(_colonist.GetClosestTarget()))
             {
-                _ai.SetFoundTarget(true);
+                _colonist.SetFoundTarget(true);
 
-                _ai.SetSearchMode(true);
-                
-                _ai.StartCoroutine(RunTask());
+                _colonist.SetSearchMode(true);
+
+                _colonist.StartCoroutine(RunTask());
             }
         }
     }
@@ -63,11 +64,4 @@ public abstract class AITask {
     {
         return _target;
     }
-
-    
-
-    
-
-
-
 }

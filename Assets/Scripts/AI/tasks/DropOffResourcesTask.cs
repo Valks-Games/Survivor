@@ -1,9 +1,10 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class DropOffResourcesTask : AITask {
-    public DropOffResourcesTask(ColonistAI ai) : base(ai, "Bases", "DropOffResources")
+public class DropOffResourcesTask : AITask
+{
+    public DropOffResourcesTask(ColonistAI colonist) : base(colonist, "Bases", "DropOffResources")
     {
 
     }
@@ -12,35 +13,33 @@ public class DropOffResourcesTask : AITask {
     {
         yield return new WaitForSeconds(1);
 
-        List<Material> keys = new List<Material> (_ai.inventory.Keys);
+        List<Material> keys = new List<Material>(_colonist.inventory.Keys);
 
         foreach (Material key in keys)
         {
-            _ai.BaseScript.DepositResource(key, _ai.inventory[key]);
-            _ai.inventory[key] = 0;
+            _colonist.BaseScript.DepositResource(key, _colonist.inventory[key]);
+            _colonist.inventory[key] = 0;
         }
 
-        if (!_ai.BaseScript.CanUpgrade())
+        if (!_colonist.BaseScript.CanUpgrade())
         {
 
 
-            Dictionary<Material, int> reqResources = _ai.BaseScript.ResourcesRequired();
+            Dictionary<Material, int> reqResources = _colonist.BaseScript.ResourcesRequired();
 
             if (reqResources[Material.Wood] > reqResources[Material.Stone])
             {
-                _ai.AssignTask(new GatherResourceTask(_ai, Material.Wood));
+                _colonist.AssignTask(new GatherResourceTask(_colonist, Material.Wood));
             }
             else
             {
-                _ai.AssignTask(new GatherResourceTask(_ai, Material.Stone));
+                _colonist.AssignTask(new GatherResourceTask(_colonist, Material.Stone));
             }
         }
         else
         {
-            _ai.BaseScript.Upgrade();
-            _ai.AssignTask(new DropOffResourcesTask(_ai));
-
+            _colonist.BaseScript.Upgrade();
+            _colonist.AssignTask(new DropOffResourcesTask(_colonist));
         }
     }
-
 }
