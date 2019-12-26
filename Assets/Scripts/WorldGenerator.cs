@@ -56,7 +56,15 @@ public class WorldGenerator : MonoBehaviour
 
     private void AddFactions() {
         Grid[0, 0] = _base;
+        for (int i = 0; i < 5; i++) {
+            Instantiate(_colonist, GetPoint(0, 0), Quaternion.identity);
+        }
+
         Grid[Rows - 1, Columns - 1] = _base;
+    }
+
+    private Vector2 GetPoint(int i, int j) {
+        return new Vector2(i - Columns / 2, j - Rows / 2);
     }
 
     private void InstantiateGrid() {

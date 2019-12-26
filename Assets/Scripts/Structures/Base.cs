@@ -20,7 +20,6 @@ public class Base : Structure
         base.Awake();
         id++;
         SetName("Base " + id);
-        SetParent("Bases");
     }
 
     public override void Start()
@@ -28,6 +27,7 @@ public class Base : Structure
         base.Start();
         _textWood = GameObject.Find("Wood").GetComponent<Text>();
         _textStone = GameObject.Find("Stone").GetComponent<Text>();
+        SetParent("Bases");
     }
 
     public void DepositResource(string type, int amount) {

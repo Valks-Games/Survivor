@@ -9,8 +9,6 @@ public class Structure : MonoBehaviour
     public int Team { get; set; } = 0;
 
     public virtual void Awake() {
-        world = GameObject.Find("World");
-
         SetName("Structure");
         SetTeam(1);
     }
@@ -18,6 +16,7 @@ public class Structure : MonoBehaviour
     public virtual void Start()
     {
         transform.parent = transform;
+        world = GameObject.Find("World");
     }
 
     public void SetParent(string parent) {

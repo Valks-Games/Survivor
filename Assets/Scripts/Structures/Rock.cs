@@ -7,11 +7,11 @@ public class Rock : Structure
         base.Awake();
         id++;
         SetName("Rock " + id);
-        SetParent("Rocks");
     }
 
     public override void Start()
     {
         base.Start();
+        SetParent("Rocks");
     }
 }

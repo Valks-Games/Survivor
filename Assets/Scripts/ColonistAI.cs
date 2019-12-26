@@ -41,7 +41,7 @@ public class ColonistAI : MonoBehaviour
         _team = Random.Range(1, 3);
 
         _world = GameObject.Find("World");
-        _base = GameObject.Find("Base(Clone)");
+        _base = GameObject.Find("Base 1");
         _baseScript = _base.GetComponent<Base>();
         _bases.Add(_base.transform);
         _rb = GetComponent<Rigidbody2D>();

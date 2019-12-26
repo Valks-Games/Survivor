@@ -9,7 +9,6 @@ public class Tree : Structure
         base.Start();
         id++;
         SetName("Tree " + id);
-        
     }
 
     public override void Start()
