@@ -8,7 +8,8 @@ public class Structure : MonoBehaviour
     public int Workers { get; set; } = 0;
     public int Team { get; set; } = 0;
 
-    public virtual void Awake() {
+    public virtual void Awake()
+    {
         SetName("Structure");
         SetTeam(1);
     }
@@ -19,15 +20,18 @@ public class Structure : MonoBehaviour
         world = GameObject.Find("World");
     }
 
-    public void SetParent(string parent) {
+    public void SetParent(string parent)
+    {
         transform.parent = world.transform.Find(parent);
     }
 
-    public void SetName(string name) {
+    public void SetName(string name)
+    {
         transform.name = name;
     }
 
-    public void SetTeam(int team) {
+    public void SetTeam(int team)
+    {
         Team = team;
     }
 
@@ -44,7 +48,8 @@ public class Structure : MonoBehaviour
         return gathered;
     }
 
-    public void Destroy() {
+    public void Destroy()
+    {
         Destroy(gameObject);
     }
 }

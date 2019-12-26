@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PanelBase : MonoBehaviour
@@ -16,6 +14,6 @@ public class PanelBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
