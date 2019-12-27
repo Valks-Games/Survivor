@@ -4,17 +4,15 @@ using UnityEngine;
 
 public abstract class AITask
 {
-
-    private readonly string _name;
-    protected ColonistAI _colonist;
-    private readonly string _target;
-    public AITask(ColonistAI colonist, string target, string name)
+    public readonly string Name;
+    public AIEntity Entity;
+    public readonly string Target;
+    public AITask(AIEntity entity, string target, string name)
     {
-        this._colonist = colonist;
-        this._name = name;
-        this._target = target;
+        Entity = entity;
+        Name = name;
+        Target = target;
     }
-
 
     public void Update(List<Transform> targets)
     {
@@ -25,43 +23,37 @@ public abstract class AITask
 
     private void TaskLoop(List<Transform> targets)
     {
-        if (_colonist.IsAtTarget())
+        if (Entity.IsAtTarget)
         {
             return;
         }
 
-        if (_colonist.InSearchMode())
+        if (Entity.Searching)
         {
-            _colonist.UpdateList(targets, _target);
-            _colonist.SetClosestTarget(_colonist.GetClosestStructure(targets));
-            if (_colonist.GetClosestTarget() != null)
+            Entity.UpdateList(targets, Target);
+            Entity.ClosestTarget = Entity.GetClosestStructure(targets);
+
+            if (Entity.ClosestTarget != null)
             {
-                _colonist.GetClosestTarget().GetComponent<Structure>().Workers += 1;
-                _colonist.SetSearchMode(false);
+                Entity.ClosestTarget.GetComponent<Structure>().Workers += 1;
+                Entity.Searching = false;
             }
         }
 
-        if (_colonist.GetClosestTarget() == null)
+        if (Entity.ClosestTarget == null)
         {
-            _colonist.SetSearchMode(true);
+            Entity.Searching = true;
+            return;
         }
-        else
+
+        Entity.WalkTowardsTarget(Entity.ClosestTarget);
+
+        if (Entity.AtTarget(Entity.ClosestTarget))
         {
-            _colonist.WalkTowardsTarget(_colonist.GetClosestTarget());
+            Entity.IsAtTarget = true;
+            Entity.Searching = true;
 
-            if (_colonist.AtTarget(_colonist.GetClosestTarget()))
-            {
-                _colonist.SetFoundTarget(true);
-
-                _colonist.SetSearchMode(true);
-
-                _colonist.StartCoroutine(RunTask());
-            }
+            Entity.StartCoroutine(RunTask());
         }
-    }
-
-    public string GetTarget()
-    {
-        return _target;
     }
 }
