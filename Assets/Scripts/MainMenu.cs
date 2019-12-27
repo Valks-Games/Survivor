@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
     
+    public Slider slider;
     public void StartGame()
     {
-        SceneManager.LoadScene("Main");
+        StartCoroutine(LoadAsynchronously("Main"));
+        //SceneManager.LoadScene("Main");
     }
 
     public void QuitGame()
@@ -14,6 +18,20 @@ public class MainMenu : MonoBehaviour {
         #else 
         Application.Quit();
         #endif
+    }
+
+    
+    IEnumerator LoadAsynchronously(string scene)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
+        
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            slider.value = progress;
+            yield return null;
+        }
     }
 
 
