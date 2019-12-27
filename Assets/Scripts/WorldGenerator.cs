@@ -9,11 +9,9 @@ public class WorldGenerator : MonoBehaviour
     private GameObject _base;
 
     public GameObject[,] Grid;
+    public int Columns = 10;
+    public int Rows = 10;
     public bool GeneratingWorld = true;
-
-    public const int Columns = 100;
-    public const int Rows = 100;
-    public const float BaseMinimumDistance = 32;
 
     public void Awake()
     {
@@ -26,9 +24,9 @@ public class WorldGenerator : MonoBehaviour
     public void Start()
     {
         PopulateGrid();
-        InstantiateGrid();
+        AddFactions();
 
-        AddFactions(BaseMinimumDistance);
+        InstantiateGrid();
 
         GeneratingWorld = false;
     }
@@ -46,23 +44,13 @@ public class WorldGenerator : MonoBehaviour
                         Grid[i, j] = _rock;
     }
 
-    private void AddFactions(float minDistance)
+    private void AddFactions()
     {
-        AddFaction(0, 0);
-
-        foreach (Vector2 point in PoissonDiscSampling.Generate(minDistance, new Vector2(Columns, Rows)))
-            AddFaction((int)point.y, (int)point.x);
-    }
-
-    private void AddFaction(int y, int x)
-    {
-        Faction faction = new Faction("Faction!")
-        {
-            Base = Instantiate(_base, new Vector2(y - Columns / 2, x - Rows / 2), Quaternion.identity).GetComponent<Base>()
-        };
-
+        Grid[0, 0] = _base;
         for (int i = 0; i < 5; i++)
-            Instantiate(_colonist, GetPoint(y, x), Quaternion.identity).SendMessage("InitFaction", faction);
+            Instantiate(_colonist, GetPoint(0, 0), Quaternion.identity);
+
+        Grid[Rows - 1, Columns - 1] = _base;
     }
 
     private Vector2 GetPoint(int i, int j)
@@ -86,6 +74,6 @@ public class WorldGenerator : MonoBehaviour
     private IEnumerator WaitForWorldGeneration()
     {
         while (GeneratingWorld)
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
     }
 }

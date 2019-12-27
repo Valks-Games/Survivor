@@ -3,30 +3,37 @@ using UnityEngine;
 
 public class GatherResourceTask : AITask
 {
+
     private readonly Material _type;
 
-    public GatherResourceTask(AIEntity entity, Material type) : base(entity, type.GetResourceSource(), "GatherResource")
+    public GatherResourceTask(ColonistAI colonist, Material type) : base(colonist, type.GetResourceSource(), "GatherResource")
     {
-        _type = type;
+        this._type = type;
     }
 
     public override IEnumerator RunTask()
     {
-        yield return new WaitForSeconds(_type.GetGatherTime());
+        yield return new WaitForSeconds(1);
 
-        if (Entity.ClosestTarget == null)
+        if (_colonist.GetClosestTarget() == null)
         {
-            Entity.AssignTask(new DropOffResourcesTask(Entity));
+            _colonist.AssignTask(new DropOffResourcesTask(_colonist));
         }
         else
         {
-            Structure structureComponent = Entity.ClosestTarget.gameObject.GetComponent<Structure>();
-            Entity.Inventory[_type] += structureComponent.GatherResource(Entity.AxePower, Entity.Inventory[_type], Entity.MaxInventorySize);
-
-            if (Entity.Inventory[_type] <= Entity.MaxInventorySize - 1)
-                Entity.StartCoroutine(RunTask());
+            Structure structureComponent = _colonist.GetClosestTarget().gameObject.GetComponent<Structure>();
+            _colonist.Inventory[_type] += structureComponent.GatherResource(_colonist.axePower, _colonist.Inventory[_type], _colonist.inventoryCapacity);
+            
+            if (_colonist.Inventory[_type] <= _colonist.inventoryCapacity - 1)
+            {
+                _colonist.StartCoroutine(RunTask());
+            }
             else
-                Entity.AssignTask(new DropOffResourcesTask(Entity));
+            {
+                _colonist.AssignTask(new DropOffResourcesTask(_colonist));
+            }
         }
     }
+
+
 }

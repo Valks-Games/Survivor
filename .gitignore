@@ -60,7 +60,6 @@ crashlytics-build.properties
 
 .vscode/settings.json
 Assets/Scenes/MainSettings.lighting
-Assets/Scenes/MainSettings.lighting.meta
 UserSettings/EditorUserSettings.asset
 ProjectSettings/VersionControlSettings.asset
 ProjectSettings/ProjectVersion.txt
