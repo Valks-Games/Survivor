@@ -35,55 +35,52 @@ public class Base : Structure
     public void DepositResource(Material type, int amount)
     {
         Resources[type] += amount;
-
-
-        GameObject.Find(ToTitleCase(type.ToString().ToLower())).GetComponent<Text>().text = "" + ToTitleCase(type.ToString().ToLower()) + ": " + Resources[type];
+        GameObject.Find(type.ToString().ToLower().ToTitleCase()).GetComponent<Text>().text = "" + type.ToString().ToLower().ToTitleCase() + ": " + Resources[type];
     }
 
     public void Upgrade()
     {
-        if (CanUpgrade())
-        {
-            Resources[Material.Wood] -= tier * costMultiplier;
-            Resources[Material.Stone] -= tier * costMultiplier;
+        if (!CanUpgrade)
+            return;
 
-            tier++;
-            Debug.Log("Upgraded base to tier " + tier);
+        Resources[Material.Wood] -= tier * costMultiplier;
+        Resources[Material.Stone] -= tier * costMultiplier;
+
+        tier++;
+        Debug.Log("Upgraded base to tier " + tier);
+    }
+
+    public bool CanUpgrade
+    {
+        get
+        {
+            Dictionary<Material, int> reqResources = ResourcesRequired;
+            // Debug.Log(reqResources.ToString());
+
+            // TODO: See if there's any faster way to do this
+            List<Material> keys = new List<Material>(reqResources.Keys);
+
+            foreach (Material key in keys)
+                if (reqResources[key] != 0)
+                    return false;
+
+            return true;
         }
     }
 
-    public bool CanUpgrade()
+    public Dictionary<Material, int> ResourcesRequired
     {
-        Dictionary<Material, int> reqResources = ResourcesRequired();
-        //Debug.Log(reqResources.ToString());
+        get
+        {
+            Dictionary<Material, int> reqResources = new Dictionary<Material, int>();
 
-        //TODO: See if there's any faster way to do this
-        List<Material> keys = new List<Material>(reqResources.Keys);
+            int reqWood = (tier * costMultiplier) - Resources[Material.Wood];
+            int reqStone = (tier * costMultiplier) - Resources[Material.Stone];
 
-        foreach (Material key in keys)
-            if (reqResources[key] != 0)
-                return false;
+            reqResources.Add(Material.Wood, reqWood);
+            reqResources.Add(Material.Stone, reqStone);
 
-        return true;
-    }
-
-
-
-    public Dictionary<Material, int> ResourcesRequired()
-    {
-        Dictionary<Material, int> reqResources = new Dictionary<Material, int>();
-
-        int reqWood = (tier * costMultiplier) - Resources[Material.Wood];
-        int reqStone = (tier * costMultiplier) - Resources[Material.Stone];
-
-        reqResources.Add(Material.Wood, reqWood);
-        reqResources.Add(Material.Stone, reqStone);
-
-        return reqResources;
-    }
-
-    private string ToTitleCase(string s)
-    {
-        return System.Globalization.CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());
+            return reqResources;
+        }
     }
 }

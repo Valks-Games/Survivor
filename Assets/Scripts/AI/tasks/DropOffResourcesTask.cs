@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DropOffResourcesTask : AITask
 {
-    public DropOffResourcesTask(ColonistAI colonist) : base(colonist, "Bases", "DropOffResources")
+    public DropOffResourcesTask(AIEntity entity) : base(entity, "Bases", "DropOffResources")
     {
 
     }
@@ -13,33 +13,31 @@ public class DropOffResourcesTask : AITask
     {
         yield return new WaitForSeconds(1);
 
-        List<Material> keys = new List<Material> (_colonist.Inventory.Keys);
+        List<Material> keys = new List<Material>(Entity.Inventory.Keys);
 
         foreach (Material key in keys)
         {
-            _colonist.BaseScript.DepositResource(key, _colonist.Inventory[key]);
-            _colonist.Inventory[key] = 0;
+            Entity.Base.DepositResource(key, Entity.Inventory[key]);
+            Entity.Inventory[key] = 0;
         }
 
-        if (!_colonist.BaseScript.CanUpgrade())
+        if (!Entity.Base.CanUpgrade)
         {
-
-
-            Dictionary<Material, int> reqResources = _colonist.BaseScript.ResourcesRequired();
+            Dictionary<Material, int> reqResources = Entity.Base.ResourcesRequired;
 
             if (reqResources[Material.Wood] > reqResources[Material.Stone])
             {
-                _colonist.AssignTask(new GatherResourceTask(_colonist, Material.Wood));
+                Entity.AssignTask(new GatherResourceTask(Entity, Material.Wood));
             }
             else
             {
-                _colonist.AssignTask(new GatherResourceTask(_colonist, Material.Stone));
+                Entity.AssignTask(new GatherResourceTask(Entity, Material.Stone));
             }
         }
         else
         {
-            _colonist.BaseScript.Upgrade();
-            _colonist.AssignTask(new DropOffResourcesTask(_colonist));
+            Entity.Base.Upgrade();
+            Entity.AssignTask(new DropOffResourcesTask(Entity));
         }
     }
 }
