@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class MainMenu : MonoBehaviour {
-    
+public class MainMenu : MonoBehaviour
+{
+
     public void StartGame()
     {
         SceneManager.LoadScene("Main");
@@ -9,11 +10,11 @@ public class MainMenu : MonoBehaviour {
 
     public void QuitGame()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else 
+#else
         Application.Quit();
-        #endif
+#endif
     }
 
 
