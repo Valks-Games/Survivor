@@ -5,10 +5,7 @@ A 2D Unity Game with a current heavy focus on a job management system. Workers c
 There are future plans for enemy AI, combat mechanics, world fog mechanics, procedural world generation, walking mechs / vehicles, more structures such as barracks / research labs / storage buildings, economy systems, trade routes, and potentially multiplayer support.
 
 ## Setup
-1. Fork this repository and clone it
-2. Install Unity `2019.3.0b9` (or any version greater than this should be fine)
-3. Add the Unity project to Unity Hub
-4. Launch the project
+The project is currently on Unity version `2019.3.0f3`. Clone the project, add it to Unity's Hub and launch it.
 
 ## Releases
 See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
