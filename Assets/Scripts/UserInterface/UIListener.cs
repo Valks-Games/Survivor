@@ -18,6 +18,8 @@ public class UIListener : MonoBehaviour
 
     private void HandleUIPopUps()
     {
+        if (_baseUICreated) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

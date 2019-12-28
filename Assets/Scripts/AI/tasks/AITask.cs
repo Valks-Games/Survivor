@@ -30,8 +30,12 @@ public abstract class AITask
 
         if (Entity.Searching)
         {
-            Entity.UpdateList(targets, Target);
-            Entity.ClosestTarget = Entity.GetClosestStructure(targets);
+            if (Target == "Bases")
+            {
+                Entity.ClosestTarget = Entity.Base.transform;
+            } else {
+                Entity.ClosestTarget = Entity.GetClosestObject(Target);
+            }
 
             if (Entity.ClosestTarget != null)
             {
