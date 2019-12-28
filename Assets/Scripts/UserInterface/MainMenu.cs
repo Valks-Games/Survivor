@@ -10,7 +10,17 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(LoadAsynchronously("Main"));
-        //SceneManager.LoadScene("Main");
+        Destroy(MenuMusicManager.MenuMusic);
+    }
+
+    public void LoadOptions()
+    {
+        SceneManager.LoadScene("Options");
+    }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
     }
 
     public void QuitGame()

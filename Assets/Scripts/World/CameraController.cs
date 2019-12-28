@@ -6,11 +6,13 @@ public class CameraController : MonoBehaviour
     private Camera _cam;
     private WorldGenerator _worldGenerator;
 
-    public float Speed = 100f;
-    public float ScrollSpeed = 500f;
+    public float SpeedPan = 3f;
+    public float SpeedScroll = 10f;
+    public float DragSpeed = 500f;
+
     public float ScrollLerp = 0.05f;
     public float TrackingLerp = 0.02f;
-    public float DragSpeed = 500f;
+    
 
     private Transform _trackingTarget = null;
     private Vector3 _dragOrigin;
@@ -19,6 +21,12 @@ public class CameraController : MonoBehaviour
     private float _currentZoom = 0f;
 
     private float _lastTimeClicked;
+
+    public void Awake()
+    {
+        SpeedPan = Options.SensitivityPan;
+        SpeedScroll = Options.SensitivityZoom;
+    }
 
     public void Start()
     {
@@ -47,7 +55,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleMoveKeys(float inputHorz, float inputVert)
     {
-        transform.position += new Vector3(inputHorz * Speed * Time.deltaTime, inputVert * Speed * Time.deltaTime, 0);
+        transform.position += new Vector3(inputHorz * SpeedPan * Time.deltaTime, inputVert * SpeedPan * Time.deltaTime, 0);
     }
 
     private void HandleZoom(float inputScroll)
@@ -55,7 +63,7 @@ public class CameraController : MonoBehaviour
         _zoom -= inputScroll;
         _zoom = Mathf.Clamp(_zoom, -0.4f, 2f);
         _currentZoom = Mathf.Lerp(_currentZoom, _zoom, ScrollLerp);
-        _cam.orthographicSize = 5 + _currentZoom * ScrollSpeed;
+        _cam.orthographicSize = 5 + _currentZoom * SpeedScroll;
     }
 
     private void HandleDrag()
