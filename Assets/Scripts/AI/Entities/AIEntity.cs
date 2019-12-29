@@ -58,7 +58,7 @@ public abstract class AIEntity : MonoBehaviour
             structures.AddRange(RetrieveList("Rocks"));
         }*/
 
-        Task = new GatherResourceTask(this, Material.Stone);
+        Task = new IdleTask(this);
 
         Health = health;
         Damage = damage;
