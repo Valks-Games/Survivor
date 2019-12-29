@@ -9,9 +9,9 @@ public class Options : MonoBehaviour
     public static float SensitivityPan = 3f;
     public static float SensitivityZoom = 10f;
 
-    private static int _dropdownResolutionIndex;
+    private static int _dropdownResolutionIndex = -1;
 
-    private const float _defaultVignetteIntensity = 0.7f;
+    private const float _defaultVignetteIntensity = 0.5f;
     private const float _defaultBloomIntensity = 30f;
     private const float _defaultVolumeMusic = 1f;
     private const float _defaultVolumeSFX = 1f;
@@ -117,8 +117,9 @@ public class Options : MonoBehaviour
         for (int i = 0; i < _resolutions.Length; i++)
         {
             _dropdownResolutions.options.Add(new Dropdown.OptionData(ResolutionToString(_resolutions[i])));
-            _dropdownResolutions.value = i;
         }
+
+        _dropdownResolutions.value = _dropdownResolutionIndex == -1 ? _resolutions.Length : _dropdownResolutionIndex;
     }
 
     private void InitializeQualityDropDown()
@@ -128,7 +129,6 @@ public class Options : MonoBehaviour
         for (int i = 0; i < names.Length; i++)
         {
             _dropdownQuality.options.Add(new Dropdown.OptionData(names[i]));
-            _dropdownQuality.value = i;
         }
     }
 

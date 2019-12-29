@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -58,7 +58,7 @@ public abstract class AIEntity : MonoBehaviour
             structures.AddRange(RetrieveList("Rocks"));
         }*/
 
-        Task = new IdleTask(this);
+        Task = new GatherResourceTask(this, Material.Stone);
 
         Health = health;
         Damage = damage;
