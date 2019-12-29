@@ -23,6 +23,7 @@ public class Structure : MonoBehaviour
     public void SetParent(string parent)
     {
         transform.parent = world.transform.Find(parent);
+        Type = parent;
     }
 
     public void SetName(string name)
@@ -42,8 +43,11 @@ public class Structure : MonoBehaviour
 
         Resource -= gathered;
 
-        if (Resource <= 0)
+
+        if (Resource <= 0) {
+            AIEntity.StructureList[Type].Remove(this.transform);
             Destroy();
+        }
 
         return gathered;
     }

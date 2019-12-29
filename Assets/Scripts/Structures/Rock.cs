@@ -1,5 +1,7 @@
 public class Rock : Structure
 {
+    public string te;
+
     public static int id = 0;
 
     public override void Awake()

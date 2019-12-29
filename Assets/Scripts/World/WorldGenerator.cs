@@ -80,7 +80,9 @@ public class WorldGenerator : MonoBehaviour
     private void SpawnObject(GameObject theObject, int x, int y)
     {
         if (theObject != null)
+         {
             Instantiate(theObject, new Vector2(x, y), Quaternion.identity);
+         }
     }
 
     private IEnumerator WaitForWorldGeneration()

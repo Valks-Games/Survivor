@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class AIEntity : MonoBehaviour
 {
@@ -17,6 +18,13 @@ public abstract class AIEntity : MonoBehaviour
 
     [Header("Resources")]
     [SerializeField] public int MaxInventorySize = 3;
+
+    [SerializeField]
+
+    public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>(); 
+    //public static List<Transform> structures = new List<Transform>();
+
+    public string CurrentTask = "NONE";
     [SerializeField] public readonly Dictionary<Material, int> Inventory = new Dictionary<Material, int>();
 
     public AITask Task { get; private set; }
@@ -28,11 +36,27 @@ public abstract class AIEntity : MonoBehaviour
 
     public void Init(int health = 1, int damage = 1)
     {
+
+
         foreach (Material resource in System.Enum.GetValues(typeof(Material)))
             Inventory.Add(resource, 0);
 
         _world = GameObject.Find("World");
         _rb = GetComponent<Rigidbody2D>();
+
+        if (StructureList.Count == 0)
+        {
+            StructureList.Add("Trees", RetrieveList("Trees"));
+            StructureList.Add("Rocks", RetrieveList("Rocks"));
+            StructureList.Add("Bases", RetrieveList("Bases"));
+        }
+
+        /*if (structures.Count == 0)
+        {
+            //structures.AddRange(RetrieveList("Bases"));
+            structures.AddRange(RetrieveList("Trees"));
+            structures.AddRange(RetrieveList("Rocks"));
+        }*/
 
         Task = new IdleTask(this);
 
@@ -49,7 +73,7 @@ public abstract class AIEntity : MonoBehaviour
         if (Task == null || Task.Target == null || RetrieveList(Task.Target) == null)
             return;
 
-        Task.Update(RetrieveList(Task.Target));
+        Task.Update(StructureList[Task.Target]);
     }
 
     public void AssignTask(AITask task)
@@ -57,6 +81,7 @@ public abstract class AIEntity : MonoBehaviour
         IsAtTarget = false;
         Searching = true;
         Task = task;
+        CurrentTask = Task.Target;
     }
 
     public void JobAttack(List<Transform> targets)
@@ -64,39 +89,6 @@ public abstract class AIEntity : MonoBehaviour
 
     }
 
-    public void JobStructure(List<Transform> targets, string type, IEnumerator task)
-    {
-        if (IsAtTarget)
-            return;
-
-        if (Searching)
-        {
-            UpdateList(targets, type);
-            ClosestTarget = GetClosestStructure(targets);
-
-            if (ClosestTarget != null)
-            {
-                ClosestTarget.GetComponent<Structure>().Workers += 1;
-                Searching = false;
-            }
-        }
-
-        if (ClosestTarget == null)
-        {
-            Searching = true;
-        }
-        else
-        {
-            WalkTowardsTarget(ClosestTarget);
-
-            if (AtTarget(ClosestTarget))
-            {
-                IsAtTarget = true;
-                Searching = true;
-                StartCoroutine(task);
-            }
-        }
-    }
     public void WalkTowardsTarget(Transform target)
     {
         Vector2 direction = target.position - transform.position;
@@ -124,15 +116,6 @@ public abstract class AIEntity : MonoBehaviour
         return list;
     }
 
-    public void UpdateList(List<Transform> list, string type)
-    {
-        list.Clear();
-        foreach (Transform child in _world.transform.Find(type))
-        {
-            list.Add(child);
-        }
-    }
-
     private Transform FindClosestTeammate(List<Transform> targets)
     {
         Transform closestTransform = null;
@@ -154,9 +137,70 @@ public abstract class AIEntity : MonoBehaviour
         return closestTransform;
     }
 
-    public Transform GetClosestStructure(List<Transform> targets)
+    public Transform GetClosestObject(string type)
     {
-        Transform closestTransform = null;
+        
+        //Debug.Log(Base.transform);
+        //return GetClosestStructure(type, StructureList[type]);
+        return StructureList[type].Where(t => t.gameObject.gameObject.GetComponent<Structure>().Workers == 0).FirstOrDefault();
+    }
+
+    private Transform GetClosest(string type, List<Transform> targets)
+    {
+
+        IOrderedEnumerable<Transform> targetSorted = targets.OrderBy(t => Vector2.Distance(this.transform.position, t.position)/*(t.position - this.transform.position).sqrMagnitude*/);
+        //Debug.Log(targetSorted.ToArray().ToString());
+        if (type != "Bases") return targets.Where(t => t.gameObject.GetComponent<Structure>().Workers == 0).First();
+        return targetSorted.First();
+
+        //return targets[0];
+    }
+
+    private Transform GetClosestStructure(string type, List<Transform> targets)
+    {
+
+        Debug.Log("Checking for " + type);
+
+
+
+        if (type == "Bases")
+        {
+
+            foreach (Transform t in targets)
+            {       
+                if (t.position == Base.transform.position) return t;
+            }
+            
+            //if (targets[0] == null) Debug.Log("it's null");
+            //return targets[0];
+
+            return null;
+            
+            //Transform e = targets.Where(t => t.position == Base.transform.position).FirstOrDefault();
+            //StartCoroutine(debug(targets));
+            //Transform e = targets.OrderBy(t => (t.position - transform.position).sqrMagnitude).FirstOrDefault();
+            //Transform e = targets[0];
+
+            //return e;
+
+        } else 
+        {
+            List<Transform> newTargets = targets.OrderBy(t => (t.position - transform.position).sqrMagnitude).ToList();
+            foreach (Transform t in newTargets)
+            {
+                Debug.Log("Starting process");
+                if (t.gameObject.GetComponent<Structure>().Workers == 0) {
+                    Debug.Log("Found one mate");   
+                    return t;
+                }
+            }
+            //Transform e = targets.Where(t => t.gameObject.GetComponent<Structure>().Workers == 0 /*t.Equals(Base.transform)*/).OrderBy(t => (t.position - transform.position).sqrMagnitude).FirstOrDefault();
+            //Debug.Log(e);
+            return null;
+        }
+
+        
+        /*Transform closestTransform = null;
         float minDist = Mathf.Infinity;
         Vector2 currentPos = transform.position;
 
@@ -175,7 +219,13 @@ public abstract class AIEntity : MonoBehaviour
             }
         }
 
-        return closestTransform;
+        return closestTransform;*/
+    }
+    
+    private IEnumerator debug(List<Transform> targets)
+    {
+        Debug.Log(targets.Count);
+        yield return null;
     }
 
     private Transform GetClosestObject(System.Func<GameObject, bool> condition, List<Transform> targets)
