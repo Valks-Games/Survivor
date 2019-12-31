@@ -70,7 +70,7 @@ public abstract class AIEntity : MonoBehaviour
 
     public void Update()
     {
-        if (Task == null || Task.Target == null || RetrieveList(Task.Target) == null)
+        if (Task == null || Task.Target == null)
             return;
 
         Task.Update(StructureList[Task.Target]);
@@ -137,12 +137,12 @@ public abstract class AIEntity : MonoBehaviour
         return closestTransform;
     }
 
-    public Transform GetClosestObject(string type)
+    public Transform GetClosestObject(string type)//
     {
         
         //Debug.Log(Base.transform);
         //return GetClosestStructure(type, StructureList[type]);
-        return StructureList[type].Where(t => t.gameObject.gameObject.GetComponent<Structure>().Workers == 0).FirstOrDefault();
+        return StructureList[type].OrderBy(t => (t.position - this.transform.position).sqrMagnitude).Where(t => t.gameObject.gameObject.GetComponent<Structure>().Workers == 0).FirstOrDefault();
     }
 
     private Transform GetClosest(string type, List<Transform> targets)
