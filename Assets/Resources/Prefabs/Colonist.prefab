@@ -56,6 +56,7 @@ MonoBehaviour:
   _speed: 100
   _interactionRange: 0.5
   MaxInventorySize: 3
+  CurrentTask: NONE
 --- !u!50 &2350104529414420000
 Rigidbody2D:
   serializedVersion: 4
