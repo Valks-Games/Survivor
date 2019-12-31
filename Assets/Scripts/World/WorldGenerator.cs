@@ -15,12 +15,16 @@ public class WorldGenerator : MonoBehaviour
     public const int Rows = 100;
     public const float BaseMinimumDistance = 32;
 
+    // World
+
     public void Awake()
     {
         _tree = Resources.Load("Prefabs/Tree") as GameObject;
         _colonist = Resources.Load("Prefabs/Colonist") as GameObject;
         _rock = Resources.Load("Prefabs/Rock") as GameObject;
         _base = Resources.Load("Prefabs/Base") as GameObject;
+
+        // World
     }
 
     public void Start()
@@ -30,7 +34,23 @@ public class WorldGenerator : MonoBehaviour
 
         AddFactions(BaseMinimumDistance);
 
+        // World
+        GenerateSpawn(4);
+
         GeneratingWorld = false;
+    }
+
+    public void GenerateSpawn(int size)
+    {
+        for (int x = -size/2; x < size/2; x++)
+        {
+            for (int z = -size/2; z < size/2; z++)
+            {
+                GameObject goChunk = new GameObject("Chunk " + x + " " + z);
+                WorldChunk worldChunk = goChunk.AddComponent<WorldChunk>();
+                worldChunk.Generate(x, z);
+            }
+        }
     }
 
     private void PopulateGrid()
