@@ -4,7 +4,6 @@ using UnityEngine;
 public class WorldGenerator : MonoBehaviour
 {
     private GameObject _tree;
-    private GameObject _colonist;
     private GameObject _rock;
     private GameObject _base;
 
@@ -18,7 +17,6 @@ public class WorldGenerator : MonoBehaviour
     public void Awake()
     {
         _tree = Resources.Load("Prefabs/Tree") as GameObject;
-        _colonist = Resources.Load("Prefabs/Colonist") as GameObject;
         _rock = Resources.Load("Prefabs/Rock") as GameObject;
         _base = Resources.Load("Prefabs/Base") as GameObject;
     }
@@ -62,7 +60,10 @@ public class WorldGenerator : MonoBehaviour
         };
 
         for (int i = 0; i < 5; i++)
-            Instantiate(_colonist, GetPoint(y, x), Quaternion.identity).SendMessage("InitFaction", faction);
+            Colonist.New(
+                location: GetPoint(y, x),
+                faction: faction
+            );
     }
 
     private Vector2 GetPoint(int i, int j)
@@ -80,9 +81,9 @@ public class WorldGenerator : MonoBehaviour
     private void SpawnObject(GameObject theObject, int x, int y)
     {
         if (theObject != null)
-         {
+        {
             Instantiate(theObject, new Vector2(x, y), Quaternion.identity);
-         }
+        }
     }
 
     private IEnumerator WaitForWorldGeneration()

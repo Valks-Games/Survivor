@@ -1,32 +1,34 @@
 using System.Collections;
 using UnityEngine;
 
-public class GatherResourceTask : AITask
+public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<T>
 {
     private readonly Material _type;
 
-    public GatherResourceTask(AIEntity entity, Material type) : base(entity, type.GetResourceSource(), "GatherResource")
+    public GatherResourceTask(Material type) : base(type.AssociatedStructure, "GatherResource")
     {
         _type = type;
     }
 
-    public override IEnumerator RunTask()
+    protected override IEnumerator Run()
     {
-        yield return new WaitForSeconds(_type.GetGatherTime());
+        yield return TaskLoop();
+        yield return new WaitForSeconds(_type.GatherTime);
 
-        if (Entity.ClosestTarget == null)
+        if (Target.TargetStructure == null)
         {
-            Entity.AssignTask(new DropOffResourcesTask(Entity));
+            Target.AssignTask(new DropOffResourcesTask<T>());
+            yield break;
         }
+        
+        Structure structureComponent = Target.TargetStructure.gameObject.GetComponent<Structure>();
+        Target.Inventory[_type] += structureComponent.GatherResource(Target.AxePower, Target.Inventory[_type], Target.MaxInventorySize);
+
+        if (Target.Inventory[_type] < Target.MaxInventorySize)
+            Target.QueueTask(new GatherResourceTask<T>(_type));
         else
-        {
-            Structure structureComponent = Entity.ClosestTarget.gameObject.GetComponent<Structure>();
-            Entity.Inventory[_type] += structureComponent.GatherResource(Entity.AxePower, Entity.Inventory[_type], Entity.MaxInventorySize);
+            Target.QueueTask(new DropOffResourcesTask<T>());
 
-            if (Entity.Inventory[_type] <= Entity.MaxInventorySize - 1)
-                Entity.StartCoroutine(RunTask());
-            else
-                Entity.AssignTask(new DropOffResourcesTask(Entity));
-        }
+        structureComponent.Workers--;
     }
 }
