@@ -51,13 +51,6 @@ public abstract class AIEntity : MonoBehaviour
             StructureList.Add("Bases", RetrieveList("Bases"));
         }
 
-        /*if (structures.Count == 0)
-        {
-            //structures.AddRange(RetrieveList("Bases"));
-            structures.AddRange(RetrieveList("Trees"));
-            structures.AddRange(RetrieveList("Rocks"));
-        }*/
-
         Task = new IdleTask(this);
 
         Health = health;
@@ -101,7 +94,7 @@ public abstract class AIEntity : MonoBehaviour
     public bool AtTarget(Transform target)
     {
         _rb.drag = 1.6f;
-        return Vector2.Distance(transform.position, target.position) < _interactionRange;
+        return (target.position - this.transform.position).sqrMagnitude < _interactionRange * _interactionRange;
     }
 
     private List<Transform> RetrieveList(string type)
@@ -116,7 +109,7 @@ public abstract class AIEntity : MonoBehaviour
         return list;
     }
 
-    private Transform FindClosestTeammate(List<Transform> targets)
+    private Transform FindClosestTeammate(List<Transform> targets) //Might be removed soon 
     {
         Transform closestTransform = null;
         float minDist = Mathf.Infinity;
@@ -137,116 +130,9 @@ public abstract class AIEntity : MonoBehaviour
         return closestTransform;
     }
 
-    public Transform GetClosestObject(string type)//
+    public Transform GetClosestObject(string type)
     {
-        
-        //Debug.Log(Base.transform);
-        //return GetClosestStructure(type, StructureList[type]);
         return StructureList[type].OrderBy(t => (t.position - this.transform.position).sqrMagnitude).Where(t => t.gameObject.gameObject.GetComponent<Structure>().Workers == 0).FirstOrDefault();
     }
 
-    private Transform GetClosest(string type, List<Transform> targets)
-    {
-
-        IOrderedEnumerable<Transform> targetSorted = targets.OrderBy(t => Vector2.Distance(this.transform.position, t.position)/*(t.position - this.transform.position).sqrMagnitude*/);
-        //Debug.Log(targetSorted.ToArray().ToString());
-        if (type != "Bases") return targets.Where(t => t.gameObject.GetComponent<Structure>().Workers == 0).First();
-        return targetSorted.First();
-
-        //return targets[0];
-    }
-
-    private Transform GetClosestStructure(string type, List<Transform> targets)
-    {
-
-        Debug.Log("Checking for " + type);
-
-
-
-        if (type == "Bases")
-        {
-
-            foreach (Transform t in targets)
-            {       
-                if (t.position == Base.transform.position) return t;
-            }
-            
-            //if (targets[0] == null) Debug.Log("it's null");
-            //return targets[0];
-
-            return null;
-            
-            //Transform e = targets.Where(t => t.position == Base.transform.position).FirstOrDefault();
-            //StartCoroutine(debug(targets));
-            //Transform e = targets.OrderBy(t => (t.position - transform.position).sqrMagnitude).FirstOrDefault();
-            //Transform e = targets[0];
-
-            //return e;
-
-        } else 
-        {
-            List<Transform> newTargets = targets.OrderBy(t => (t.position - transform.position).sqrMagnitude).ToList();
-            foreach (Transform t in newTargets)
-            {
-                Debug.Log("Starting process");
-                if (t.gameObject.GetComponent<Structure>().Workers == 0) {
-                    Debug.Log("Found one mate");   
-                    return t;
-                }
-            }
-            //Transform e = targets.Where(t => t.gameObject.GetComponent<Structure>().Workers == 0 /*t.Equals(Base.transform)*/).OrderBy(t => (t.position - transform.position).sqrMagnitude).FirstOrDefault();
-            //Debug.Log(e);
-            return null;
-        }
-
-        
-        /*Transform closestTransform = null;
-        float minDist = Mathf.Infinity;
-        Vector2 currentPos = transform.position;
-
-        foreach (Transform t in targets)
-        {
-            if (t.gameObject.GetComponent<Structure>().Workers >= 1 && !t.CompareTag("Base"))
-            {
-                continue;
-            }
-
-            float dist = Vector2.Distance(t.position, currentPos);
-            if (dist < minDist)
-            {
-                closestTransform = t;
-                minDist = dist;
-            }
-        }
-
-        return closestTransform;*/
-    }
-    
-    private IEnumerator debug(List<Transform> targets)
-    {
-        Debug.Log(targets.Count);
-        yield return null;
-    }
-
-    private Transform GetClosestObject(System.Func<GameObject, bool> condition, List<Transform> targets)
-    {
-        Transform closestTransform = null;
-        float minDist = Mathf.Infinity;
-        Vector2 currentPos = transform.position;
-
-        foreach (Transform t in targets)
-        {
-            if (condition(t.gameObject))
-            {
-                float dist = Vector2.Distance(t.position, currentPos);
-                if (dist < minDist)
-                {
-                    closestTransform = t;
-                    minDist = dist;
-                };
-            }
-        }
-
-        return closestTransform;
-    }
 }
