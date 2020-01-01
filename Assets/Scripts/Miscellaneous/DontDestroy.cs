@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PostProcessingManager : MonoBehaviour
+public class DontDestroy : MonoBehaviour
 {
-    public static GameObject PostProcessing;
+    public static GameObject go;
 
     public void Awake()
     {
-        if (PostProcessing == null)
+        if (go == null)
         {
-            PostProcessing = gameObject;
+            go = gameObject;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            if (PostProcessing != this)
+            if (go != this)
             {
                 Destroy(gameObject);
             }

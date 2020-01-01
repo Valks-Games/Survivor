@@ -60,10 +60,13 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom(float inputScroll)
     {
-        _zoom -= inputScroll;
-        _zoom = Mathf.Clamp(_zoom, -0.4f, 2f);
+        _zoom += inputScroll;
+        _zoom = Mathf.Clamp(_zoom, 0f, 0.8f);
         _currentZoom = Mathf.Lerp(_currentZoom, _zoom, ScrollLerp);
-        _cam.orthographicSize = 5 + _currentZoom * SpeedScroll;
+
+        Vector3 pos = transform.position;
+        pos.z = -10 + _currentZoom * SpeedScroll;
+        transform.position = pos; 
     }
 
     private void HandleDrag()

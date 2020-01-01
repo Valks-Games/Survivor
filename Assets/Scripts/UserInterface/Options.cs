@@ -5,22 +5,33 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
-    public static float VolumeSFX = 1.0f;
-    public static float SensitivityPan = 3f;
-    public static float SensitivityZoom = 10f;
+    [Header("Vignette")]
+    [SerializeField] public float DefaultVignetteIntensity = 0.25f;
+    [SerializeField] public bool DefaultVignetteEnabled = true;
 
+    [Header("Bloom")]
+    [SerializeField] public float DefaultBloomIntensity = 30f;
+    [SerializeField] public bool DefaultBloomEnabled = true;
+
+    [Header("Volume")]
+    [SerializeField] public float DefaultVolumeMusic = 1f;
+    [SerializeField] public float DefaultVolumeSFX = 1f;
+
+    [Header("VSync")]
+    [SerializeField] public int DefaultVSyncValue = 1;
+    [SerializeField] public bool DefaultVSyncEnabled = true;
+
+    [Header("Camera")]
+    [SerializeField] public float DefaultSensitivityPan = 3f;
+    [SerializeField] public float DefaultSensitivityZoom = 10f;
+
+    // Static
+    [HideInInspector] public static float VolumeSFX = 1.0f;
+    [HideInInspector] public static float SensitivityPan = 3f;
+    [HideInInspector] public static float SensitivityZoom = 10f;
+
+    // Private
     private static int _dropdownResolutionIndex = -1;
-
-    private const float _defaultVignetteIntensity = 0.5f;
-    private const float _defaultBloomIntensity = 30f;
-    private const float _defaultVolumeMusic = 1f;
-    private const float _defaultVolumeSFX = 1f;
-    private const bool _defaultVignetteEnabled = true;
-    private const bool _defaultBloomEnabled = true;
-    private const bool _defaultVSyncEnabled = true;
-    private const int _defaultVSyncValue = 1;
-    private const float _defaultSensitivityPan = 3f;
-    private const float _defaultSensitivityZoom = 10f;
 
     private GameObject _goPostProcessing;
     private GameObject _goMenuMusic;
@@ -47,7 +58,7 @@ public class Options : MonoBehaviour
 
     public void Start()
     {
-        _goPostProcessing = PostProcessingManager.PostProcessing;
+        _goPostProcessing = DontDestroy.go;
 
         if (_goPostProcessing != null)
         {
@@ -262,32 +273,32 @@ public class Options : MonoBehaviour
             return;
 
         // Bloom
-        _ppBloom.enabled.value = _defaultBloomEnabled;
-        _ppBloom.intensity.value = _defaultBloomIntensity;
-        _toggleBloom.isOn = _defaultBloomEnabled;
-        _sliderBloom.value = _defaultBloomIntensity;
+        _ppBloom.enabled.value = DefaultBloomEnabled;
+        _ppBloom.intensity.value = DefaultBloomIntensity;
+        _toggleBloom.isOn = DefaultBloomEnabled;
+        _sliderBloom.value = DefaultBloomIntensity;
 
         // Vignette
-        _ppVignette.enabled.value = _defaultVignetteEnabled;
-        _ppVignette.intensity.value = _defaultVignetteIntensity;
-        _toggleVignette.isOn = _defaultVignetteEnabled;
-        _sliderVignette.value = _defaultVignetteIntensity;
+        _ppVignette.enabled.value = DefaultVignetteEnabled;
+        _ppVignette.intensity.value = DefaultVignetteIntensity;
+        _toggleVignette.isOn = DefaultVignetteEnabled;
+        _sliderVignette.value = DefaultVignetteIntensity;
 
         // Volume (Music)
-        _sliderVolumeMusic.value = _defaultVolumeMusic;
+        _sliderVolumeMusic.value = DefaultVolumeMusic;
 
         // Volume (SFX)
-        _sliderVolumeSFX.value = _defaultVolumeSFX;
+        _sliderVolumeSFX.value = DefaultVolumeSFX;
 
         // VSync
-        _toggleVSync.isOn = _defaultVSyncEnabled;
-        QualitySettings.vSyncCount = _defaultVSyncValue;
+        _toggleVSync.isOn = DefaultVSyncEnabled;
+        QualitySettings.vSyncCount = DefaultVSyncValue;
 
         // Camera Pan
-        _sliderSensitivityPan.value = _defaultSensitivityPan;
+        _sliderSensitivityPan.value = DefaultSensitivityPan;
 
         // Camera Zoom
-        _sliderSensitivityZoom.value = _defaultSensitivityZoom;
+        _sliderSensitivityZoom.value = DefaultSensitivityZoom;
     }
 
     public void BackToMenu()

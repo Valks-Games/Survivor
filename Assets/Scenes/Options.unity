@@ -1159,6 +1159,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd9ba6bcf8f57b438eb73c47db00bcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaultVignetteIntensity: 0.25
+  DefaultVignetteEnabled: 1
+  DefaultBloomIntensity: 30
+  DefaultBloomEnabled: 1
+  DefaultVolumeMusic: 1
+  DefaultVolumeSFX: 1
+  DefaultVSyncValue: 1
+  DefaultVSyncEnabled: 1
+  DefaultSensitivityPan: 3
+  DefaultSensitivityZoom: 10
 --- !u!1 &183982055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1931,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: 0.25
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

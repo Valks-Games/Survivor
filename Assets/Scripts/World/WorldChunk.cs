@@ -13,13 +13,14 @@ public class WorldChunk : MonoBehaviour
     {
         _mesh = GetComponent<MeshFilter>().mesh;
         _meshRenderer = GetComponent<MeshRenderer>();
-        
-        transform.Rotate(new Vector3(-90, 0, 0));
+
+        transform.Translate(new Vector3(0, 0, 0.1f)); // Prevent overlapping.
+        transform.Rotate(new Vector3(-90, 0, 0)); // Make visible to the camera.
     }
 
     public void Start()
     {
-        _meshRenderer.material = Resources.Load("Materials/Sprite-Diffuse") as UnityEngine.Material;
+        _meshRenderer.material = Resources.Load("Materials/Terrain") as UnityEngine.Material;
     }
 
     public void Generate(int x, int z)

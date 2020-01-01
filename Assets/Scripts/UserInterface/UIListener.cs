@@ -20,7 +20,7 @@ public class UIListener : MonoBehaviour
 
     public void Update()
     {
-        HandleUIPopUps();
+        //HandleUIPopUps();
         HandleMenu();
         HandleChangeGameSpeed();
     }

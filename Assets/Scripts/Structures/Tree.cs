@@ -13,5 +13,6 @@ public class Tree : Structure
     {
         base.Start();
         SetParent("Trees");
+        transform.Rotate(new UnityEngine.Vector3(-90, 0, 0));
     }
 }

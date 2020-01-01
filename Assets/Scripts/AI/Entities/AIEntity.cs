@@ -19,9 +19,7 @@ public abstract class AIEntity : MonoBehaviour
     [Header("Resources")]
     [SerializeField] public int MaxInventorySize = 3;
 
-    [SerializeField]
-
-    public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>(); 
+    [SerializeField] public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>(); 
     //public static List<Transform> structures = new List<Transform>();
 
     public string CurrentTask = "NONE";
@@ -30,19 +28,17 @@ public abstract class AIEntity : MonoBehaviour
     public AITask Task { get; private set; }
 
     protected GameObject _world;
-    protected Rigidbody2D _rb;
+    protected Rigidbody _rb;
 
     public Base Base => Faction.Base;
 
     public void Init(int health = 1, int damage = 1)
     {
-
-
         foreach (Material resource in System.Enum.GetValues(typeof(Material)))
             Inventory.Add(resource, 0);
 
         _world = GameObject.Find("World");
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody>();
 
         if (StructureList.Count == 0)
         {
