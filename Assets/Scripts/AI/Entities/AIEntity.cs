@@ -90,7 +90,7 @@ public abstract class AIEntity : MonoBehaviour
     public bool AtTarget(Transform target)
     {
         _rb.drag = 1.6f;
-        return (target.position - this.transform.position).sqrMagnitude < _interactionRange * _interactionRange;
+        return (target.position - transform.position).sqrMagnitude < _interactionRange * _interactionRange;
     }
 
     private List<Transform> RetrieveList(string type)

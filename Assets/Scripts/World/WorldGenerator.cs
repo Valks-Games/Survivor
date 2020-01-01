@@ -82,7 +82,7 @@ public class WorldGenerator : MonoBehaviour
         };
 
         for (int i = 0; i < 5; i++)
-            Instantiate(_colonist, new Vector3(pos.x, 0.15f, pos.y), Quaternion.identity).SendMessage("InitFaction", faction);
+            Instantiate(_colonist, new Vector3(pos.x, 1, pos.y), Quaternion.identity).SendMessage("InitFaction", faction);
     }
 
     private Vector2 GetPoint(int i, int j)
