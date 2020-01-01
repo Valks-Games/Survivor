@@ -22,7 +22,7 @@ public partial class Colonist : ResourceGatherer<Colonist>
 }
 
 public partial class Colonist { 
-    private static GameObject? _prefab = null;
+    private static GameObject _prefab = null;
 
     public static Colonist New(string name = "Colonist", Vector3? location = null, Faction faction = null)
     {
