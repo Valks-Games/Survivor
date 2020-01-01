@@ -13,8 +13,8 @@ public abstract class AIEntity : MonoBehaviour
     [SerializeField] public bool Searching = true;
     [SerializeField] public bool IsAtTarget;
     [SerializeField] public int AxePower = 10;
-    [SerializeField] protected float _speed = 100.0f;
-    [SerializeField] protected float _interactionRange = 0.5f;
+    [SerializeField] protected float speed = 100.0f;
+    [SerializeField] protected float interactionRange = 0.5f;
 
     [Header("Resources")]
     [SerializeField] public int MaxInventorySize = 3;
@@ -27,8 +27,8 @@ public abstract class AIEntity : MonoBehaviour
 
     public AITask Task { get; private set; }
 
-    protected GameObject _world;
-    protected Rigidbody _rb;
+    protected GameObject world;
+    protected Rigidbody rb;
 
     public Base Base => Faction.Base;
 
@@ -37,8 +37,8 @@ public abstract class AIEntity : MonoBehaviour
         foreach (Material resource in System.Enum.GetValues(typeof(Material)))
             Inventory.Add(resource, 0);
 
-        _world = GameObject.Find("World");
-        _rb = GetComponent<Rigidbody>();
+        world = GameObject.Find("World");
+        rb = GetComponent<Rigidbody>();
 
         if (StructureList.Count == 0)
         {
@@ -83,21 +83,21 @@ public abstract class AIEntity : MonoBehaviour
         Vector3 direction = target.position - transform.position;
         direction.Normalize();
 
-        _rb.drag = 1.0f;
-        _rb.AddForce(direction * _speed * Time.deltaTime);
+        rb.drag = 1.0f;
+        rb.AddForce(direction * speed * Time.deltaTime);
     }
 
     public bool AtTarget(Transform target)
     {
-        _rb.drag = 1.6f;
-        return (target.position - transform.position).sqrMagnitude < _interactionRange * _interactionRange;
+        rb.drag = 1.6f;
+        return (target.position - transform.position).sqrMagnitude < interactionRange * interactionRange;
     }
 
     private List<Transform> RetrieveList(string type)
     {
         List<Transform> list = new List<Transform>();
 
-        foreach (Transform child in _world.transform.Find(type))
+        foreach (Transform child in world.transform.Find(type))
         {
             list.Add(child);
         }

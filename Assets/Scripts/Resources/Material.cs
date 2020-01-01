@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,21 +47,21 @@ public static class MaterialExtension
 
     public static string GetName(this Material material)
     {
-        return material.GetMaterialData().name;
+        return material.GetMaterialData().Name;
     }
 
     public static string GetDescription(this Material material)
     {
-        return material.GetMaterialData().description;
+        return material.GetMaterialData().Description;
     }
 
     public static float GetGatherTime(this Material material)
     {
-        return material.GetMaterialData().gatherTime;
+        return material.GetMaterialData().GatherTime;
     }
 
     public static string GetResourceSource(this Material material)
     {
-        return material.GetMaterialData().associatedStructure;
+        return material.GetMaterialData().AssociatedStructure;
     }
 }

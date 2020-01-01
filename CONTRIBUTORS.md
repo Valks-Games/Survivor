@@ -9,10 +9,9 @@ Note that you need to close Unity before committing changes to your fork.
 Always consult the leader of the project before introducing new concepts.
 
 ## C# Style
-- Private variables should start with a `_` and be camelCase.
+- Private variables should be camelCase.
 - Public variables should follow the PascalFormat
 - Methods should follow PascalFormat
-- Local variables do not need a `_` and should be camelCase.
 
 ### General Guidelines for Style
 - Do not remove informative comments.

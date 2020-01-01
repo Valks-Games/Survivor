@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Camera _cam;
-    private WorldGenerator _worldGenerator;
+    private Camera cam;
+    private WorldGenerator worldGenerator;
 
     public float SpeedPan = 3f;
     public float SpeedScroll = 10f;
@@ -14,13 +14,13 @@ public class CameraController : MonoBehaviour
     public float TrackingLerp = 0.02f;
     
 
-    private Transform _trackingTarget = null;
-    private Vector3 _dragOrigin;
+    private Transform trackingTarget = null;
+    private Vector3 dragOrigin;
 
-    private float _zoom = 0f;
-    private float _currentZoom = 0f;
+    private float zoom = 0f;
+    private float currentZoom = 0f;
 
-    private float _lastTimeClicked;
+    private float lastTimeClicked;
 
     public void Awake()
     {
@@ -30,9 +30,9 @@ public class CameraController : MonoBehaviour
 
     public void Start()
     {
-        _cam = GetComponent<Camera>();
-        _worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
-        _lastTimeClicked = Time.time;
+        cam = GetComponent<Camera>();
+        worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
+        lastTimeClicked = Time.time;
     }
 
     public void Update()
@@ -60,12 +60,12 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom(float inputScroll)
     {
-        _zoom += inputScroll;
-        _zoom = Mathf.Clamp(_zoom, 0f, 0.8f);
-        _currentZoom = Mathf.Lerp(_currentZoom, _zoom, ScrollLerp);
+        zoom += inputScroll;
+        zoom = Mathf.Clamp(zoom, 0f, 0.8f);
+        currentZoom = Mathf.Lerp(currentZoom, zoom, ScrollLerp);
 
         Vector3 pos = transform.position;
-        pos.y = 10 - _currentZoom * SpeedScroll;
+        pos.y = 10 - currentZoom * SpeedScroll;
         transform.position = pos; 
     }
 
@@ -75,14 +75,14 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            _dragOrigin = Input.mousePosition;
+            dragOrigin = Input.mousePosition;
 
             return;
         }
 
         if (!Input.GetMouseButton(0)) return;
 
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - _dragOrigin);
+        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
         Vector3 move = new Vector3(-pos.x * DragSpeed, -pos.y * DragSpeed, 0);
 
         transform.Translate(move, Space.World);
@@ -93,7 +93,7 @@ public class CameraController : MonoBehaviour
     private void HandleTracking(float inputHorz, float inputVert)
     {
         if (inputHorz != 0 || inputVert != 0)
-            _trackingTarget = null;
+            trackingTarget = null;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -105,26 +105,26 @@ public class CameraController : MonoBehaviour
             if (hit.collider != null)
             {
 
-                _trackingTarget = hit.collider.transform;
+                trackingTarget = hit.collider.transform;
                 StartCoroutine(SlowDownLerp());
-                _zoom = 0;
+                zoom = 0;
             }
         }
 
-        if (_trackingTarget != null)
-            transform.position = Vector3.Lerp(transform.position, new Vector3(_trackingTarget.position.x, _trackingTarget.position.y, -10), TrackingLerp);
+        if (trackingTarget != null)
+            transform.position = Vector3.Lerp(transform.position, new Vector3(trackingTarget.position.x, trackingTarget.position.y, -10), TrackingLerp);
     }
 
     private void HandleClicking()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Time.time - _lastTimeClicked < 0.2f)
+            if (Time.time - lastTimeClicked < 0.2f)
             {
                 //Double click logic here
             }
 
-            _lastTimeClicked = Time.time;
+            lastTimeClicked = Time.time;
         }
     }
 

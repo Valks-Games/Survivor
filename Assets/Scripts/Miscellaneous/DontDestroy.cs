@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
-    public static GameObject go;
+    public static GameObject Go; // <-- this should eventually be a list of some sorts to make it useful for more then one gameobject
 
     public void Awake()
     {
-        if (go == null)
+        if (Go == null)
         {
-            go = gameObject;
+            Go = gameObject;
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            if (go != this)
+            if (Go != this)
             {
                 Destroy(gameObject);
             }

@@ -6,16 +6,16 @@ public class UIListener : MonoBehaviour
 {
     public static float CurrentGameSpeed = 1f;
 
-    private bool _baseUICreated;
-    private GameObject _canvas;
-    private GameObject _menu;
-    private bool _menuActive;
+    private bool baseUICreated;
+    private GameObject canvas;
+    private GameObject menu;
+    private bool menuActive;
 
     public void Start()
     {
-        _canvas = GameObject.Find("World Canvas");
-        _menu = GameObject.Find("Menu");
-        _menu.SetActive(_menuActive);
+        canvas = GameObject.Find("World Canvas");
+        menu = GameObject.Find("Menu");
+        menu.SetActive(menuActive);
     }
 
     public void Update()
@@ -45,8 +45,8 @@ public class UIListener : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _menuActive = !_menuActive;
-            _menu.SetActive(_menuActive);
+            menuActive = !menuActive;
+            menu.SetActive(menuActive);
 
             if (Time.timeScale == 0)
             {
@@ -66,7 +66,7 @@ public class UIListener : MonoBehaviour
 
     private void HandleUIPopUps()
     {
-        if (_baseUICreated) return;
+        if (baseUICreated) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -75,11 +75,11 @@ public class UIListener : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.tag.Equals("Base") && !_baseUICreated)
+            if (hit.collider != null && hit.collider.tag.Equals("Base") && !baseUICreated)
             {
 
                 GameObject panel = Resources.Load("Prefabs/PanelBaseInfo") as GameObject;
-                GameObject panelGO = Instantiate(panel, _canvas.transform);
+                GameObject panelGO = Instantiate(panel, canvas.transform);
 
                 Debug.Log(panelGO.transform.childCount);
 
@@ -89,7 +89,7 @@ public class UIListener : MonoBehaviour
                 stone.GetComponent<TextMeshPro>().text = "Stone: " + 1;
                 wood.GetComponent<TextMeshPro>().text = "Wood: " + 1;
 
-                _baseUICreated = true;
+                baseUICreated = true;
             }
         }
     }
