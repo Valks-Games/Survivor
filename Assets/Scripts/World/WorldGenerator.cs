@@ -80,7 +80,7 @@ public class WorldGenerator : MonoBehaviour
         {
             Base = Instantiate(_base, new Vector3(pos.x, 0, pos.y), Quaternion.identity).GetComponent<Base>()
         };
-
+        //
         for (int i = 0; i < 5; i++)
             Instantiate(_colonist, new Vector3(pos.x, 1, pos.y), Quaternion.identity).SendMessage("InitFaction", faction);
     }
