@@ -22,23 +22,19 @@ public partial class Colonist : ResourceGatherer<Colonist>
 }
 
 public partial class Colonist { 
-    private static GameObject _prefab;
+    private static GameObject? _prefab = null;
 
     public static Colonist New(string name = "Colonist", Vector3? location = null, Faction faction = null)
     {
-        return Derive(name, location, faction).GetComponent<Colonist>();
-    }
+        if (_prefab == null)
+            _prefab = Resources.Load("Prefabs/Colonist") as GameObject;
 
-    public static GameObject Derive(string name = "Colonist", Vector3? location = null, Faction faction = null)
-    {
-        GameObject prefab = Resources.Load("Prefabs/Colonist") as GameObject;
-
-        Colonist colonist = (location == null ? Instantiate(prefab) : Instantiate(prefab, (Vector3)location, Quaternion.identity)).GetComponent<Colonist>();
+        Colonist colonist = (location == null ? Instantiate(_prefab) : Instantiate(_prefab, (Vector3)location, Quaternion.identity)).GetComponent<Colonist>();
 
         colonist.gameObject.name = name;
         colonist.Faction = faction;
         colonist.QueueTask(new GatherResourceTask<Colonist>(Material.Stone));
 
-        return colonist.gameObject;
+        return colonist;
     }
 }
