@@ -80,7 +80,7 @@ public abstract class AIEntity : MonoBehaviour
 
     public void WalkTowardsTarget(Transform target)
     {
-        Vector2 direction = target.position - transform.position;
+        Vector3 direction = target.position - transform.position;
         direction.Normalize();
 
         _rb.drag = 1.0f;
@@ -109,12 +109,12 @@ public abstract class AIEntity : MonoBehaviour
     {
         Transform closestTransform = null;
         float minDist = Mathf.Infinity;
-        Vector2 currentPos = transform.position;
+        Vector3 currentPos = transform.position;
         foreach (Transform t in targets)
         {
             if (t.gameObject.GetComponent<AIEntity>().Faction == Faction)
             {
-                float dist = Vector2.Distance(t.position, currentPos);
+                float dist = Vector3.Distance(t.position, currentPos);
                 if (dist < minDist)
                 {
                     closestTransform = t;

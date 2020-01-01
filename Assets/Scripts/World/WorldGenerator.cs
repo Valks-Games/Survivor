@@ -78,11 +78,11 @@ public class WorldGenerator : MonoBehaviour
     {
         Faction faction = new Faction("Faction!")
         {
-            Base = Instantiate(_base, new Vector2(pos.x, pos.y), Quaternion.identity).GetComponent<Base>()
+            Base = Instantiate(_base, new Vector3(pos.x, 0, pos.y), Quaternion.identity).GetComponent<Base>()
         };
 
         for (int i = 0; i < 5; i++)
-            Instantiate(_colonist, new Vector2(pos.x, pos.y), Quaternion.identity).SendMessage("InitFaction", faction);
+            Instantiate(_colonist, new Vector3(pos.x, 0.15f, pos.y), Quaternion.identity).SendMessage("InitFaction", faction);
     }
 
     private Vector2 GetPoint(int i, int j)
@@ -101,7 +101,7 @@ public class WorldGenerator : MonoBehaviour
     {
         if (theObject != null)
          {
-            Instantiate(theObject, new Vector2(x, y), Quaternion.identity);
+            Instantiate(theObject, new Vector3(x, 0, y), Quaternion.identity);
          }
     }
 

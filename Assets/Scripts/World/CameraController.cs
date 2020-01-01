@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
 
     private void HandleMoveKeys(float inputHorz, float inputVert)
     {
-        transform.position += new Vector3(inputHorz * SpeedPan * Time.deltaTime, inputVert * SpeedPan * Time.deltaTime, 0);
+        transform.position += new Vector3(inputHorz * SpeedPan * Time.deltaTime, 0, inputVert * SpeedPan * Time.deltaTime);
     }
 
     private void HandleZoom(float inputScroll)
@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
         _currentZoom = Mathf.Lerp(_currentZoom, _zoom, ScrollLerp);
 
         Vector3 pos = transform.position;
-        pos.z = -10 + _currentZoom * SpeedScroll;
+        pos.y = 10 - _currentZoom * SpeedScroll;
         transform.position = pos; 
     }
 

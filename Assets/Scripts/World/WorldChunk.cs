@@ -13,9 +13,6 @@ public class WorldChunk : MonoBehaviour
     {
         _mesh = GetComponent<MeshFilter>().mesh;
         _meshRenderer = GetComponent<MeshRenderer>();
-
-        transform.Translate(new Vector3(0, 0, 0.1f)); // Prevent overlapping.
-        transform.Rotate(new Vector3(-90, 0, 0)); // Make visible to the camera.
     }
 
     public void Start()
