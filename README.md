@@ -20,7 +20,7 @@ If you have any of the following skills then this project may be for you.
 
 If you're interested please talk to me on discord at **valk#3277**.
 
-See [CONTRIBUTORS.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTORS.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
+See [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
 
 ## Preview
 ![Preview](preview2.gif)
