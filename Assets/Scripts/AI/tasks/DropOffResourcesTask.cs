@@ -1,43 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WorldAPI.Items;
 
-public class DropOffResourcesTask : AITask
+public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGatherer<T>
 {
-    public DropOffResourcesTask(AIEntity entity) : base(entity, "Bases", "DropOffResources")
+    public DropOffResourcesTask() : base("Bases", "DropOffResources")
     {
 
     }
 
-    public override IEnumerator RunTask()
+    protected override IEnumerator Run()
     {
+        yield return TaskLoop();
         yield return new WaitForSeconds(1);
 
-        List<Material> keys = new List<Material>(Entity.Inventory.Keys);
+        List<Item> keys = new List<Item>(Target.Inventory.Items.Keys);
 
         foreach (Material key in keys)
         {
-            Entity.Base.DepositResource(key, Entity.Inventory[key]);
-            Entity.Inventory[key] = 0;
+            Target.Base.DepositResource(key, Target.Inventory.Items[key]);
+            Target.Inventory.Items[key] = 0;
         }
 
-        if (!Entity.Base.CanUpgrade)
+        if (Target.Base.CanUpgrade)
         {
-            Dictionary<Material, int> reqResources = Entity.Base.ResourcesRequired;
-
-            if (reqResources[Material.Wood] > reqResources[Material.Stone])
-            {
-                Entity.AssignTask(new GatherResourceTask(Entity, Material.Wood));
-            }
-            else
-            {
-                Entity.AssignTask(new GatherResourceTask(Entity, Material.Stone));
-            }
+            Target.Base.Upgrade();
+            Target.QueueTask(new DropOffResourcesTask<T>());
+            yield break;
         }
+        
+        Dictionary<Material, int> reqResources = Target.Base.ResourcesRequired;
+
+        if (reqResources[Material.Wood] > reqResources[Material.Stone])
+            Target.QueueTask(new GatherResourceTask<T>(Material.Wood));
         else
-        {
-            Entity.Base.Upgrade();
-            Entity.AssignTask(new DropOffResourcesTask(Entity));
-        }
+            Target.QueueTask(new GatherResourceTask<T>(Material.Stone));
+
+        Target.TargetStructure.GetComponent<Structure>().Workers--;
     }
 }

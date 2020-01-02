@@ -4,7 +4,6 @@ using UnityEngine;
 public class WorldGenerator : MonoBehaviour
 {
     [HideInInspector] public static GameObject prefabTree { get; private set; }
-    [HideInInspector] public static GameObject prefabColonist { get; private set; }
     [HideInInspector] public static GameObject prefabRock { get; private set; }
     [HideInInspector] public static GameObject prefabBase { get; private set; }
 
@@ -18,7 +17,6 @@ public class WorldGenerator : MonoBehaviour
     public void Awake()
     {
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
-        prefabColonist = Resources.Load("Prefabs/Colonist") as GameObject;
         prefabRock = Resources.Load("Prefabs/Rock") as GameObject;
         prefabBase = Resources.Load("Prefabs/Base") as GameObject;
     }
@@ -46,19 +44,22 @@ public class WorldGenerator : MonoBehaviour
 
     private void AddFactions(float minDistance)
     {
-        foreach (Vector2 point in PoissonDiscSampling.Generate(minDistance, new Vector2(Columns, Rows)))
-            AddFaction(new Vector2((int)point.y, (int)point.x));
+        foreach (Vector3 point in PoissonDiscSampling.Generate(minDistance, new Vector2(Columns, Rows)))
+            AddFaction(point);
     }
 
-    private void AddFaction(Vector2 pos)
+    private void AddFaction(Vector3 pos)
     {
         Faction faction = new Faction("Faction!")
         {
-            Base = Instantiate(prefabBase, new Vector3(pos.x, 0, pos.y), Quaternion.identity).GetComponent<Base>()
+            Base = Instantiate(prefabBase, pos, Quaternion.identity).GetComponent<Base>()
         };
 
         for (int i = 0; i < 5; i++)
-            Instantiate(prefabColonist, new Vector3(pos.x, 1, pos.y), Quaternion.identity).SendMessage("InitFaction", faction);
+            Colonist.New(
+                location: pos,
+                faction: faction
+            );
     }
 
     private Vector2 GetPoint(int i, int j)

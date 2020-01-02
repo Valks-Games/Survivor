@@ -22,11 +22,8 @@ public class Base : Structure
 
     public override void Start()
     {
-        foreach (Material resource in Enum.GetValues(typeof(Material)))
-        {
+        foreach (Material resource in Material.Values)
             Resources.Add(resource, 0);
-        }
-
 
         base.Start();
         SetParent("Bases");
@@ -35,7 +32,7 @@ public class Base : Structure
     public void DepositResource(Material type, int amount)
     {
         Resources[type] += amount;
-        GameObject.Find(type.ToString().ToLower().ToTitleCase()).GetComponent<Text>().text = "" + type.ToString().ToLower().ToTitleCase() + ": " + Resources[type];
+        GameObject.Find(type.Name.ToLower().ToTitleCase()).GetComponent<Text>().text = "" + type.Name.ToLower().ToTitleCase() + ": " + Resources[type];
     }
 
     public void Upgrade()
