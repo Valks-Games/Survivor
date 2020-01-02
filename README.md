@@ -3,7 +3,7 @@
 
 ## About
 ### Description
-Forage and explore infinite procedurally generated worlds.
+Forage and explore infinite procedurally generated worlds in a unique RTS experience.
 
 ### Lore
 You crashland on the surface of a planet. You have nothing, you're alone, what do you do?
@@ -25,7 +25,7 @@ If you're interested please talk to **valk#3277** through Discord.
 See [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
 
 ## Roadmap
-- [x] 3 Dimentional World
+- [x] 3 Dimensional World
 - [ ] Custom/Better 3D Graphics
   - [ ] Blender Animations
 - [ ] Character Customization
