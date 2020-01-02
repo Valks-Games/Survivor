@@ -1,8 +1,10 @@
 # Survivor
 ## About
-A 2D Unity Game with a current heavy focus on a job management system. Workers collect resources and bring them back to the base. The player will start off with a colony of their own aside many other colonies foe, neutral or ally. They will be able to manage colonists jobs and control their movement manually if they want.
+### Description
+Forage and explore infinite procedurally generated worlds.
 
-There are future plans for enemy AI, combat mechanics, world fog mechanics, procedural world generation, walking mechs / vehicles, more structures such as barracks / research labs / storage buildings, economy systems, trade routes, and potentially multiplayer support.
+### Lore
+You crashland on the surface of a planet. You have nothing, you're alone, what do you do?
 
 ## Setup
 The project is currently on Unity version `2019.3.0f3`. Clone the project, add it to Unity's Hub and launch it.
@@ -12,13 +14,11 @@ See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
 
 ## Contributing
 If you have any of the following skills then this project may be for you.
-- Basic Knowledge of C#
-- Debugging with VS / Unity's Profiler
-- Extensive Knowledge of the Unity's new Low Level Multiplayer API
-- Pixel Art
+- Unity Scripting
+- 3D Modeling
 - Music / SFX
 
-If you're interested please talk to me on discord at **valk#3277**.
+If you're interested please talk to **valk#3277** through Discord.
 
 See [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
 
