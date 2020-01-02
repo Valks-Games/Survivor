@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Structure : WorldAPI.Structures.Structure
+public class Structure : MonoBehaviour
 {
     private GameObject _world;
     public int Resource { get; private set; } = 3;

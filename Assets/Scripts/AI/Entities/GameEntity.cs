@@ -7,7 +7,6 @@ using System;
 public abstract class GameEntity<T> : Entity<T> where T: GameEntity<T>
 {
     public Transform TargetStructure;
-    public new readonly Dictionary<Material, int> Inventory = new Dictionary<Material, int>();
 
     public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>();
 
@@ -18,7 +17,7 @@ public abstract class GameEntity<T> : Entity<T> where T: GameEntity<T>
         base.Start();
 
         foreach (Material resource in Material.Values)
-            Inventory.Add(resource, 0);
+            Inventory.Items.Add(resource, 0);
 
         _world = GameObject.Find("World");
 
