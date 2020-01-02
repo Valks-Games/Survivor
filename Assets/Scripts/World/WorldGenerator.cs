@@ -1,14 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
+    [HideInInspector] public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>();
+
     [HideInInspector] public static GameObject prefabTree { get; private set; }
     [HideInInspector] public static GameObject prefabRock { get; private set; }
     [HideInInspector] public static GameObject prefabBase { get; private set; }
 
     [HideInInspector] public GameObject[,] Grid;
-    [HideInInspector] public bool GeneratingWorld = true;
+    [HideInInspector] public static bool GeneratingWorld = true;
 
     [HideInInspector] public const int Columns = 100;
     [HideInInspector] public const int Rows = 100;
@@ -26,7 +29,27 @@ public class WorldGenerator : MonoBehaviour
         GenerateSpawn(1);
         AddFaction(GetPoint(Rows / 2, Columns / 2)); // Temp
         //AddFactions(BaseMinimumDistance);
+
+        if (StructureList.Count == 0)
+        {
+            StructureList.Add("Trees", RetrieveList("Trees"));
+            StructureList.Add("Rocks", RetrieveList("Rocks"));
+            StructureList.Add("Bases", RetrieveList("Bases"));
+
+            Debug.Log(StructureList["Trees"].Count);
+        }
+
         GeneratingWorld = false;
+    }
+
+    private List<Transform> RetrieveList(string type)
+    {
+        List<Transform> list = new List<Transform>();
+
+        foreach (Transform child in transform.Find(type))
+            list.Add(child);
+
+        return list;
     }
 
     public void GenerateSpawn(int size)
@@ -65,11 +88,5 @@ public class WorldGenerator : MonoBehaviour
     private Vector2 GetPoint(int i, int j)
     {
         return new Vector2(i - Columns / 2, j - Rows / 2);
-    }
-
-    private IEnumerator WaitForWorldGeneration()
-    {
-        while (GeneratingWorld)
-            yield return new WaitForSeconds(0.05f);
     }
 }

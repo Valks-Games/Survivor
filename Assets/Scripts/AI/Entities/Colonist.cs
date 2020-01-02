@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using WorldAPI.Tasks.Generic;
 
@@ -12,12 +13,21 @@ public partial class Colonist : ResourceGatherer<Colonist>
 
         Damage = 1 + Random.Range(0, 3);
 
-        QueueTask(new IdleTask<Colonist>());
+        StartCoroutine(WaitForWorldGeneration());
     }
 
     public new void Update()
     {
         base.Update();
+    }
+
+    private IEnumerator WaitForWorldGeneration() {
+        if (WorldGenerator.GeneratingWorld)
+        {
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        QueueTask(new IdleTask<Colonist>());
     }
 }
 
