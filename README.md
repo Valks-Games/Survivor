@@ -1,4 +1,6 @@
 # Survivor
+![Preview](preview2.gif)
+
 ## About
 ### Description
 Forage and explore infinite procedurally generated worlds.
@@ -22,5 +24,13 @@ If you're interested please talk to **valk#3277** through Discord.
 
 See [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
 
-## Preview
-![Preview](preview2.gif)
+## Roadmap
+- [x] 3 Dimentional World
+- [ ] Custom/Better 3D Graphics
+  - [ ] Blender Animations
+- [ ] Character Customization
+- [ ] Infinite & Better World Generation
+- [ ] Entity Equipment & Interaction
+  - [ ] Commanding & Selecting Units
+- [ ] Factions & Faction Relations
+- [ ] Sound Effects & Game Music
