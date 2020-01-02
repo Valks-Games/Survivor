@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WorldAPI.Items;
 
 public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGatherer<T>
 {
@@ -14,12 +15,12 @@ public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGather
         yield return TaskLoop();
         yield return new WaitForSeconds(1);
 
-        List<Material> keys = new List<Material>(Target.Inventory.Keys);
+        List<Item> keys = new List<Item>(Target.Inventory.Items.Keys);
 
         foreach (Material key in keys)
         {
-            Target.Base.DepositResource(key, Target.Inventory[key]);
-            Target.Inventory[key] = 0;
+            Target.Base.DepositResource(key, Target.Inventory.Items[key]);
+            Target.Inventory.Items[key] = 0;
         }
 
         if (Target.Base.CanUpgrade)

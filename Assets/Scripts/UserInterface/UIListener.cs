@@ -66,7 +66,7 @@ public class UIListener : MonoBehaviour
 
     private void HandleUIPopUps()
     {
-        if (_baseUICreated)
+        if (baseUICreated)
             return;
 
         if (Input.GetMouseButtonDown(0))
@@ -76,9 +76,9 @@ public class UIListener : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
 
-            if (hit.collider != null && hit.collider.CompareTag("Base") && !_baseUICreated)
+            if (hit.collider != null && hit.collider.CompareTag("Base") && !baseUICreated)
             {
-                GameObject panel = Instantiate(Resources.Load("Prefabs/PanelBaseInfo") as GameObject, _canvas.transform);
+                GameObject panel = Instantiate(Resources.Load("Prefabs/PanelBaseInfo") as GameObject, canvas.transform);
 
                 Transform stone = panel.transform.Find("Stone");
                 Transform wood = panel.transform.Find("Wood");

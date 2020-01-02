@@ -44,20 +44,20 @@ public class WorldGenerator : MonoBehaviour
 
     private void AddFactions(float minDistance)
     {
-        foreach (Vector2 point in PoissonDiscSampling.Generate(minDistance, new Vector2(Columns, Rows)))
-            AddFaction(new Vector2((int)point.y, (int)point.x));
+        foreach (Vector3 point in PoissonDiscSampling.Generate(minDistance, new Vector2(Columns, Rows)))
+            AddFaction(point);
     }
 
-    private void AddFaction(Vector2 pos)
+    private void AddFaction(Vector3 pos)
     {
         Faction faction = new Faction("Faction!")
         {
-            Base = Instantiate(prefabBase, new Vector3(pos.x, 0, pos.y), Quaternion.identity).GetComponent<Base>()
+            Base = Instantiate(prefabBase, pos, Quaternion.identity).GetComponent<Base>()
         };
 
         for (int i = 0; i < 5; i++)
             Colonist.New(
-                location: GetPoint(y, x),
+                location: pos,
                 faction: faction
             );
     }

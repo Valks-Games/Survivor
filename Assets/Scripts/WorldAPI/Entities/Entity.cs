@@ -19,11 +19,11 @@ namespace WorldAPI.Entities
 
         public readonly Inventory Inventory = new Inventory(maxSize: 3);
 
-        protected Rigidbody2D _rb;
+        protected Rigidbody _rb;
 
         public void Start()
         {
-            _rb = GetComponent<Rigidbody2D>();
+            _rb = GetComponent<Rigidbody>();
         }
 
         public void Update()

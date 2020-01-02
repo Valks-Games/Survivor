@@ -24,7 +24,7 @@ public abstract class StructureTask<T> : GameTask<T> where T: FactionMember<T>
         }
 
         Target.TargetStructure.GetComponent<Structure>().Workers++;
-        Target.WalkTowards(Target.TargetStructure);
+        Target.MoveTowards(Target.TargetStructure);
 
         while (!Target.IsAt(Target.TargetStructure))
             yield return new WaitForSeconds(0.1f);

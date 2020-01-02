@@ -13,7 +13,7 @@ public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<
     protected override IEnumerator Run()
     {
         yield return TaskLoop();
-        yield return new WaitForSeconds(_type.GatherTime);
+        yield return new WaitForSeconds(type.GatherTime);
 
         if (Target.TargetStructure == null)
         {
@@ -22,10 +22,10 @@ public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<
         }
         
         Structure structureComponent = Target.TargetStructure.gameObject.GetComponent<Structure>();
-        Target.Inventory.Items[_type] += structureComponent.GatherResource(Target.AxePower, Target.Inventory.Items[_type], Target.Inventory.MaxSize);
+        Target.Inventory.Items[type] += structureComponent.GatherResource(Target.AxePower, Target.Inventory.Items[type], Target.Inventory.MaxSize);
 
-        if (Target.Inventory.Items[_type] < Target.Inventory.MaxSize)
-            Target.QueueTask(new GatherResourceTask<T>(_type));
+        if (Target.Inventory.Items[type] < Target.Inventory.MaxSize)
+            Target.QueueTask(new GatherResourceTask<T>(type));
         else
             Target.QueueTask(new DropOffResourcesTask<T>());
 
