@@ -6,21 +6,21 @@ public class UIListener : MonoBehaviour
 {
     public static float CurrentGameSpeed = 1f;
 
-    private bool _baseUICreated;
-    private GameObject _canvas;
-    private GameObject _menu;
-    private bool _menuActive;
+    private bool baseUICreated;
+    private GameObject canvas;
+    private GameObject menu;
+    private bool menuActive;
 
     public void Start()
     {
-        _canvas = GameObject.Find("World Canvas");
-        _menu = GameObject.Find("Menu");
-        _menu.SetActive(_menuActive);
+        canvas = GameObject.Find("World Canvas");
+        menu = GameObject.Find("Menu");
+        menu.SetActive(menuActive);
     }
 
     public void Update()
     {
-        HandleUIPopUps();
+        //HandleUIPopUps();
         HandleMenu();
         HandleChangeGameSpeed();
     }
@@ -45,8 +45,8 @@ public class UIListener : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            _menuActive = !_menuActive;
-            _menu.SetActive(_menuActive);
+            menuActive = !menuActive;
+            menu.SetActive(menuActive);
 
             if (Time.timeScale == 0)
             {
@@ -86,7 +86,7 @@ public class UIListener : MonoBehaviour
                 stone.GetComponent<TextMeshPro>().text = "Stone: " + 1;
                 wood.GetComponent<TextMeshPro>().text = "Wood: " + 1;
 
-                _baseUICreated = true;
+                baseUICreated = true;
             }
         }
     }

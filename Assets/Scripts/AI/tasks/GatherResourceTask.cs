@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<T>
 {
-    private readonly Material _type;
+    private readonly Material type;
 
     public GatherResourceTask(Material type) : base(type.AssociatedStructure, "GatherResource")
     {
-        _type = type;
+        this.type = type;
     }
 
     protected override IEnumerator Run()

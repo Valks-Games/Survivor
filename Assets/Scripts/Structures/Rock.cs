@@ -1,6 +1,6 @@
 public class Rock : Structure
 {
-    public string te;
+    public string te; // <-- what is this?
 
     public static int id = 0;
 
