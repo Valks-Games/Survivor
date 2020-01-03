@@ -145,7 +145,7 @@ public class Options : MonoBehaviour
 
     private string ResolutionToString(Resolution res)
     {
-        return res.width + " x " + res.height;
+        return res.width + " x " + res.height + " (" + res.refreshRate + " Hz)";
     }
 
     private void InitializeValues()
