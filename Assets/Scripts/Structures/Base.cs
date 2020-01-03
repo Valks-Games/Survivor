@@ -26,7 +26,6 @@ public class Base : Structure
             Resources.Add(resource, 0);
 
         base.Start();
-        SetParent("Bases");
     }
 
     public void DepositResource(Material type, int amount)

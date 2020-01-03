@@ -12,6 +12,6 @@ public class Tree : Structure
     public override void Start()
     {
         base.Start();
-        SetParent("Trees");
+        
     }
 }

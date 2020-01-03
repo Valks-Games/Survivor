@@ -5,6 +5,7 @@ using UnityEngine;
 public class WorldGenerator : MonoBehaviour
 {
     [HideInInspector] public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>();
+    [HideInInspector] public static GameObject World;
 
     [HideInInspector] public static GameObject prefabTree { get; private set; }
     [HideInInspector] public static GameObject prefabRock { get; private set; }
@@ -22,6 +23,7 @@ public class WorldGenerator : MonoBehaviour
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
         prefabRock = Resources.Load("Prefabs/Rock") as GameObject;
         prefabBase = Resources.Load("Prefabs/Base") as GameObject;
+        World = gameObject;
     }
 
     public void Start()
@@ -35,8 +37,6 @@ public class WorldGenerator : MonoBehaviour
             StructureList.Add("Trees", RetrieveList("Trees"));
             StructureList.Add("Rocks", RetrieveList("Rocks"));
             StructureList.Add("Bases", RetrieveList("Bases"));
-
-            Debug.Log(StructureList["Trees"].Count);
         }
 
         GeneratingWorld = false;
@@ -46,7 +46,9 @@ public class WorldGenerator : MonoBehaviour
     {
         List<Transform> list = new List<Transform>();
 
-        foreach (Transform child in transform.Find(type))
+        Transform parent = transform.Find(type);
+
+        foreach (Transform child in parent)
             list.Add(child);
 
         return list;

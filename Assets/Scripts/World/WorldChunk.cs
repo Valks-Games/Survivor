@@ -80,11 +80,13 @@ public class WorldChunk : MonoBehaviour
                 {
                     if (Random.Range(0f, 1f) < 0.5f)
                     {
-                        Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                        GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                        go.transform.parent = WorldGenerator.World.transform.Find("Trees");
                     }
                     else
                     {
-                        Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                        GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                        go.transform.parent = WorldGenerator.World.transform.Find("Rocks");
                     }
                 }
             }

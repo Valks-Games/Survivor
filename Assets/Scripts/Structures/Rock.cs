@@ -14,6 +14,5 @@ public class Rock : Structure
     public override void Start()
     {
         base.Start();
-        SetParent("Rocks");
     }
 }

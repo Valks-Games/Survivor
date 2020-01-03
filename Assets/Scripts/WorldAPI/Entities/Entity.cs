@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using WorldAPI.Items;
 using WorldAPI.Tasks;
@@ -38,6 +38,8 @@ namespace WorldAPI.Entities
             {
                 _rb.drag = WalkDrag;
                 _rb.AddForce(((Vector3)Target - transform.position).normalized * Speed * Time.deltaTime);
+                Vector3 newDir = Vector3.RotateTowards(transform.position, (Vector3) Target, Speed * Time.deltaTime, 0.0f);
+                transform.rotation = Quaternion.LookRotation(newDir);
 
                 return;
             }
