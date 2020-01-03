@@ -1,20 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 namespace WorldAPI.Tasks.Generic
 {
     public class WaitTask<T> : Task<T> where T : ITaskRunner<T>
     {
-        private readonly float _delay;
+        private readonly float delay;
 
         public WaitTask(float delay)
         {
-            _delay = delay;
+            delay = delay;
         }
 
         protected override IEnumerator Run()
         {
-            yield return new WaitForSeconds(_delay);
+            yield return new WaitForSeconds(delay);
         }
     }
 }

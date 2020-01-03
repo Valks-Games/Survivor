@@ -19,11 +19,11 @@ namespace WorldAPI.Entities
 
         public readonly Inventory Inventory = new Inventory(maxSize: 3);
 
-        protected Rigidbody _rb;
+        protected Rigidbody rb;
 
         public void Start()
         {
-            _rb = GetComponent<Rigidbody>();
+            rb = GetComponent<Rigidbody>();
         }
 
         public void Update()
@@ -36,15 +36,15 @@ namespace WorldAPI.Entities
         {
             if (Target != null && !IsAt((Vector3)Target))
             {
-                _rb.drag = WalkDrag;
-                _rb.AddForce(((Vector3)Target - transform.position).normalized * Speed * Time.deltaTime);
+                rb.drag = WalkDrag;
+                rb.AddForce(((Vector3)Target - transform.position).normalized * Speed * Time.deltaTime);
                 Vector3 newDir = Vector3.RotateTowards(transform.position, (Vector3) Target, Speed * Time.deltaTime, 0.0f);
                 transform.rotation = Quaternion.LookRotation(newDir);
 
                 return;
             }
             
-            _rb.drag = HaltDrag;
+            rb.drag = HaltDrag;
             Target = null;
         }
 
