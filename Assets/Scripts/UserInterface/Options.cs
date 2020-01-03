@@ -127,7 +127,23 @@ public class Options : MonoBehaviour
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            dropdownResolutions.options.Add(new Dropdown.OptionData(ResolutionToString(resolutions[i])));
+            Resolution res = resolutions[i];
+            int refreshRate = res.refreshRate;
+
+            // Listing all the refresh rates can become really messy for some users.
+            switch (refreshRate)
+            {
+                case 30:
+                case 60:
+                case 120:
+                case 144:
+                case 160:
+                case 240:
+                    dropdownResolutions.options.Add(new Dropdown.OptionData(ResolutionToString(res)));
+                    break;
+                default:
+                    break;
+            }
         }
 
         dropdownResolutions.value = dropdownResolutionIndex == -1 ? resolutions.Length : dropdownResolutionIndex;
