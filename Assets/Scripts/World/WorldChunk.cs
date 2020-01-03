@@ -7,6 +7,7 @@ public class WorldChunk : MonoBehaviour
     private MeshRenderer meshRenderer;
 
     private Vector3[] vertices;
+    private Vector2[] uvs;
     private int[] triangles;
 
     private readonly float cellSize = 0.25f;
@@ -25,15 +26,16 @@ public class WorldChunk : MonoBehaviour
 
     public void Start()
     {
-        meshRenderer.material = Resources.Load("Materials/Terrain") as UnityEngine.Material;
+        meshRenderer.material = Resources.Load("Materials/Texture") as UnityEngine.Material;
     }
 
     public void Generate(int chunkX, int chunkZ)
     {
         // Discrete Procedural Grid (2 vertices are never shared)
         Vector3 renderOffset = new Vector3(chunkX * chunkSize * cellSize, 0, chunkZ * chunkSize * cellSize);
-
+        
         vertices = new Vector3[chunkSize * chunkSize * 4];
+        uvs = new Vector2[vertices.Length];
         triangles = new int[chunkSize * chunkSize * 6];
 
         int v = 0;
@@ -62,9 +64,40 @@ public class WorldChunk : MonoBehaviour
             }
         }
 
+        //uvs = SpriteLoader.Instance.GetTileUVs("Tex_1");
+
         UpdateMesh();
 
         InstantiateEntities(chunkX, chunkZ);
+    }
+
+    private void UpdateMesh()
+    {
+        mesh.Clear();
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+
+        //Vector2[] texTest = SpriteLoader.Instance.GetTileUVs("Tex_1");
+        Vector2[] tex1 = new Vector2[]
+        {
+            new Vector2(0.0f, 1.0f), //TopLeft
+            new Vector2(0.0f, 0.5f), //BottomLeft
+            new Vector2(0.5f, 1.0f), //TopRight
+            new Vector2(0.5f, 0.5f)  //BottomRight
+        };
+
+        int k = 0;
+        for (int g = 0; g < vertices.Length / 4; g++) {
+            for (int i = 0; i < tex1.Length; i++)
+            {
+                uvs[i + k] = tex1[i];
+            }
+            k += 4;
+        }
+
+        mesh.uv = uvs;
+        
+        mesh.RecalculateNormals();
     }
 
     private void InstantiateEntities(int chunkX, int chunkZ)
@@ -91,13 +124,5 @@ public class WorldChunk : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void UpdateMesh()
-    {
-        mesh.Clear();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.RecalculateNormals();
     }
 }
