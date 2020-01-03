@@ -9,7 +9,7 @@ namespace WorldAPI.Tasks.Generic
 
         public IdleTask(float tick = 0.1f)
         {
-            tick = tick;
+            this.tick = tick;
         }
 
         protected override IEnumerator Run()

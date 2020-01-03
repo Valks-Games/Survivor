@@ -9,7 +9,7 @@ namespace WorldAPI.Tasks.Generic
 
         public WaitTask(float delay)
         {
-            delay = delay;
+            this.delay = delay;
         }
 
         protected override IEnumerator Run()

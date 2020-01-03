@@ -49,6 +49,7 @@ public class Options : MonoBehaviour
     private Slider sliderSensitivityPan;
     private Slider sliderSensitivityZoom;
 
+    private Toggle toggleFullscreen;
     private Toggle toggleVignette;
     private Toggle toggleBloom;
     private Toggle toggleVSync;
@@ -56,8 +57,12 @@ public class Options : MonoBehaviour
     private Dropdown dropdownResolutions;
     private Dropdown dropdownQuality;
 
+    private Color menuColor;
+
     public void Start()
     {
+        menuColor = new Color32(255, 105, 180, 255); // Default Color
+
         goPostProcessing = DontDestroy.Go;
 
         if (goPostProcessing != null)
@@ -107,6 +112,9 @@ public class Options : MonoBehaviour
         // VSync
         toggleVSync = GameObject.Find("ToggleVSync").GetComponent<Toggle>();
 
+        // Fullscreen
+        toggleFullscreen = GameObject.Find("ToggleFullscreen").GetComponent<Toggle>();
+
         // Camera
         sliderSensitivityPan = GameObject.Find("SliderSensitivityPan").GetComponent<Slider>();
         sliderSensitivityZoom = GameObject.Find("SliderSensitivityZoom").GetComponent<Slider>();
@@ -130,20 +138,7 @@ public class Options : MonoBehaviour
             Resolution res = resolutions[i];
             int refreshRate = res.refreshRate;
 
-            // Listing all the refresh rates can become really messy for some users.
-            switch (refreshRate)
-            {
-                case 30:
-                case 60:
-                case 120:
-                case 144:
-                case 160:
-                case 240:
-                    dropdownResolutions.options.Add(new Dropdown.OptionData(ResolutionToString(res)));
-                    break;
-                default:
-                    break;
-            }
+            dropdownResolutions.options.Add(new Dropdown.OptionData(ResolutionToString(res)));
         }
 
         dropdownResolutions.value = dropdownResolutionIndex == -1 ? resolutions.Length : dropdownResolutionIndex;
@@ -170,30 +165,49 @@ public class Options : MonoBehaviour
             return;
 
         // Bloom
-        toggleBloom.isOn = ppBloom.enabled.value;
-        sliderBloom.interactable = toggleBloom.isOn;
-        sliderBloom.value = ppBloom.intensity.value;
+        OptionToggle optionToggleBloom = new OptionToggle(toggleBloom, menuColor);
+        optionToggleBloom.Instance.isOn = ppBloom.enabled.value;
+
+        OptionSlider optionSliderBloom = new OptionSlider(sliderBloom, menuColor);
+        optionSliderBloom.Instance.value = ppBloom.intensity.value;
+        optionSliderBloom.Instance.interactable = toggleBloom.isOn;
 
         // Volume
-        sliderVolumeMusic.value = audioMenuMusic.volume;
-        sliderVolumeSFX.value = VolumeSFX;
+        OptionSlider optionSliderVolumeMusic = new OptionSlider(sliderVolumeMusic, menuColor);
+        optionSliderVolumeMusic.Instance.value = audioMenuMusic.volume;
+
+        OptionSlider optionSliderVolumeSFX = new OptionSlider(sliderVolumeSFX, menuColor);
+        optionSliderVolumeSFX.Instance.value = VolumeSFX;
 
         // Vignette
-        toggleVignette.isOn = ppVignette.enabled.value;
-        sliderVignette.value = ppVignette.intensity.value;
+        OptionToggle optionToggleVignette = new OptionToggle(toggleVignette, menuColor);
+        optionToggleVignette.Instance.isOn = ppVignette.enabled.value;
+
+        OptionSlider optionSliderVignette = new OptionSlider(sliderVignette, menuColor);
+        optionSliderVignette.Instance.value = ppVignette.intensity.value;
 
         // VSync
-        toggleVSync.isOn = QualitySettings.vSyncCount == 0 ? false : true;
+        OptionToggle optionToggleVSync = new OptionToggle(toggleVSync, menuColor);
+        optionToggleVSync.Instance.isOn = QualitySettings.vSyncCount == 0 ? false : true;
+
+        // Fullscreen
+        OptionToggle optionToggleFullscreen = new OptionToggle(toggleFullscreen, menuColor);
+        optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
 
         // Camera
-        sliderSensitivityPan.value = SensitivityPan;
-        sliderSensitivityZoom.value = SensitivityZoom;
+        OptionSlider optionSliderSensitivityPan = new OptionSlider(sliderSensitivityPan, menuColor);
+        optionSliderSensitivityPan.Instance.value = SensitivityPan;
+
+        OptionSlider optionSliderSenitivityZoom = new OptionSlider(sliderSensitivityZoom, menuColor);
+        optionSliderSenitivityZoom.Instance.value = SensitivityZoom;
 
         // Resolutions
-        dropdownResolutions.value = dropdownResolutionIndex;
+        OptionDropdown optionDropdownResolutions = new OptionDropdown(dropdownResolutions, menuColor);
+        optionDropdownResolutions.Instance.value = dropdownResolutionIndex;
 
         // Quality
-        dropdownQuality.value = QualitySettings.GetQualityLevel();
+        OptionDropdown optionDropdownQuality = new OptionDropdown(dropdownQuality, menuColor);
+        optionDropdownQuality.Instance.value = QualitySettings.GetQualityLevel();
     }
 
     public void ChangeQuality()
