@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("LoadingScreen");
         Destroy(MenuMusicManager.MenuMusic);
     }
 
