@@ -1,19 +1,22 @@
 fileFormatVersion: 2
-guid: e72be7d41d89dd54790262b059941769
+guid: bf5cbbd45521c694fa408163add27e04
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2623224014815184843
-    second: Tex_1
+      213: 1412778643854539469
+    second: Dirt_1
   - first:
-      213: -2903492340773828746
-    second: Tex_2
+      213: -1278900557311105747
+    second: Dirt_2
   - first:
-      213: -115812940486809656
-    second: Tex_3
+      213: 8641727722977497643
+    second: Dirt_3
   - first:
-      213: 1849367697520948917
-    second: Tex_4
+      213: -5696172171868935861
+    second: Dirt_4
+  - first:
+      213: -7873847628168509994
+    second: Void
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -75,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -87,7 +90,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -99,7 +102,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,11 +113,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tex_1
+      name: Dirt_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -124,18 +127,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df79eaa6fcb3be14d9740b44d9e6dd67
-      internalID: 2623224014815184843
+      spriteID: 0563c35982c36ab43b601ba9163cd4f7
+      internalID: 1412778643854539469
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tex_2
+      name: Dirt_2
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 48
         width: 16
         height: 16
       alignment: 0
@@ -145,17 +148,59 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7307673bf26e6b4bb42c12cea16c0f3
-      internalID: -2903492340773828746
+      spriteID: 98ed6532157c3bc44a4464e467f7cb0b
+      internalID: -1278900557311105747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tex_3
+      name: Dirt_3
       rect:
         serializedVersion: 2
         x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99d79509a0fada447839796a8fe98897
+      internalID: 8641727722977497643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dirt_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bcd2857420a6da40a27d39b01cc3ab1
+      internalID: -5696172171868935861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Void
+      rect:
+        serializedVersion: 2
+        x: 48
         y: 0
         width: 16
         height: 16
@@ -166,29 +211,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad275c96ac40d02428a3f24d596b64a0
-      internalID: -115812940486809656
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tex_4
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23354654f4576894aa50418f4841d816
-      internalID: 1849367697520948917
+      spriteID: 2a0f87f5640cbd04193c1412a3e2d079
+      internalID: -7873847628168509994
       vertices: []
       indices: 
       edges: []

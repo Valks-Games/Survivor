@@ -26,7 +26,7 @@ public class WorldChunk : MonoBehaviour
 
     public void Start()
     {
-        meshRenderer.material = Resources.Load("Materials/Texture") as UnityEngine.Material;
+        meshRenderer.material = Resources.Load("Materials/Terrain") as UnityEngine.Material;
     }
 
     public void Generate(int chunkX, int chunkZ)
@@ -64,7 +64,30 @@ public class WorldChunk : MonoBehaviour
             }
         }
 
-        //uvs = SpriteLoader.Instance.GetTileUVs("Tex_1");
+        // UVs
+        Vector2[] dirt1 = SpriteLoader.GetTileUVs("Dirt_1");
+        Vector2[] dirt2 = SpriteLoader.GetTileUVs("Dirt_2");
+
+        int k = 0;
+        for (int g = 0; g < vertices.Length / 4; g++)
+        {
+            if (Random.Range(0f, 1f) < 0.5f)
+            {
+                for (int i = 0; i < dirt1.Length; i++)
+                {
+                    uvs[i + k] = dirt1[i];
+                }
+            }
+            else
+            {
+                for (int i = 0; i < dirt2.Length; i++)
+                {
+                    uvs[i + k] = dirt2[i];
+                }
+            }
+
+            k += 4;
+        }
 
         UpdateMesh();
 
@@ -76,27 +99,7 @@ public class WorldChunk : MonoBehaviour
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-
-        //Vector2[] texTest = SpriteLoader.Instance.GetTileUVs("Tex_1");
-        Vector2[] tex1 = new Vector2[]
-        {
-            new Vector2(0.0f, 1.0f), //TopLeft
-            new Vector2(0.0f, 0.5f), //BottomLeft
-            new Vector2(0.5f, 1.0f), //TopRight
-            new Vector2(0.5f, 0.5f)  //BottomRight
-        };
-
-        int k = 0;
-        for (int g = 0; g < vertices.Length / 4; g++) {
-            for (int i = 0; i < tex1.Length; i++)
-            {
-                uvs[i + k] = tex1[i];
-            }
-            k += 4;
-        }
-
         mesh.uv = uvs;
-        
         mesh.RecalculateNormals();
     }
 

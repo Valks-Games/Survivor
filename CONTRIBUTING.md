@@ -1,5 +1,9 @@
 # Contributing
-Note that you need to close Unity before committing changes to your fork.
+## Steps before opening an issue.
+1. Gather as much information as you can about the topic (excl. questions)
+2. Read the General Guidelines ([#54](https://github.com/valkyrienyanko/Survivor/issues/54))
+3. Open an issue with a predefined template
+4. Provice as much context as possible in your issue!
 
 ## Steps before creating a pull request.
 1. Always test the application to see if it works as intended with no additional bugs you may be adding!

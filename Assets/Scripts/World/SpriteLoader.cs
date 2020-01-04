@@ -3,16 +3,13 @@ using UnityEngine;
 
 public class SpriteLoader : MonoBehaviour
 {
-    public static SpriteLoader Instance;
-    public Dictionary<string, Vector2[]> TileUVMap;
+    private static Dictionary<string, Vector2[]> tileUVMap;
 
     public void Awake()
     {
-        Instance = this;
+        tileUVMap = new Dictionary<string, Vector2[]>();
 
-        TileUVMap = new Dictionary<string, Vector2[]>();
-
-        Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites");
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites/Tiles");
 
         float imageWidth = 0;
         float imageHeight = 0;
@@ -31,27 +28,24 @@ public class SpriteLoader : MonoBehaviour
             Vector2[] uvs = new Vector2[4];
 
             uvs[0] = new Vector2(s.rect.x / imageWidth, s.rect.y / imageHeight);
-            uvs[1] = new Vector2((s.rect.x + s.rect.width) / imageWidth, s.rect.y / imageHeight);
-            uvs[2] = new Vector2(s.rect.x / imageWidth, (s.rect.y + s.rect.height) / imageHeight);
+            uvs[1] = new Vector2(s.rect.x / imageWidth, (s.rect.y + s.rect.height) / imageHeight);
+            uvs[2] = new Vector2((s.rect.x + s.rect.width) / imageWidth, s.rect.y / imageHeight);
             uvs[3] = new Vector2((s.rect.x + s.rect.width) / imageWidth, (s.rect.y + s.rect.height) / imageHeight);
 
-            TileUVMap.Add(s.name, uvs);
+            tileUVMap.Add(s.name, uvs);
         }
     }
 
-    public Vector2[] GetTileUVs(string tile)
+    public static Vector2[] GetTileUVs(string key)
     {
-        string key = tile;
-
-        if (TileUVMap.ContainsKey(key))
+        if (tileUVMap.ContainsKey(key))
         {
-            return TileUVMap[key];
+            return tileUVMap[key];
         }
         else
         {
-            Debug.LogError("There is no UV map for tile type: " + key);
-            //TODO: return void (black + pink checkerbox)
-            return null;
+            Debug.Log("There is no UV map for tile type: " + key);
+            return tileUVMap["Void"];
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
+    // Inspector Options
     [Header("Vignette")]
     [SerializeField] public float DefaultVignetteIntensity = 0.25f;
     [SerializeField] public bool DefaultVignetteEnabled = true;
@@ -29,6 +30,7 @@ public class Options : MonoBehaviour
     [HideInInspector] public static float VolumeSFX = 1.0f;
     [HideInInspector] public static float SensitivityPan = 3f;
     [HideInInspector] public static float SensitivityZoom = 10f;
+    [HideInInspector] public static bool OptionsLoading = true;
 
     // Private
     private static int dropdownResolutionIndex = -1;
@@ -120,6 +122,8 @@ public class Options : MonoBehaviour
         sliderSensitivityZoom = GameObject.Find("SliderSensitivityZoom").GetComponent<Slider>();
 
         InitializeValues();
+
+        OptionsLoading = false;
     }
 
     private bool NotSetup()
@@ -192,7 +196,7 @@ public class Options : MonoBehaviour
 
         // Fullscreen
         OptionToggle optionToggleFullscreen = new OptionToggle(toggleFullscreen, menuColor);
-        optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
+        //optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
 
         // Camera
         OptionSlider optionSliderSensitivityPan = new OptionSlider(sliderSensitivityPan, menuColor);

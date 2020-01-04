@@ -32,6 +32,7 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
+    // Unity's LoadSceneAsync does NOT work and its a KNOWN bug. Try to avoid using this method for now.
     private IEnumerator LoadAsynchronously(string scene)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
