@@ -714,6 +714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 912402247}
+  - component: {fileID: 912402248}
   - component: {fileID: 912402246}
   m_Layer: 0
   m_Name: Directional Light
@@ -797,6 +798,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 20, y: 45, z: 0}
+--- !u!114 &912402248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912402245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29045ca905ae39c4b9df9b43887f4787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0.3
 --- !u!1 &1045089729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1447,7 @@ GameObject:
   - component: {fileID: 1905524197}
   - component: {fileID: 1905524196}
   - component: {fileID: 1905524198}
+  - component: {fileID: 1905524199}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -1484,6 +1499,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activate:
   - {fileID: 1852820661}
+--- !u!114 &1905524199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905524195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92b1b36f06658674d8c094bc6fe2c3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2024643911
 GameObject:
   m_ObjectHideFlags: 0

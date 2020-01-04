@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(LoadAsynchronously("Main"));
+        SceneManager.LoadScene("Main");
         Destroy(MenuMusicManager.MenuMusic);
     }
 
@@ -32,6 +32,7 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
+    // Unity's LoadSceneAsync does NOT work and its a KNOWN bug. Try to avoid using this method for now.
     private IEnumerator LoadAsynchronously(string scene)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
