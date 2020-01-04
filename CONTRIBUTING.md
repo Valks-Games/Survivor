@@ -1,6 +1,4 @@
 # Contributing
-Note that you need to close Unity before committing changes to your fork.
-
 ## Steps before opening an issue.
 1. Gather as much information as you can about the topic (excl. questions)
 2. Read the General Guidelines ([#54](https://github.com/valkyrienyanko/Survivor/issues/54))
