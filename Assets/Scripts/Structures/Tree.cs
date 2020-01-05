@@ -1,4 +1,4 @@
-public class Tree : Structure
+public class Tree : StructureResource
 {
     public static int id = 0;
 

@@ -1,4 +1,4 @@
-public class Rock : Structure
+public class Rock : StructureResource
 {
     public string te; // <-- what is this?
 
