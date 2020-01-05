@@ -5,7 +5,7 @@ public class OptionToggle : Option
 {
     public Toggle Instance => (Toggle)selectable;
 
-    public OptionToggle(Selectable selectable, Color32 color) : base(selectable, color)
+    public OptionToggle(string name) : base(name)
     {
 
     }

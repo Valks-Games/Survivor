@@ -7,7 +7,7 @@ public class OptionDropdown : Option
 {
     public Dropdown Instance => (Dropdown)selectable;
 
-    public OptionDropdown(Selectable selectable, Color32 color) : base(selectable, color)
+    public OptionDropdown(string name) : base(name)
     {
 
     }

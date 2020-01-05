@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
-    #region Default Values
+    #region Inspector:Default Values
     // Inspector Options
     [Header("Vignette")]
     [SerializeField] public float DefaultVignetteIntensity = 0.25f;
@@ -28,7 +28,11 @@ public class Options : MonoBehaviour
     [SerializeField] public float DefaultSensitivityZoom = 10f;
     #endregion
 
-    #region Objects
+    [HideInInspector] public static float VolumeSFX = 1.0f;
+    [HideInInspector] public static float VolumeMusic = 1.0f;
+    [HideInInspector] public static float SensitivityPan = 3f;
+    [HideInInspector] public static float SensitivityZoom = 10f;
+
     private GameObject goPostProcessing;
     private GameObject goMenuMusic;
 
@@ -38,39 +42,27 @@ public class Options : MonoBehaviour
 
     private AudioSource audioMenuMusic;
 
-    private Slider sliderVignette;
-    private Slider sliderBloom;
-    private Slider sliderVolumeMusic;
-    private Slider sliderVolumeSFX;
-    private Slider sliderSensitivityPan;
-    private Slider sliderSensitivityZoom;
-
-    private Toggle toggleFullscreen;
-    private Toggle toggleVignette;
-    private Toggle toggleBloom;
-    private Toggle toggleVSync;
-
-    private Dropdown dropdownResolutions;
-    private Dropdown dropdownQuality;
-
-    private Color menuColor;
-    #endregion
-
-    // Static
-    [HideInInspector] public static float VolumeSFX = 1.0f;
-    [HideInInspector] public static float VolumeMusic = 1.0f;
-    [HideInInspector] public static float SensitivityPan = 3f;
-    [HideInInspector] public static float SensitivityZoom = 10f;
-    [HideInInspector] public static bool OptionsLoading = true;
-
-    // Private
     private Resolution[] resolutions;
     private static int dropdownResolutionIndex = -1;
 
+    private OptionSlider optionSliderBloom;
+    private OptionToggle optionToggleBloom;
+    private OptionSlider optionSliderVolumeMusic;
+    private OptionSlider optionSliderVolumeSFX;
+    private OptionToggle optionToggleVignette;
+    private OptionSlider optionSliderVignette;
+    private OptionDropdown optionDropdownResolution;
+    private OptionDropdown optionDropdownQuality;
+    private OptionToggle optionToggleVSync;
+    private OptionToggle optionToggleFullscreen;
+    private OptionSlider optionSliderSensitivityPan;
+    private OptionSlider optionSliderSensitivityZoom;
+
+    private Button buttonResetToDefaults;
+    private Button buttonBackToMenu;
+
     public void Start()
     {
-        menuColor = new Color32(255, 105, 180, 255); // Default Color
-
         #region Post Processing
         goPostProcessing = DontDestroy.DontDestroyObjects[0];
 
@@ -100,47 +92,141 @@ public class Options : MonoBehaviour
             Debug.Log("Menu Music has to be loaded from the 'Menu' scene first.");
         }
         #endregion
+        
+        optionSliderBloom = new OptionSlider("SliderBloom"); // Bloom
+        optionToggleBloom = new OptionToggle("ToggleBloom");
 
-        #region Setup Selectables
-        // Bloom
-        sliderBloom = GameObject.Find("SliderBloom").GetComponent<Slider>();
-        toggleBloom = GameObject.Find("ToggleBloom").GetComponent<Toggle>();
+        optionSliderVolumeMusic = new OptionSlider("SliderVolumeMusic"); // Volume
+        optionSliderVolumeSFX = new OptionSlider("SliderVolumeSFX");
+        
+        optionToggleVignette = new OptionToggle("ToggleVignette"); // Vignette
+        optionSliderVignette = new OptionSlider("SliderVignette");
 
-        // Volume
-        sliderVolumeMusic = GameObject.Find("SliderVolumeMusic").GetComponent<Slider>();
-        sliderVolumeSFX = GameObject.Find("SliderVolumeSFX").GetComponent<Slider>();
-
-        // Vignette
-        toggleVignette = GameObject.Find("ToggleVignette").GetComponent<Toggle>();
-        sliderVignette = GameObject.Find("SliderVignette").GetComponent<Slider>();
-
-        // Resolutions
-        dropdownResolutions = GameObject.Find("DropdownResolutions").GetComponent<Dropdown>();
+        optionDropdownResolution = new OptionDropdown("DropdownResolutions"); // Resolutions
         InitializeResolutionsDropDown();
 
-        // Quality
-        dropdownQuality = GameObject.Find("DropdownQuality").GetComponent<Dropdown>();
+        optionDropdownQuality = new OptionDropdown("DropdownQuality"); // Quality
         InitializeQualityDropDown();
 
-        // VSync
-        toggleVSync = GameObject.Find("ToggleVSync").GetComponent<Toggle>();
+        optionToggleFullscreen = new OptionToggle("ToggleFullscreen"); // Fullscreen
+        optionToggleVSync = new OptionToggle("ToggleVSync"); // VSync
 
-        // Fullscreen
-        toggleFullscreen = GameObject.Find("ToggleFullscreen").GetComponent<Toggle>();
+        optionSliderSensitivityPan = new OptionSlider("SliderSensitivityPan"); // Camera
+        optionSliderSensitivityZoom = new OptionSlider("SliderSensitivityZoom");
 
-        // Camera
-        sliderSensitivityPan = GameObject.Find("SliderSensitivityPan").GetComponent<Slider>();
-        sliderSensitivityZoom = GameObject.Find("SliderSensitivityZoom").GetComponent<Slider>();
-        #endregion
+        if (goPostProcessing == null || goMenuMusic == null)
+            return;
 
-        InitializeValues();
+        buttonResetToDefaults = GameObject.Find("ButtonReset").GetComponent<Button>();
+        buttonBackToMenu = GameObject.Find("ButtonMenu").GetComponent<Button>();
 
-        OptionsLoading = false;
+        buttonResetToDefaults.onClick.AddListener(delegate {
+            ResetToDefaults();
+        });
+
+        buttonBackToMenu.onClick.AddListener(delegate {
+            SceneManager.LoadScene("Menu");
+        });
+
+        InitializeOptionValues();
     }
 
-    private bool NotSetup()
+    private void InitializeOptionValues()
     {
-        return goPostProcessing == null || goMenuMusic == null;
+        // Bloom
+        optionToggleBloom.Instance.isOn = ppBloom.enabled.value; 
+        optionToggleBloom.Instance.onValueChanged.AddListener(delegate {
+            ppBloom.enabled.value = !ppBloom.enabled.value;
+            optionSliderBloom.Instance.interactable = !optionSliderBloom.Instance.interactable;
+        });
+        
+        optionSliderBloom.Instance.value = ppBloom.intensity.value;
+        optionSliderBloom.Instance.interactable = optionToggleBloom.Instance.isOn;
+        optionSliderBloom.Instance.onValueChanged.AddListener(delegate {
+            ppBloom.intensity.value = optionSliderBloom.Instance.value;
+        });
+
+        // Volume
+        optionSliderVolumeMusic.Instance.value = audioMenuMusic.volume;
+        optionSliderVolumeMusic.Instance.onValueChanged.AddListener(delegate {
+            VolumeMusic = optionSliderVolumeMusic.Instance.value;
+            audioMenuMusic.volume = VolumeMusic;
+        });
+
+        optionSliderVolumeSFX.Instance.value = VolumeSFX;
+        optionSliderVolumeSFX.Instance.onValueChanged.AddListener(delegate {
+            VolumeSFX = optionSliderVolumeSFX.Instance.value;
+        });
+
+        // Vignette
+        optionToggleVignette.Instance.isOn = ppVignette.enabled.value;
+        optionToggleVignette.Instance.onValueChanged.AddListener(delegate {
+            ppVignette.enabled.value = !ppVignette.enabled.value;
+            optionSliderVignette.Instance.interactable = !optionSliderVignette.Instance.interactable;
+        });
+
+        optionSliderVignette.Instance.value = ppVignette.intensity.value;
+        optionSliderVignette.Instance.onValueChanged.AddListener(delegate {
+            ppVignette.intensity.value = optionSliderVignette.Instance.value;
+        });
+
+        // VSync
+        optionToggleVSync.Instance.isOn = QualitySettings.vSyncCount == 0 ? false : true;
+        optionToggleVSync.Instance.onValueChanged.AddListener(delegate {
+            QualitySettings.vSyncCount = QualitySettings.vSyncCount == 0 ? 1 : 0;
+        });
+
+        // Fullscreen
+        optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
+        optionToggleFullscreen.Instance.onValueChanged.AddListener(delegate {
+            Screen.fullScreen = !Screen.fullScreen;
+        });
+
+        // Camera
+        optionSliderSensitivityPan.Instance.value = SensitivityPan;
+        optionSliderSensitivityPan.Instance.onValueChanged.AddListener(delegate {
+            SensitivityPan = optionSliderSensitivityPan.Instance.value;
+        });
+
+        optionSliderSensitivityZoom.Instance.value = SensitivityZoom;
+        optionSliderSensitivityZoom.Instance.onValueChanged.AddListener(delegate {
+            SensitivityZoom = optionSliderSensitivityZoom.Instance.value;
+        });
+
+        // Resolutions
+        optionDropdownResolution.Instance.value = dropdownResolutionIndex;
+        optionDropdownResolution.Instance.onValueChanged.AddListener(delegate {
+            dropdownResolutionIndex = optionDropdownResolution.Instance.value;
+            Screen.SetResolution(resolutions[optionDropdownResolution.Instance.value].width, resolutions[optionDropdownResolution.Instance.value].height, Screen.fullScreen);
+        });
+
+        // Quality
+        optionDropdownQuality.Instance.value = QualitySettings.GetQualityLevel();
+        optionDropdownQuality.Instance.onValueChanged.AddListener(delegate {
+            QualitySettings.SetQualityLevel(optionDropdownQuality.Instance.value);
+        });
+    }
+
+    private void ResetToDefaults()
+    {
+        ppBloom.enabled.value = DefaultBloomEnabled; // Bloom
+        ppBloom.intensity.value = DefaultBloomIntensity;
+        optionToggleBloom.Instance.isOn = DefaultBloomEnabled;
+        optionSliderBloom.Instance.value = DefaultBloomIntensity;
+        
+        ppVignette.enabled.value = DefaultVignetteEnabled; // Vignette
+        ppVignette.intensity.value = DefaultVignetteIntensity;
+        optionToggleVignette.Instance.isOn = DefaultVignetteEnabled;
+        optionSliderVignette.Instance.value = DefaultVignetteIntensity;
+        
+        optionSliderVolumeMusic.Instance.value = DefaultVolumeMusic; // Volume (Music)
+        optionSliderVolumeSFX.Instance.value = DefaultVolumeSFX; // Volume (SFX)
+
+        optionToggleVSync.Instance.isOn = DefaultVSyncEnabled; // VSync
+        QualitySettings.vSyncCount = DefaultVSyncValue;
+        
+        optionSliderSensitivityPan.Instance.value = DefaultSensitivityPan; // Camera Pan
+        optionSliderSensitivityZoom.Instance.value = DefaultSensitivityZoom; // Camera Zoom
     }
 
     private void InitializeResolutionsDropDown()
@@ -152,10 +238,10 @@ public class Options : MonoBehaviour
             Resolution res = resolutions[i];
             int refreshRate = res.refreshRate;
 
-            dropdownResolutions.options.Add(new Dropdown.OptionData(ResolutionToString(res)));
+            optionDropdownResolution.Instance.options.Add(new Dropdown.OptionData(ResolutionToString(res)));
         }
 
-        dropdownResolutions.value = dropdownResolutionIndex == -1 ? resolutions.Length : dropdownResolutionIndex;
+        optionDropdownResolution.Instance.value = dropdownResolutionIndex == -1 ? resolutions.Length : dropdownResolutionIndex;
     }
 
     private void InitializeQualityDropDown()
@@ -164,226 +250,12 @@ public class Options : MonoBehaviour
 
         for (int i = 0; i < names.Length; i++)
         {
-            dropdownQuality.options.Add(new Dropdown.OptionData(names[i]));
+            optionDropdownQuality.Instance.options.Add(new Dropdown.OptionData(names[i]));
         }
     }
 
     private string ResolutionToString(Resolution res)
     {
         return res.width + " x " + res.height + " (" + res.refreshRate + " Hz)";
-    }
-
-    private void InitializeValues()
-    {
-        if (NotSetup())
-            return;
-
-        // Bloom
-        OptionToggle optionToggleBloom = new OptionToggle(toggleBloom, menuColor);
-        optionToggleBloom.Instance.isOn = ppBloom.enabled.value;
-        optionToggleBloom.Instance.onValueChanged.AddListener(delegate {
-            ToggleBloom();
-        });
-
-        OptionSlider optionSliderBloom = new OptionSlider(sliderBloom, menuColor);
-        optionSliderBloom.Instance.value = ppBloom.intensity.value;
-        optionSliderBloom.Instance.interactable = toggleBloom.isOn;
-        optionSliderBloom.Instance.onValueChanged.AddListener(delegate {
-            SliderBloomUpdate();
-        });
-
-        // Volume
-        OptionSlider optionSliderVolumeMusic = new OptionSlider(sliderVolumeMusic, menuColor);
-        optionSliderVolumeMusic.Instance.value = audioMenuMusic.volume;
-        optionSliderVolumeMusic.Instance.onValueChanged.AddListener(delegate {
-            SliderVolumeMusicUpdate();
-        });
-
-        OptionSlider optionSliderVolumeSFX = new OptionSlider(sliderVolumeSFX, menuColor);
-        optionSliderVolumeSFX.Instance.value = VolumeSFX;
-        optionSliderVolumeSFX.Instance.onValueChanged.AddListener(delegate {
-            SliderVolumeSFXUpdate();
-        });
-
-        // Vignette
-        OptionToggle optionToggleVignette = new OptionToggle(toggleVignette, menuColor);
-        optionToggleVignette.Instance.isOn = ppVignette.enabled.value;
-        optionToggleVignette.Instance.onValueChanged.AddListener(delegate {
-            ToggleVignette();
-        });
-
-        OptionSlider optionSliderVignette = new OptionSlider(sliderVignette, menuColor);
-        optionSliderVignette.Instance.value = ppVignette.intensity.value;
-        optionSliderVignette.Instance.onValueChanged.AddListener(delegate {
-            SliderVignetteUpdate();
-        });
-
-        // VSync
-        OptionToggle optionToggleVSync = new OptionToggle(toggleVSync, menuColor);
-        optionToggleVSync.Instance.isOn = QualitySettings.vSyncCount == 0 ? false : true;
-        optionToggleVSync.Instance.onValueChanged.AddListener(delegate {
-            ToggleVSync();
-        });
-
-        // Fullscreen
-        OptionToggle optionToggleFullscreen = new OptionToggle(toggleFullscreen, menuColor);
-        optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
-        optionToggleFullscreen.Instance.onValueChanged.AddListener(delegate {
-            ToggleFullScreen();
-        });
-
-        // Camera
-        OptionSlider optionSliderSensitivityPan = new OptionSlider(sliderSensitivityPan, menuColor);
-        optionSliderSensitivityPan.Instance.value = SensitivityPan;
-        optionSliderSensitivityPan.Instance.onValueChanged.AddListener(delegate {
-            SliderSensitivityPanUpdate();
-        });
-
-        OptionSlider optionSliderSenitivityZoom = new OptionSlider(sliderSensitivityZoom, menuColor);
-        optionSliderSenitivityZoom.Instance.value = SensitivityZoom;
-        optionSliderSenitivityZoom.Instance.onValueChanged.AddListener(delegate {
-            SliderSensitivityZoomUpdate();
-        });
-
-        // Resolutions
-        OptionDropdown optionDropdownResolutions = new OptionDropdown(dropdownResolutions, menuColor);
-        optionDropdownResolutions.Instance.value = dropdownResolutionIndex;
-        optionDropdownResolutions.Instance.onValueChanged.AddListener(delegate {
-            ChangeResolution();
-        });
-
-        // Quality
-        OptionDropdown optionDropdownQuality = new OptionDropdown(dropdownQuality, menuColor);
-        optionDropdownQuality.Instance.value = QualitySettings.GetQualityLevel();
-        optionDropdownQuality.Instance.onValueChanged.AddListener(delegate {
-            ChangeQuality();
-        });
-    }
-
-    public void ChangeQuality()
-    {
-        QualitySettings.SetQualityLevel(dropdownQuality.value);
-    }
-
-    public void ChangeResolution()
-    {
-        dropdownResolutionIndex = dropdownResolutions.value;
-        Screen.SetResolution(resolutions[dropdownResolutions.value].width, resolutions[dropdownResolutions.value].height, Screen.fullScreen);
-    }
-
-    public void ToggleFullScreen()
-    {
-        Screen.fullScreen = !Screen.fullScreen;
-    }
-
-    public void ToggleVSync()
-    {
-        QualitySettings.vSyncCount = QualitySettings.vSyncCount == 0 ? 1 : 0;
-    }
-
-    public void ToggleBloom()
-    {
-        if (NotSetup())
-            return;
-
-        ppBloom.enabled.value = !ppBloom.enabled.value;
-        sliderBloom.interactable = !sliderBloom.interactable;
-    }
-
-    public void ToggleVignette()
-    {
-        if (NotSetup())
-            return;
-
-        ppVignette.enabled.value = !ppVignette.enabled.value;
-        sliderVignette.interactable = !sliderVignette.interactable;
-    }
-
-    public void SliderVignetteUpdate()
-    {
-        if (NotSetup())
-            return;
-
-        ppVignette.intensity.value = sliderVignette.value;
-    }
-
-    public void SliderBloomUpdate()
-    {
-        if (NotSetup())
-            return;
-
-        ppBloom.intensity.value = sliderBloom.value;
-    }
-
-    public void SliderVolumeMusicUpdate()
-    {
-        if (NotSetup())
-            return;
-
-        VolumeMusic = sliderVolumeMusic.value;
-        audioMenuMusic.volume = VolumeMusic;
-    }
-
-    public void SliderVolumeSFXUpdate()
-    {
-        if (NotSetup())
-            return;
-
-        VolumeSFX = sliderVolumeSFX.value;
-    }
-
-    public void SliderSensitivityPanUpdate()
-    {
-        if (NotSetup())
-            return;
-
-        SensitivityPan = sliderSensitivityPan.value;
-    }
-
-    public void SliderSensitivityZoomUpdate()
-    {
-        if (NotSetup())
-            return;
-
-        SensitivityZoom = sliderSensitivityZoom.value;
-    }
-
-    public void ResetToDefaults()
-    {
-        if (NotSetup())
-            return;
-
-        // Bloom
-        ppBloom.enabled.value = DefaultBloomEnabled;
-        ppBloom.intensity.value = DefaultBloomIntensity;
-        toggleBloom.isOn = DefaultBloomEnabled;
-        sliderBloom.value = DefaultBloomIntensity;
-
-        // Vignette
-        ppVignette.enabled.value = DefaultVignetteEnabled;
-        ppVignette.intensity.value = DefaultVignetteIntensity;
-        toggleVignette.isOn = DefaultVignetteEnabled;
-        sliderVignette.value = DefaultVignetteIntensity;
-
-        // Volume (Music)
-        sliderVolumeMusic.value = DefaultVolumeMusic;
-
-        // Volume (SFX)
-        sliderVolumeSFX.value = DefaultVolumeSFX;
-
-        // VSync
-        toggleVSync.isOn = DefaultVSyncEnabled;
-        QualitySettings.vSyncCount = DefaultVSyncValue;
-
-        // Camera Pan
-        sliderSensitivityPan.value = DefaultSensitivityPan;
-
-        // Camera Zoom
-        sliderSensitivityZoom.value = DefaultSensitivityZoom;
-    }
-
-    public void BackToMenu()
-    {
-        SceneManager.LoadScene("Menu");
     }
 }

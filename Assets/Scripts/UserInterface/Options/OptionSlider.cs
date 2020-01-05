@@ -5,9 +5,9 @@ public class OptionSlider : Option
 {
     public Slider Instance => (Slider)selectable;
 
-    public OptionSlider(Selectable selectable, Color32 color) : base(selectable, color)
+    public OptionSlider(string name) : base(name)
     {
-
+        
     }
 
     public override void Colorize()
