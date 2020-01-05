@@ -3,7 +3,7 @@ using UnityEngine;
 public class Structure : MonoBehaviour
 {
     private GameObject _world;
-    public int Resource { get; private set; } = 3;
+    public int Resource { get; set; } = 3;
     public int Workers { get; set; } = 0;
 
     public virtual void Awake()
@@ -23,19 +23,7 @@ public class Structure : MonoBehaviour
     public void SetName(string name) =>
         transform.name = name;
 
-    public int GatherResource(int toolPower, int colonistResource, int colonistInvCapacity)
-    {
-        int gathered = Mathf.Min(colonistResource + toolPower, colonistInvCapacity, Resource);
-        Resource -= gathered;
 
-       if (Resource < 1)
-       {
-            Destroy(transform.gameObject);
-            Destroy();
-       }
-
-        return gathered;
-    }
 
     public void Destroy() =>
         Destroy(gameObject);

@@ -1,22 +1,46 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class DontDestroy : MonoBehaviour
 {
-    public static GameObject Go; // <-- this should eventually be a list of some sorts to make it useful for more then one gameobject
+    public static List<GameObject> DontDestroyObjects = new List<GameObject>(); // <-- this should eventually be a list of some sorts to make it useful for more then one gameobject
 
     public void Awake()
     {
-        if (Go == null)
+        if (DontDestroyObjects.Count == 0)
         {
-            Go = gameObject;
-            DontDestroyOnLoad(gameObject);
+            AddSelf();
+            return;
         }
-        else
+
+        GameObject foundObject = DontDestroyObjects.Where(t => t.name == gameObject.name).First();
+        
+        if (foundObject != null)
         {
-            if (Go != this)
-            {
-                Destroy(gameObject);
+            Destroy(this);
+        } else {
+            AddSelf();
+        }
+
+
+        /*DontDestroyObjects.ForEach(t => {
+            if (t.name == gameObject.name)
+            {    
+                Destroy(this);
+                return;
             }
-        }
+        });
+
+        AddSelf();*/
+
+
+
+    }
+
+    private void AddSelf()
+    {
+        DontDestroyObjects.Add(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }

@@ -72,7 +72,7 @@ public class Options : MonoBehaviour
         menuColor = new Color32(255, 105, 180, 255); // Default Color
 
         #region Post Processing
-        goPostProcessing = DontDestroy.Go;
+        goPostProcessing = DontDestroy.DontDestroyObjects[0];
 
         if (goPostProcessing != null)
         {

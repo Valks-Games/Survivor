@@ -22,7 +22,7 @@ public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<
         }
         
         Structure structureComponent = Target.TargetStructure.gameObject.GetComponent<Structure>();
-        Target.Inventory.Items[type] += structureComponent.GatherResource(Target.AxePower, Target.Inventory.Items[type], Target.Inventory.MaxSize);
+        Target.Inventory.Items[type] += ((StructureResource) structureComponent).GatherResource(Target.AxePower, Target.Inventory.Items[type], Target.Inventory.MaxSize);
 
         if (Target.Inventory.Items[type] < Target.Inventory.MaxSize)
             Target.QueueTask(new GatherResourceTask<T>(type));
