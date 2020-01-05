@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        LoadSceneAsync("Main");
+        LoadSceneAsync("LoadingScreen");
         Destroy(MenuMusicManager.MenuMusic);
     }
 
@@ -32,8 +32,6 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
-    private AsyncOperation asyncOperation;
-
     private void LoadSceneAsync(string scene)
     {
         StartCoroutine(LoadAsynchronously(scene));
@@ -41,7 +39,7 @@ public class MainMenu : MonoBehaviour
 
     private IEnumerator LoadAsynchronously(string scene)
     {
-        asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
         asyncOperation.allowSceneActivation = false;
 
         while (!asyncOperation.isDone)
