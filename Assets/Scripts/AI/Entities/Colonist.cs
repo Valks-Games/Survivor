@@ -4,6 +4,8 @@ using WorldAPI.Tasks.Generic;
 
 public partial class Colonist : ResourceGatherer<Colonist>
 {
+    private Animator animator;
+
     public new void Start()
     {
         base.Start();
@@ -14,11 +16,17 @@ public partial class Colonist : ResourceGatherer<Colonist>
         Damage = 1 + Random.Range(0, 3);
 
         StartCoroutine(WaitForWorldGeneration());
+
+        animator = GetComponentInChildren<Animator>();
     }
 
     public new void Update()
     {
         base.Update();
+
+        float speedPercent = Mathf.Clamp01(rb.velocity.magnitude * 10);
+        Debug.Log(speedPercent);
+        animator.SetFloat("speedPercent", speedPercent, 0.1f, Time.deltaTime);
     }
 
     private IEnumerator WaitForWorldGeneration() {
