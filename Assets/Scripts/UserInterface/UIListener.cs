@@ -23,6 +23,9 @@ public class UIListener : MonoBehaviour
         //HandleUIPopUps();
         HandleMenu();
         HandleChangeGameSpeed();
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene("Main");
     }
 
     private void HandleChangeGameSpeed()

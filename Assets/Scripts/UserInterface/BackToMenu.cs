@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Credits : MonoBehaviour
+public class BackToMenu : MonoBehaviour
 {
     public void Update()
     {

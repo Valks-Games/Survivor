@@ -17,16 +17,7 @@ public class OptionSlider : Option
         Transform fill = selectable.transform.Find("Fill Area").Find("Fill");
         Transform background = selectable.transform.Find("Background");
 
-        Color32 fillColor = color;
-        Color32 backgroundColor = color;
-
-        int reductionFill = 100;
-        int reductionBackground = 200;
-
-        fillColor = new Color32((byte)Mathf.Max(0, fillColor.r - reductionFill), (byte)Mathf.Max(0, fillColor.g - reductionFill), (byte)Mathf.Max(0, fillColor.b - reductionFill), fillColor.a);
-        backgroundColor = new Color32((byte)Mathf.Max(0, backgroundColor.r - reductionBackground), (byte)Mathf.Max(0, backgroundColor.g - reductionBackground), (byte)Mathf.Max(0, backgroundColor.b - reductionBackground), backgroundColor.a);
-
-        fill.GetComponent<Image>().color = fillColor;
-        background.GetComponent<Image>().color = backgroundColor;
+        fill.GetComponent<Image>().color = Utils.ModifyColor(color, -100);
+        background.GetComponent<Image>().color = Utils.ModifyColor(color, -200);
     }
 }

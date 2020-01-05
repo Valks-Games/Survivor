@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Options : MonoBehaviour
 {
+    #region Default Values
     // Inspector Options
     [Header("Vignette")]
     [SerializeField] public float DefaultVignetteIntensity = 0.25f;
@@ -25,16 +26,9 @@ public class Options : MonoBehaviour
     [Header("Camera")]
     [SerializeField] public float DefaultSensitivityPan = 3f;
     [SerializeField] public float DefaultSensitivityZoom = 10f;
+    #endregion
 
-    // Static
-    [HideInInspector] public static float VolumeSFX = 1.0f;
-    [HideInInspector] public static float SensitivityPan = 3f;
-    [HideInInspector] public static float SensitivityZoom = 10f;
-    [HideInInspector] public static bool OptionsLoading = true;
-
-    // Private
-    private static int dropdownResolutionIndex = -1;
-
+    #region Objects
     private GameObject goPostProcessing;
     private GameObject goMenuMusic;
 
@@ -60,11 +54,24 @@ public class Options : MonoBehaviour
     private Dropdown dropdownQuality;
 
     private Color menuColor;
+    #endregion
+
+    // Static
+    [HideInInspector] public static float VolumeSFX = 1.0f;
+    [HideInInspector] public static float VolumeMusic = 1.0f;
+    [HideInInspector] public static float SensitivityPan = 3f;
+    [HideInInspector] public static float SensitivityZoom = 10f;
+    [HideInInspector] public static bool OptionsLoading = true;
+
+    // Private
+    private Resolution[] resolutions;
+    private static int dropdownResolutionIndex = -1;
 
     public void Start()
     {
         menuColor = new Color32(255, 105, 180, 255); // Default Color
 
+        #region Post Processing
         goPostProcessing = DontDestroy.Go;
 
         if (goPostProcessing != null)
@@ -80,7 +87,9 @@ public class Options : MonoBehaviour
         {
             Debug.Log("Post Processing has to be loaded from the 'Menu' scene first.");
         }
+        #endregion
 
+        #region Menu Music
         goMenuMusic = GameObject.Find("Menu Music");
         if (goMenuMusic != null)
         {
@@ -90,7 +99,9 @@ public class Options : MonoBehaviour
         {
             Debug.Log("Menu Music has to be loaded from the 'Menu' scene first.");
         }
+        #endregion
 
+        #region Setup Selectables
         // Bloom
         sliderBloom = GameObject.Find("SliderBloom").GetComponent<Slider>();
         toggleBloom = GameObject.Find("ToggleBloom").GetComponent<Toggle>();
@@ -120,6 +131,7 @@ public class Options : MonoBehaviour
         // Camera
         sliderSensitivityPan = GameObject.Find("SliderSensitivityPan").GetComponent<Slider>();
         sliderSensitivityZoom = GameObject.Find("SliderSensitivityZoom").GetComponent<Slider>();
+        #endregion
 
         InitializeValues();
 
@@ -130,8 +142,6 @@ public class Options : MonoBehaviour
     {
         return goPostProcessing == null || goMenuMusic == null;
     }
-
-    private Resolution[] resolutions;
 
     private void InitializeResolutionsDropDown()
     {
@@ -171,47 +181,83 @@ public class Options : MonoBehaviour
         // Bloom
         OptionToggle optionToggleBloom = new OptionToggle(toggleBloom, menuColor);
         optionToggleBloom.Instance.isOn = ppBloom.enabled.value;
+        optionToggleBloom.Instance.onValueChanged.AddListener(delegate {
+            ToggleBloom();
+        });
 
         OptionSlider optionSliderBloom = new OptionSlider(sliderBloom, menuColor);
         optionSliderBloom.Instance.value = ppBloom.intensity.value;
         optionSliderBloom.Instance.interactable = toggleBloom.isOn;
+        optionSliderBloom.Instance.onValueChanged.AddListener(delegate {
+            SliderBloomUpdate();
+        });
 
         // Volume
         OptionSlider optionSliderVolumeMusic = new OptionSlider(sliderVolumeMusic, menuColor);
         optionSliderVolumeMusic.Instance.value = audioMenuMusic.volume;
+        optionSliderVolumeMusic.Instance.onValueChanged.AddListener(delegate {
+            SliderVolumeMusicUpdate();
+        });
 
         OptionSlider optionSliderVolumeSFX = new OptionSlider(sliderVolumeSFX, menuColor);
         optionSliderVolumeSFX.Instance.value = VolumeSFX;
+        optionSliderVolumeSFX.Instance.onValueChanged.AddListener(delegate {
+            SliderVolumeSFXUpdate();
+        });
 
         // Vignette
         OptionToggle optionToggleVignette = new OptionToggle(toggleVignette, menuColor);
         optionToggleVignette.Instance.isOn = ppVignette.enabled.value;
+        optionToggleVignette.Instance.onValueChanged.AddListener(delegate {
+            ToggleVignette();
+        });
 
         OptionSlider optionSliderVignette = new OptionSlider(sliderVignette, menuColor);
         optionSliderVignette.Instance.value = ppVignette.intensity.value;
+        optionSliderVignette.Instance.onValueChanged.AddListener(delegate {
+            SliderVignetteUpdate();
+        });
 
         // VSync
         OptionToggle optionToggleVSync = new OptionToggle(toggleVSync, menuColor);
         optionToggleVSync.Instance.isOn = QualitySettings.vSyncCount == 0 ? false : true;
+        optionToggleVSync.Instance.onValueChanged.AddListener(delegate {
+            ToggleVSync();
+        });
 
         // Fullscreen
         OptionToggle optionToggleFullscreen = new OptionToggle(toggleFullscreen, menuColor);
-        //optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
+        optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
+        optionToggleFullscreen.Instance.onValueChanged.AddListener(delegate {
+            ToggleFullScreen();
+        });
 
         // Camera
         OptionSlider optionSliderSensitivityPan = new OptionSlider(sliderSensitivityPan, menuColor);
         optionSliderSensitivityPan.Instance.value = SensitivityPan;
+        optionSliderSensitivityPan.Instance.onValueChanged.AddListener(delegate {
+            SliderSensitivityPanUpdate();
+        });
 
         OptionSlider optionSliderSenitivityZoom = new OptionSlider(sliderSensitivityZoom, menuColor);
         optionSliderSenitivityZoom.Instance.value = SensitivityZoom;
+        optionSliderSenitivityZoom.Instance.onValueChanged.AddListener(delegate {
+            SliderSensitivityZoomUpdate();
+        });
 
         // Resolutions
         OptionDropdown optionDropdownResolutions = new OptionDropdown(dropdownResolutions, menuColor);
         optionDropdownResolutions.Instance.value = dropdownResolutionIndex;
+        optionDropdownResolutions.Instance.onValueChanged.AddListener(delegate {
+            ChangeResolution();
+        });
 
         // Quality
         OptionDropdown optionDropdownQuality = new OptionDropdown(dropdownQuality, menuColor);
         optionDropdownQuality.Instance.value = QualitySettings.GetQualityLevel();
+        optionDropdownQuality.Instance.onValueChanged.AddListener(delegate {
+            ChangeQuality();
+        });
     }
 
     public void ChangeQuality()
@@ -274,7 +320,8 @@ public class Options : MonoBehaviour
         if (NotSetup())
             return;
 
-        audioMenuMusic.volume = sliderVolumeMusic.value;
+        VolumeMusic = sliderVolumeMusic.value;
+        audioMenuMusic.volume = VolumeMusic;
     }
 
     public void SliderVolumeSFXUpdate()
@@ -338,13 +385,5 @@ public class Options : MonoBehaviour
     public void BackToMenu()
     {
         SceneManager.LoadScene("Menu");
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("Menu");
-        }
     }
 }

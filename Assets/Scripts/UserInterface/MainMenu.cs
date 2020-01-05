@@ -9,8 +9,13 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        LoadSceneAsync("LoadingScreen");
+        LoadSceneAsync("Loading");
         Destroy(MenuMusicManager.MenuMusic);
+    }
+
+    public void LoadRoadmap()
+    {
+        LoadSceneAsync("Roadmap");
     }
 
     public void LoadOptions()

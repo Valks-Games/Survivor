@@ -13,9 +13,9 @@ public class Option
         this.selectable = selectable;
         this.color = color;
 
-        this.Colorize();
-
         this.selectable.gameObject.SetActive(false);
+        this.Colorize();
+        this.selectable.gameObject.SetActive(true);
     }
 
     public virtual void Colorize()
