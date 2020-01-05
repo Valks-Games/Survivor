@@ -63,7 +63,7 @@ public class Options : MonoBehaviour
 
     public void Start()
     {
-        #region Post Processing
+        #region Init:Post Processing
         goPostProcessing = DontDestroy.DontDestroyObjects[0];
 
         if (goPostProcessing != null)
@@ -81,7 +81,7 @@ public class Options : MonoBehaviour
         }
         #endregion
 
-        #region Menu Music
+        #region Init:Menu Music
         goMenuMusic = GameObject.Find("Menu Music");
         if (goMenuMusic != null)
         {
