@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 486654547508018491}
   - component: {fileID: 486654547508018485}
   - component: {fileID: 8011771010444863675}
+  - component: {fileID: 5809244339088846606}
   m_Layer: 8
   m_Name: Colonist
   m_TagString: Colonist
@@ -54,7 +55,6 @@ MonoBehaviour:
   HaltDrag: 1.75
   TargetStructure: {fileID: 0}
   AxePower: 10
-  MaxSpeed: 5
 --- !u!54 &8011771010444863675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -71,6 +71,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5809244339088846606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486654547508018484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da80d3660c2640409d60d7b4666bd49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Initialized: 0
+  Renderers: []
 --- !u!1 &7529126097558163316
 GameObject:
   m_ObjectHideFlags: 0
