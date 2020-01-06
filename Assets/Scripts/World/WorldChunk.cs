@@ -72,20 +72,22 @@ public class WorldChunk : MonoBehaviour
         int k = 0;
         for (int g = 0; g < vertices.Length / 4; g++)
         {
-            if (Random.Range(0f, 1f) < 0.5f)
+            
+            float noise = Mathf.PerlinNoise(g *.9f, (Mathf.Floor(g / (float) chunkSize) + g));
+            if (noise >= .3)
             {
                 for (int i = 0; i < dirt1.Length; i++)
                 {
                     uvs[i + k] = dirt1[i];
                 }
-            }
-            else
+            } else 
             {
                 for (int i = 0; i < dirt2.Length; i++)
                 {
-                    uvs[i + k] = dirt2[i];
+                        uvs[i + k] = dirt2[i];
                 }
             }
+
 
             k += 4;
         }
