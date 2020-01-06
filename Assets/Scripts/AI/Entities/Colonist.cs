@@ -25,7 +25,6 @@ public partial class Colonist : ResourceGatherer<Colonist>
         base.Update();
 
         float speedPercent = Mathf.Clamp01(rb.velocity.magnitude * 10);
-        Debug.Log(speedPercent);
         animator.SetFloat("speedPercent", speedPercent, 0.1f, Time.deltaTime);
     }
 
