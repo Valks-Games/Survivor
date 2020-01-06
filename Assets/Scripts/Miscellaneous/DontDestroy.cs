@@ -23,19 +23,6 @@ public class DontDestroy : MonoBehaviour
             AddSelf();
         }
 
-
-        /*DontDestroyObjects.ForEach(t => {
-            if (t.name == gameObject.name)
-            {    
-                Destroy(this);
-                return;
-            }
-        });
-
-        AddSelf();*/
-
-
-
     }
 
     private void AddSelf()

@@ -49,7 +49,8 @@ public class CameraController : MonoBehaviour
         HandleMoveKeys(inputHorz, inputVert);
         HandleTracking(inputHorz, inputVert);
         HandleZoom(inputScroll);
-        HandleDrag();
+        //HandleDrag(); Removed because of adding selection
+        
         HandleClicking();
     }
 
@@ -126,6 +127,8 @@ public class CameraController : MonoBehaviour
 
             lastTimeClicked = Time.time;
         }
+
+
     }
 
     private IEnumerator SlowDownLerp(float value = 0.02f, float transition = 1f, int iterations = 64)
