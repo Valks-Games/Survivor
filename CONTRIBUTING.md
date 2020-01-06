@@ -1,4 +1,6 @@
 # Contributing
+Make sure you are on the same [Unity Project Version](https://unity3d.com/unity/beta/2019.3#downloads). Here's a reference to the [Unity Scripting API](https://docs.unity3d.com/ScriptReference/).
+
 ## Opening an Issue.
 1. Gather as much information as you can about the topic (excl. questions)
 2. Read the General Guidelines ([#54](https://github.com/valkyrienyanko/Survivor/issues/54))
