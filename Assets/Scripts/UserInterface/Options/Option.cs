@@ -11,7 +11,7 @@ public class Option
     public Option(string name)
     {
         this.selectable = GameObject.Find(name).GetComponent<Selectable>();
-        this.color = new Color32(255, 255, 0, 255); // Default Color
+        this.color = new Color32(255, 255, 255, 255); // Default Color
 
         this.selectable.gameObject.SetActive(false); // Prevents visual color flash change
         this.Colorize();

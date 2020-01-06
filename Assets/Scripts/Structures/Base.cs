@@ -14,10 +14,6 @@ public class Base : Structure
 
     public Dictionary<Material, int> Resources = new Dictionary<Material, int>();
 
-    private Transform panel;
-    private TMP_Text stone;
-    private TMP_Text wood;
-
     public override void Awake()
     {
         base.Awake();
@@ -31,18 +27,11 @@ public class Base : Structure
             Resources.Add(resource, 0);
 
         base.Start();
-
-        panel = transform.Find("World Canvas").Find("Panel");
-        stone = panel.Find("Stone").GetComponent<TMP_Text>();
-        wood = panel.Find("Wood").GetComponent<TMP_Text>();
     }
 
     public void DepositResource(Material type, int amount)
     {
         Resources[type] += amount;
-
-        stone.text = "Stone: " + Resources[Material.Stone];
-        wood.text = "Wood: " + Resources[Material.Wood];
     }
 
     public void Upgrade()
@@ -52,9 +41,6 @@ public class Base : Structure
 
         Resources[Material.Wood] -= tier * costMultiplier;
         Resources[Material.Stone] -= tier * costMultiplier;
-
-        stone.text = "Stone: " + Resources[Material.Stone];
-        wood.text = "Wood: " + Resources[Material.Wood];
 
         tier++;
         Debug.Log("Upgraded base to tier " + tier);
