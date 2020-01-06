@@ -13,7 +13,6 @@ public class BottomPanel : MonoBehaviour
         UIVerticalLayout entityInfo = new UIVerticalLayout("Entity Information", elements.transform);
 
         UIText name = new UIText("Name", entityInfo.transform);
-        UIText stone = new UIText("Stone", entityInfo.transform);
-        UIText wood = new UIText("Wood", entityInfo.transform);
+        UIButton button = new UIButton("Button", entityInfo.transform);
     }
 }
