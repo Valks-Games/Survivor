@@ -3,7 +3,7 @@
 
 ## About
 ### Description
-Forage and explore infinite procedurally generated worlds in a unique RTS experience.
+Forage and explore infinite procedurally generated worlds in a unique RPG experience.
 
 ### Lore
 You crashland on the surface of a planet. You have nothing, you're alone, what do you do?
