@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class WorldChunk : MonoBehaviour
@@ -34,7 +33,7 @@ public class WorldChunk : MonoBehaviour
     {
         // Discrete Procedural Grid (2 vertices are never shared)
         Vector3 renderOffset = new Vector3(chunkX * chunkSize * cellSize, 0, chunkZ * chunkSize * cellSize);
-        
+
         vertices = new Vector3[chunkSize * chunkSize * 4];
         uvs = new Vector2[vertices.Length];
         triangles = new int[chunkSize * chunkSize * 6];
@@ -72,22 +71,21 @@ public class WorldChunk : MonoBehaviour
         int k = 0;
         for (int g = 0; g < vertices.Length / 4; g++)
         {
-            
-            float noise = Mathf.PerlinNoise(g *.9f, (Mathf.Floor(g / (float) chunkSize) + g));
+            float noise = Mathf.PerlinNoise(g * .9f, (Mathf.Floor(g / (float)chunkSize) + g));
             if (noise >= .3)
             {
                 for (int i = 0; i < dirt1.Length; i++)
                 {
                     uvs[i + k] = dirt1[i];
                 }
-            } else 
+            }
+            else
             {
                 for (int i = 0; i < dirt2.Length; i++)
                 {
-                        uvs[i + k] = dirt2[i];
+                    uvs[i + k] = dirt2[i];
                 }
             }
-
 
             k += 4;
         }

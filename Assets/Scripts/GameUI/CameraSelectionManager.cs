@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class CameraSelectionManager : MonoBehaviour {
-    
+public class CameraSelectionManager : MonoBehaviour
+{
     //Disabled until I find the inputkey for left click (I can't think I know)
     //[Header("Input")]
     //public string InputKey = "Mouse 0";
@@ -10,14 +10,16 @@ public class CameraSelectionManager : MonoBehaviour {
     public int SelectionBoxThickness = 1;
 
     public Color SelectionBoxColor = Color.cyan;
+
     [Header("Selected Circle")]
     public float SelectedCircleThickness = 0.03f;
+
     public float SelectedCircleRadius = 0.1f;
     public Color SelectedCircleColor = Color.cyan;
-    
 
     [Header("Textures")]
     private Texture2D _Border;
+
     public Texture2D Border
     {
         get
@@ -31,19 +33,16 @@ public class CameraSelectionManager : MonoBehaviour {
 
             return _Border;
         }
-        set
-        {
-            _Border = value;
-        }
+        set => _Border = value;
     }
 
-    private GameObject colliderEntity;
+    private readonly GameObject colliderEntity;
 
-    bool selectionEnabled;
-    Vector3 initialMousePosition;
-    private GUIStyle style;
+    private bool selectionEnabled;
+    private Vector3 initialMousePosition;
+    private readonly GUIStyle style;
 
-    public static List<CameraSelectable> Selectables = new List<CameraSelectable>(); 
+    public static List<CameraSelectable> Selectables = new List<CameraSelectable>();
     public static List<GameObject> Selected = new List<GameObject>();
 
     private void Update()
@@ -52,29 +51,27 @@ public class CameraSelectionManager : MonoBehaviour {
         {
             selectionEnabled = true;
             initialMousePosition = Input.mousePosition;
-        } else if (Input.GetKeyUp(KeyCode.Mouse0))
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             selectionEnabled = false;
         }
-        
+
         if (selectionEnabled)
         {
             List<GameObject> clone = new List<GameObject>(Selected);
 
             Bounds viewport = GetViewportBounds(Camera.main, initialMousePosition, Input.mousePosition);
 
-
-            foreach(CameraSelectable selectable in Selectables)
+            foreach (CameraSelectable selectable in Selectables)
             {
-
                 if (viewport.Contains(Camera.main.WorldToViewportPoint(selectable.transform.position)))
                 {
-                    
                     Selected.Add(selectable.gameObject);
                     selectable.gameObject.DrawCircle(SelectedCircleColor, SelectedCircleRadius, SelectedCircleThickness);
                     selectable.Initialized = true;
                 }
-                else 
+                else
                 {
                     if (selectable.GetComponent<LineRenderer>() != null) Destroy(selectable.GetComponent<LineRenderer>());
                     if (Selected.Contains(selectable.gameObject))
@@ -84,25 +81,16 @@ public class CameraSelectionManager : MonoBehaviour {
                     }
                 }
             }
-
-
-            
-
-
-            
         }
-        
     }
 
-private void OnGUI()
+    private void OnGUI()
     {
         if (selectionEnabled)
         {
             Rect selectionPane = GetSelectionRect(initialMousePosition, Input.mousePosition);
             DrawBorder(selectionPane, SelectionBoxThickness, SelectionBoxColor);
-
         }
-
     }
 
     private void DrawBorder(Rect rect, float thickness, Color color)
@@ -131,7 +119,6 @@ private void OnGUI()
         return Rect.MinMaxRect(minBounds.x, minBounds.y, maxBounds.x, maxBounds.y);
     }
 
-
     private Bounds GetViewportBounds(Camera view, Vector3 firstPos, Vector3 secondPos)
     {
         firstPos = view.ScreenToViewportPoint(firstPos);
@@ -143,10 +130,7 @@ private void OnGUI()
 
         Bounds endResult = new Bounds();
         endResult.SetMinMax(min, max);
-        
+
         return endResult;
     }
-
-
-
 }

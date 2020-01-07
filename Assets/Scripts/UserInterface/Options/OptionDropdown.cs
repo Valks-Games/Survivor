@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,6 @@ public class OptionDropdown : Option
 
     public OptionDropdown(string name) : base(name)
     {
-
     }
 
     public override void Colorize()

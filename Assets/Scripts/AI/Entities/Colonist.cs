@@ -28,7 +28,8 @@ public partial class Colonist : ResourceGatherer<Colonist>
         animator.SetFloat("speedPercent", speedPercent, 0.1f, Time.deltaTime);
     }
 
-    private IEnumerator WaitForWorldGeneration() {
+    private IEnumerator WaitForWorldGeneration()
+    {
         if (WorldGenerator.GeneratingWorld)
         {
             yield return new WaitForSeconds(0.01f);
@@ -38,7 +39,8 @@ public partial class Colonist : ResourceGatherer<Colonist>
     }
 }
 
-public partial class Colonist { 
+public partial class Colonist
+{
     private static GameObject _prefab = null;
 
     public static Colonist New(string name = "Colonist", Vector3? location = null, Faction faction = null)

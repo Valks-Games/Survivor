@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public abstract class StructureTask<T> : GameTask<T> where T: FactionMember<T>
+public abstract class StructureTask<T> : GameTask<T> where T : FactionMember<T>
 {
     public readonly string TargetStructure;
 

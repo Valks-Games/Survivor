@@ -1,4 +1,4 @@
-﻿using WorldAPI.Items;
+using WorldAPI.Items;
 
 namespace WorldAPI.Resources
 {
@@ -6,7 +6,6 @@ namespace WorldAPI.Resources
     {
         public Resource(string name) : base(name)
         {
-            
         }
     }
 }

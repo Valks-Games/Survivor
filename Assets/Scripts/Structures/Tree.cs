@@ -12,6 +12,5 @@ public class Tree : StructureResource
     public override void Start()
     {
         base.Start();
-        
     }
 }

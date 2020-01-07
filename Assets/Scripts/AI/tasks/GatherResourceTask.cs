@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<T>
+public class GatherResourceTask<T> : StructureTask<T> where T : ResourceGatherer<T>
 {
     private readonly Material type;
 
@@ -20,9 +20,9 @@ public class GatherResourceTask<T> : StructureTask<T> where T: ResourceGatherer<
             Target.AssignTask(new DropOffResourcesTask<T>());
             yield break;
         }
-        
+
         Structure structureComponent = Target.TargetStructure.gameObject.GetComponent<Structure>();
-        Target.Inventory.Items[type] += ((StructureResource) structureComponent).GatherResource(Target.AxePower, Target.Inventory.Items[type], Target.Inventory.MaxSize);
+        Target.Inventory.Items[type] += ((StructureResource)structureComponent).GatherResource(Target.AxePower, Target.Inventory.Items[type], Target.Inventory.MaxSize);
 
         if (Target.Inventory.Items[type] < Target.Inventory.MaxSize)
             Target.QueueTask(new GatherResourceTask<T>(type));

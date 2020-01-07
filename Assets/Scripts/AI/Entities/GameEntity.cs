@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using WorldAPI.Entities;
-using System;
 
-public abstract class GameEntity<T> : Entity<T> where T: GameEntity<T>
+public abstract class GameEntity<T> : Entity<T> where T : GameEntity<T>
 {
     public Transform TargetStructure;
 

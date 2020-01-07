@@ -17,14 +17,18 @@ public class Structure : MonoBehaviour
         _world = GameObject.Find("World");
     }
 
-    public void SetParent(string parent) =>
+    public void SetParent(string parent)
+    {
         transform.parent = _world.transform.Find(parent);
+    }
 
-    public void SetName(string name) =>
+    public void SetName(string name)
+    {
         transform.name = name;
+    }
 
-
-
-    public void Destroy() =>
+    public void Destroy()
+    {
         Destroy(gameObject);
+    }
 }

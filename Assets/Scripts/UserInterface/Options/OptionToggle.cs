@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.UI;
 
 public class OptionToggle : Option
@@ -7,6 +6,5 @@ public class OptionToggle : Option
 
     public OptionToggle(string name) : base(name)
     {
-
     }
 }

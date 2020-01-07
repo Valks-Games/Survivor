@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
 
     public float ScrollLerp = 0.05f;
     public float TrackingLerp = 0.02f;
-    
 
     private Transform trackingTarget = null;
     private Vector3 dragOrigin;
@@ -50,7 +49,7 @@ public class CameraController : MonoBehaviour
         HandleTracking(inputHorz, inputVert);
         HandleZoom(inputScroll);
         //HandleDrag(); Removed because of adding selection
-        
+
         HandleClicking();
     }
 
@@ -67,7 +66,7 @@ public class CameraController : MonoBehaviour
 
         Vector3 pos = transform.position;
         pos.y = 10 - currentZoom * SpeedScroll;
-        transform.position = pos; 
+        transform.position = pos;
     }
 
     private void HandleDrag()
@@ -105,7 +104,6 @@ public class CameraController : MonoBehaviour
 
             if (hit.collider != null)
             {
-
                 trackingTarget = hit.collider.transform;
                 StartCoroutine(SlowDownLerp());
                 zoom = 0;
@@ -127,8 +125,6 @@ public class CameraController : MonoBehaviour
 
             lastTimeClicked = Time.time;
         }
-
-
     }
 
     private IEnumerator SlowDownLerp(float value = 0.02f, float transition = 1f, int iterations = 64)

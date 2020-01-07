@@ -7,7 +7,6 @@ public class OptionSlider : Option
 
     public OptionSlider(string name) : base(name)
     {
-        
     }
 
     public override void Colorize()

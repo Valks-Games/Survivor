@@ -5,7 +5,7 @@ using WorldAPI.Tasks;
 
 namespace WorldAPI.Entities
 {
-    public partial class Entity<TType> : TaskedBehaviour<TType> where TType: Entity<TType>
+    public partial class Entity<TType> : TaskedBehaviour<TType> where TType : Entity<TType>
     {
         public int Health = 1;
         public int MaxHealth = 1;
@@ -38,7 +38,7 @@ namespace WorldAPI.Entities
             {
                 rb.drag = WalkDrag;
                 rb.AddForce(((Vector3)Target - transform.position).normalized * Speed * Time.deltaTime);
-                Vector3 newDir = Vector3.RotateTowards(transform.position, (Vector3) Target, Speed * Time.deltaTime, 0.0f);
+                Vector3 newDir = Vector3.RotateTowards(transform.position, (Vector3)Target, Speed * Time.deltaTime, 0.0f);
                 if (rb.velocity.sqrMagnitude != 0)
                 {
                     transform.rotation = Quaternion.LookRotation(newDir);
@@ -46,30 +46,42 @@ namespace WorldAPI.Entities
 
                 return;
             }
-            
+
             rb.drag = HaltDrag;
             Target = null;
         }
 
-        public void MoveTowards(Vector3 target) => 
+        public void MoveTowards(Vector3 target)
+        {
             Target = target;
+        }
 
-        public void MoveTowards<TTarget>(TTarget target) where TTarget : Component =>
+        public void MoveTowards<TTarget>(TTarget target) where TTarget : Component
+        {
             Target = target.transform.position;
+        }
 
-        public void TeleportTo(Vector3 target) =>
+        public void TeleportTo(Vector3 target)
+        {
             transform.position = target;
+        }
 
-        public void TeleportTo<TTarget>(TTarget target) where TTarget : Component =>
+        public void TeleportTo<TTarget>(TTarget target) where TTarget : Component
+        {
             transform.position = target.transform.position;
+        }
 
-        public bool IsAt(Vector3 target) =>
-            (target - transform.position).sqrMagnitude <= InteractionRange * InteractionRange;
+        public bool IsAt(Vector3 target)
+        {
+            return (target - transform.position).sqrMagnitude <= InteractionRange * InteractionRange;
+        }
 
-        public bool IsAt<TTarget>(TTarget target) where TTarget : Component =>
-            IsAt(target.transform.position);
+        public bool IsAt<TTarget>(TTarget target) where TTarget : Component
+        {
+            return IsAt(target.transform.position);
+        }
 
-        public TTarget Nearest<TTarget>(List<TTarget> targets = null) where TTarget: Component
+        public TTarget Nearest<TTarget>(List<TTarget> targets = null) where TTarget : Component
         {
             TTarget closest = null;
             float minimumDistance = Mathf.Infinity;

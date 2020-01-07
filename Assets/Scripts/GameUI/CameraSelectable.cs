@@ -1,5 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraSelectable : MonoBehaviour
@@ -16,12 +14,12 @@ public class CameraSelectable : MonoBehaviour
             if (bounds.center == Vector3.zero)
             {
                 bounds = Renderers[0].bounds;
-            } else 
+            }
+            else
             {
                 bounds.Encapsulate(Renderers[i].bounds);
             }
         }
-    
 
         return bounds;
     }
@@ -36,5 +34,4 @@ public class CameraSelectable : MonoBehaviour
     {
         CameraSelectionManager.Selectables.Remove(this);
     }
-    
 }

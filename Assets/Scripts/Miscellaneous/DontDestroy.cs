@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
@@ -15,14 +15,15 @@ public class DontDestroy : MonoBehaviour
         }
 
         GameObject foundObject = DontDestroyObjects.Where(t => t.name == gameObject.name).First();
-        
+
         if (foundObject != null)
         {
             Destroy(this);
-        } else {
+        }
+        else
+        {
             AddSelf();
         }
-
     }
 
     private void AddSelf()

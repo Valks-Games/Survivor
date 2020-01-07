@@ -7,7 +7,6 @@ public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGather
 {
     public DropOffResourcesTask() : base("Bases", "DropOffResources")
     {
-
     }
 
     protected override IEnumerator Run()
@@ -29,7 +28,7 @@ public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGather
             Target.QueueTask(new DropOffResourcesTask<T>());
             yield break;
         }
-        
+
         Dictionary<Material, int> reqResources = Target.Base.ResourcesRequired;
 
         if (reqResources[Material.Wood] > reqResources[Material.Stone])
