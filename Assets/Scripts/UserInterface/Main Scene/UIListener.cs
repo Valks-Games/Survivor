@@ -33,15 +33,23 @@ public class UIListener : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Minus))
         {
             CurrentGameSpeed -= 0.1f;
+            Time.timeScale = CurrentGameSpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.Equals))
         {
             CurrentGameSpeed += 0.1f;
+            Time.timeScale = CurrentGameSpeed;
         }
 
-        CurrentGameSpeed = Mathf.Max(0.25f, CurrentGameSpeed);
-        CurrentGameSpeed = Mathf.Min(3.00f, CurrentGameSpeed);
+        if (Input.GetKeyDown(KeyCode.Alpha0)) 
+        {
+            CurrentGameSpeed = 1f;
+            Time.timeScale = CurrentGameSpeed;
+        }
+
+        CurrentGameSpeed = Mathf.Max(0.5f, CurrentGameSpeed);
+        CurrentGameSpeed = Mathf.Min(3f, CurrentGameSpeed);
     }
 
     private void HandleMenu()

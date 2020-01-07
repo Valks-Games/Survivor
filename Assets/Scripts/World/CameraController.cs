@@ -55,7 +55,9 @@ public class CameraController : MonoBehaviour
 
     private void HandleMoveKeys(float inputHorz, float inputVert)
     {
-        transform.position += new Vector3(inputHorz * SpeedPan * Time.deltaTime, 0, inputVert * SpeedPan * Time.deltaTime);
+        float horzSpeed = inputHorz * SpeedPan * (Time.unscaledDeltaTime);
+        float vertSpeed = inputVert * SpeedPan * (Time.unscaledDeltaTime);
+        transform.position += new Vector3(horzSpeed, 0, vertSpeed);
     }
 
     private void HandleZoom(float inputScroll)
