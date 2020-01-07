@@ -14,7 +14,7 @@ We are looking for people with the following skills.
 - 3D Modeling / Animations
 - Music / SFX
 
-If you're interested please talk to **valk#3277** through Discord.
+If you're interested in joining the team, please talk to **valk#3277** through Discord.
 
 [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md)
 
