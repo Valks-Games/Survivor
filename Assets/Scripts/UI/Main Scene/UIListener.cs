@@ -18,9 +18,9 @@ public class UIListener : MonoBehaviour
         menu.SetActive(menuActive);
     }
 
-    public void Update()
-    {
+    public void Update()   {
         //HandleUIPopUps();
+
         HandleMenu();
         HandleChangeGameSpeed();
 

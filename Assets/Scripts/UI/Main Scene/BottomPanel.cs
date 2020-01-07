@@ -6,7 +6,8 @@ public class BottomPanel : MonoBehaviour
     {
         GameObject screenCanvas = GameObject.Find("Screen Canvas");
         Transform panel = screenCanvas.transform.Find("Panel");
-        //
+        // Test
+
         UIHorizontalLayout elements = new UIHorizontalLayout("Elements", panel);
         UIVerticalLayout entityInfo = new UIVerticalLayout("Entity Information", elements.transform);
 
