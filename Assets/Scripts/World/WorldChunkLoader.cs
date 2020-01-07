@@ -24,12 +24,10 @@ public class WorldChunkLoader : MonoBehaviour
     }
 
     private void LoadChunk(int posX, int posZ, int offsetX, int offsetZ) {
-        //Debug.Log("X: " + (posX + offsetX) + ", Z: " + (posZ + offsetZ));
         if (!GetChunk(posX + offsetX, posZ + offsetZ))
         {
             GameObject chunk = new GameObject("Chunk " + (posX + offsetX) + " " + (posZ + offsetZ));
             chunk.transform.parent = gameObject.transform;
-            //chunk.transform.position = new Vector3((posX + offsetX) * chunkSize, 0, (posZ + offsetZ) * chunkSize);
 
             WorldChunk renderChunk = chunk.AddComponent<WorldChunk>();
             renderChunk.Generate(posX + offsetX, posZ + offsetZ);
@@ -63,24 +61,20 @@ public class WorldChunkLoader : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadChunks() {
+    private IEnumerator LoadChunks(int dist) {
         while (checkChunks)
         {
             Vector3 position = cameraTransform.position;
-            int posX = (int)position.x / (int) (WorldGenerator.ChunkSize * WorldGenerator.CellSize);
-            int posZ = (int)position.z / (int) (WorldGenerator.ChunkSize * WorldGenerator.CellSize);
+            int posX = (int) ((position.x / (WorldGenerator.ChunkSize * WorldGenerator.CellSize)) - 0.5f);
+            int posZ = (int) ((position.z / (WorldGenerator.ChunkSize * WorldGenerator.CellSize)) - 0.5f);
 
-            //Debug.Log("X: " + posX + ", Z: " + posZ);
-
-            LoadChunk(posX, posZ, 0, 0);
-            LoadChunk(posX, posZ, 1, 0);
-            LoadChunk(posX, posZ, 0, 1);
-            LoadChunk(posX, posZ, -1, 0);
-            LoadChunk(posX, posZ, 0, -1);
-            LoadChunk(posX, posZ, 1, 1);
-            LoadChunk(posX, posZ, -1, -1);
-            LoadChunk(posX, posZ, -1, 1);
-            LoadChunk(posX, posZ, 1, -1);
+            for (int x = -dist; x < dist; x++) 
+            {
+                for (int z = -dist; z < dist; z++) 
+                {
+                    LoadChunk(posX, posZ, x, z);
+                }
+            }
 
             yield return new WaitForSeconds(1f);
         }
@@ -90,7 +84,7 @@ public class WorldChunkLoader : MonoBehaviour
     {
         if (Started) {
             Started = false;
-            StartCoroutine(LoadChunks());
+            StartCoroutine(LoadChunks(3));
             //StartCoroutine(UnloadChunks(chunkSize * 3));
         }
     }
