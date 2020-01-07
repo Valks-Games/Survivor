@@ -19,6 +19,6 @@ If you're interested in joining the team, please talk to **valk#3277** through D
 [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md)
 
 ## Roadmap
-- [ ] Infinite Procedural Terrain Generation
+- [x] Infinite Procedural Terrain Generation
 - [ ] Structure Grid Placement
 - [ ] Inventory Management
