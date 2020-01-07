@@ -6,6 +6,7 @@ public class WorldChunkLoader : MonoBehaviour
 {
     private WorldGenerator world;
     private int chunkSize;
+    private float cellSize;
 
     public static bool Started = false;
     private bool checkChunks = true;
@@ -16,6 +17,7 @@ public class WorldChunkLoader : MonoBehaviour
     {
         world = GetComponent<WorldGenerator>();
         chunkSize = WorldGenerator.ChunkSize;
+        cellSize = WorldGenerator.CellSize;
         cameraTransform = Camera.main.transform;
     }
 
@@ -43,7 +45,7 @@ public class WorldChunkLoader : MonoBehaviour
         }
     }
 
-    private IEnumerator UnloadChunks(int dist)
+    private IEnumerator UnloadChunks(float dist)
     {
         while (checkChunks)
         {
@@ -52,7 +54,12 @@ public class WorldChunkLoader : MonoBehaviour
             for (int i = 0; i < childCount; i++) {
                 Transform chunk = transform.GetChild(i);
                 
-                if (Vector3.Distance(cameraTransform.position, chunk.position) >= dist) {
+                Vector3 vecToTarget = cameraTransform.position - chunk.position;
+                vecToTarget.y = 0;
+
+                Debug.Log(vecToTarget.magnitude);
+
+                if (vecToTarget.magnitude >= dist) {
                     Destroy(chunk.gameObject);
                 }
             }
@@ -65,8 +72,8 @@ public class WorldChunkLoader : MonoBehaviour
         while (checkChunks)
         {
             Vector3 position = cameraTransform.position;
-            int posX = (int) ((position.x / (WorldGenerator.ChunkSize * WorldGenerator.CellSize)) - 0.5f);
-            int posZ = (int) ((position.z / (WorldGenerator.ChunkSize * WorldGenerator.CellSize)) - 0.5f);
+            int posX = (int) ((position.x / (chunkSize * cellSize)) - 0.5f);
+            int posZ = (int) ((position.z / (chunkSize * cellSize)) - 0.5f);
 
             for (int x = -dist; x < dist; x++) 
             {
@@ -84,8 +91,8 @@ public class WorldChunkLoader : MonoBehaviour
     {
         if (Started) {
             Started = false;
-            StartCoroutine(LoadChunks(3));
-            //StartCoroutine(UnloadChunks(chunkSize * 3));
+            StartCoroutine(LoadChunks(1));
+            //StartCoroutine(UnloadChunks((chunkSize * cellSize * 3) - 0.5f));
         }
     }
 }
