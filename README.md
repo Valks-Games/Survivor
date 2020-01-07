@@ -1,5 +1,5 @@
 # Survivor
-![Preview](preview.gif)
+<!--Preview is oudated. Commented out for now. ![Preview](preview.gif)-->
 
 ## About
 ### Description
