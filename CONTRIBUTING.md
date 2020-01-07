@@ -16,13 +16,13 @@ Not all extensions are required for development but I highly recommend you at le
 - [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) (Real-time collaboration through the VSC editor)
 - [Discord Presence](https://marketplace.visualstudio.com/items?itemName=icrawl.discord-vscode) (Shows others what your working on)
 
-## Opening an Issue.
+## Opening an Issue
 1. Gather as much information as you can about the topic (excl. questions)
 2. Read the General Guidelines ([#54](https://github.com/valkyrienyanko/Survivor/issues/54))
 3. Open an issue with a predefined template
 4. Provice as much context as possible in your issue!
 
-## Creating a Pull Request.
+## Creating a Pull Request
 1. Always test the application to see if it works as intended with no additional bugs you may be adding!
 2. State all the changes you made in the PR, not everyone will understand what you've done!
 
@@ -39,7 +39,10 @@ Always consult the leader of the project before introducing new concepts.
 
 ## Animations
 ### Mixamo Humanoids
-Keep the format .FBX for Unity at 30 Frames with no keyframe reduction and check off "In Place" if applicable. Import the .FBX into Blender, then delete the imported armature. Apply the new animation to the original armature. Make sure your applying the animation to the "Armature" and not the "Cube". Export the Blender file to .FBX, import into Unity, set the scale factor to 0.1, set the animation type to Humanoid, go into configure, sample Bind-Pose, then enforce T-Pose, and finally enable Loop Time for all animations.
+1. Keep the format .FBX for Unity at 30 Frames with no keyframe reduction and check off "In Place" if applicable. 
+2. Import the .FBX into Blender, then delete the imported armature. 
+3. Apply the new animation to the original armature. Make sure your applying the animation to the "Armature" and not the "Cube". 
+4. Export the Blender file to .FBX, import into Unity, set the scale factor to 0.1, set the animation type to Humanoid, go into configure, sample Bind-Pose, then enforce T-Pose, and finally enable Loop Time for all animations.
 
 ## Useful Links
 - [Unity Scripting Reference](https://docs.unity3d.com/ScriptReference/)
