@@ -8,29 +8,17 @@ Forage and explore infinite procedurally generated worlds in a unique RTS experi
 ### Lore
 You crashland on the surface of a planet. You have nothing, you're alone, what do you do?
 
-## Setup
-The project is currently on Unity version `2019.3.0f3`. Clone the project, add it to Unity's Hub and launch it.
-
-## Releases
-See the [current releases](https://github.com/valkyrienyanko/Survivor/releases).
-
 ## Contributing
-If you have any of the following skills then this project may be for you.
+We are looking for people with the following skills.
 - Unity Scripting
-- 3D Modeling
+- 3D Modeling / Animations
 - Music / SFX
 
 If you're interested please talk to **valk#3277** through Discord.
 
-See [CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md) and the projects [issues](https://github.com/valkyrienyanko/Survivor/issues).
+[CONTRIBUTING.md](https://github.com/valkyrienyanko/Survivor/blob/master/CONTRIBUTING.md)
 
 ## Roadmap
-- [x] 3 Dimensional World
-- [ ] Custom/Better 3D Graphics
-  - [ ] Blender Animations
-- [ ] Character Customization
-- [ ] Infinite & Better World Generation
-- [ ] Entity Equipment & Interaction
-  - [ ] Commanding & Selecting Units
-- [ ] Factions & Faction Relations
-- [ ] Sound Effects & Game Music
+- [ ] Infinite Procedural Terrain Generation
+- [ ] Structure Grid Placement
+- [ ] Inventory Management
