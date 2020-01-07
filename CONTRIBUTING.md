@@ -2,7 +2,7 @@
 Make sure you are on the same [Unity Project Version](https://unity3d.com/unity/beta/2019.3#downloads).
 
 ## Setting up Visual Studio Code
-Throughout my development career, I've worked with several different editors and IDE's. Intellisense, Atom, Notepad++, and Eclipse to name a few. With experience I can now say that Visual Studio Code is my favorite editor and it's what I will be recommending you to use for contributing to this project.
+Throughout my development career, I've worked with several different editors and IDE's. JetBrains, Atom, Notepad++, and Eclipse to name a few. With experience I can now say that Visual Studio Code is my favorite editor and it's what I will be recommending you to use for contributing to this project.
 
 ### Installing VSC
 1. Download and Install [Visual Studio Code](https://code.visualstudio.com)
