@@ -10,8 +10,8 @@ public class WorldChunk : MonoBehaviour
     private Vector2[] uvs;
     private int[] triangles;
 
-    private readonly float cellSize = 0.25f;
-    private readonly int chunkSize = 11;
+    private float cellSize;
+    private int chunkSize;
 
     private GameObject prefabTree;
     private GameObject prefabRock;
@@ -22,6 +22,8 @@ public class WorldChunk : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         prefabTree = WorldGenerator.prefabTree;
         prefabRock = WorldGenerator.prefabRock;
+        chunkSize = WorldGenerator.ChunkSize;
+        cellSize = WorldGenerator.CellSize;
     }
 
     public void Start()

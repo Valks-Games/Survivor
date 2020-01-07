@@ -17,6 +17,9 @@ public class WorldGenerator : MonoBehaviour
     [HideInInspector] public const int Rows = 100;
     [HideInInspector] public const float BaseMinimumDistance = 32;
 
+    public static int ChunkSize = 11;
+    public static float CellSize = 0.25f;
+
     public void Awake()
     {
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
@@ -27,7 +30,7 @@ public class WorldGenerator : MonoBehaviour
 
     public void Start()
     {
-        GenerateSpawn(1);
+        //GenerateSpawn(1);
         AddFaction(GetPoint(Rows / 2, Columns / 2)); // Temp
         //AddFactions(BaseMinimumDistance);
 
@@ -39,6 +42,7 @@ public class WorldGenerator : MonoBehaviour
         }
 
         GeneratingWorld = false;
+        WorldChunkLoader.Started = true;
     }
 
     private List<Transform> RetrieveList(string type)
