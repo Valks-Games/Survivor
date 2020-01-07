@@ -59,6 +59,7 @@ sysinfo.txt
 crashlytics-build.properties
 
 .vscode/settings.json
+.vscode/launch.json
 Assets/Scenes/MainSettings.lighting
 Assets/Scenes/MainSettings.lighting.meta
 UserSettings/EditorUserSettings.asset
