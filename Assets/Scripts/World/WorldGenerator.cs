@@ -30,9 +30,7 @@ public class WorldGenerator : MonoBehaviour
 
     public void Start()
     {
-        //GenerateSpawn(1);
-        AddFaction(GetPoint(Rows / 2, Columns / 2)); // Temp
-        //AddFactions(BaseMinimumDistance);
+        GenerateSpawn(1);
 
         if (StructureList.Count == 0)
         {
@@ -40,6 +38,10 @@ public class WorldGenerator : MonoBehaviour
             StructureList.Add("Rocks", RetrieveList("Rocks"));
             StructureList.Add("Bases", RetrieveList("Bases"));
         }
+
+        // Generate spawn with resources first otherwise colonists will complain that they can't find resources.
+        AddFaction(GetPoint(Rows / 2, Columns / 2)); // Temp
+        //AddFactions(BaseMinimumDistance);
 
         GeneratingWorld = false;
         WorldChunkLoader.Started = true;
