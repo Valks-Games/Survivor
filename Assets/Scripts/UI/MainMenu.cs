@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
             FirstTime = false;
             SetResolution();
             SetQuality();
+            SetFullscreen();
         }
     }
 
@@ -31,6 +32,13 @@ public class MainMenu : MonoBehaviour
             return;
         int index = PlayerPrefs.GetInt("options.quality");
         QualitySettings.SetQualityLevel(index);
+    }
+
+    private void SetFullscreen()
+    {
+        if (!PlayerPrefs.HasKey("options.fullscreen"))
+            return;
+        Screen.fullScreen = PlayerPrefsX.GetBool("options.fullscreen");
     }
 
     public void StartGame()
