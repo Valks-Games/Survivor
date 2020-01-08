@@ -20,12 +20,18 @@ public class WorldGenerator : MonoBehaviour
     public static int ChunkSize = 11;
     public static float CellSize = 0.25f;
 
+    public static Category CategoryChunks;
+    public static Category CategoryColonists;
+
     public void Awake()
     {
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
         prefabRock = Resources.Load("Prefabs/Rock") as GameObject;
         prefabBase = Resources.Load("Prefabs/Base") as GameObject;
         World = gameObject;
+
+        CategoryChunks = new Category("Chunks", transform);
+        CategoryColonists = new Category("Colonists", transform);
     }
 
     public void Start()
@@ -51,7 +57,7 @@ public class WorldGenerator : MonoBehaviour
     {
         List<Transform> list = new List<Transform>();
 
-        Transform parent = transform.Find(type);
+        Transform parent = WorldGenerator.CategoryChunks.Transform.Find("Chunk 0 0").Find("Structures").Find(type);
 
         foreach (Transform child in parent)
             list.Add(child);

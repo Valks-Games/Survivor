@@ -13,6 +13,8 @@ public partial class Colonist : ResourceGatherer<Colonist>
         Health = 10 + Random.Range(0, 5);
         MaxHealth = Health;
 
+        transform.parent = WorldGenerator.CategoryColonists.Transform;
+
         Damage = 1 + Random.Range(0, 3);
 
         StartCoroutine(WaitForWorldGeneration());

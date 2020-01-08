@@ -10,11 +10,18 @@ public class WorldChunk : MonoBehaviour
     private Vector2[] uvs;
     private int[] triangles;
 
+    private Transform chunks;
+
     private float cellSize;
     private int chunkSize;
 
     private GameObject prefabTree;
     private GameObject prefabRock;
+
+    public Category CategoryStructures;
+    public Category CategoryRocks;
+    public Category CategoryTrees;
+    public Category CategoryBases;
 
     public void Awake()
     {
@@ -24,6 +31,15 @@ public class WorldChunk : MonoBehaviour
         prefabRock = WorldGenerator.prefabRock;
         chunkSize = WorldGenerator.ChunkSize;
         cellSize = WorldGenerator.CellSize;
+
+        // Setup layout
+        CategoryStructures = new Category("Structures", transform);
+        CategoryTrees = new Category("Trees", CategoryStructures.Transform);
+        CategoryRocks = new Category("Rocks", CategoryStructures.Transform);
+        CategoryBases = new Category("Bases", CategoryStructures.Transform);
+
+        chunks = WorldGenerator.CategoryChunks.Transform;
+        transform.parent = chunks;
     }
 
     public void Start()
@@ -120,12 +136,12 @@ public class WorldChunk : MonoBehaviour
                     if (Random.Range(0f, 1f) < 0.5f)
                     {
                         GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
-                        go.transform.parent = WorldGenerator.World.transform.Find("Trees");
+                        go.transform.parent = CategoryTrees.Transform;
                     }
                     else
                     {
                         GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
-                        go.transform.parent = WorldGenerator.World.transform.Find("Rocks");
+                        go.transform.parent = CategoryRocks.Transform;
                     }
                 }
             }
