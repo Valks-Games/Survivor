@@ -4,14 +4,22 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public static bool FirstTime = true;
+
     public void Awake()
     {
-        SetResolution();
-        SetQuality();
+        if (FirstTime)
+        {
+            FirstTime = false;
+            SetResolution();
+            SetQuality();
+        }
     }
 
     private void SetResolution()
     {
+        if (!PlayerPrefs.HasKey("options.resolution"))
+            return;
         Resolution[] resolutions = Screen.resolutions;
         int index = PlayerPrefs.GetInt("options.resolution");
         Screen.SetResolution(resolutions[index].width, resolutions[index].height, Screen.fullScreen);
@@ -19,6 +27,8 @@ public class MainMenu : MonoBehaviour
 
     private void SetQuality()
     {
+        if (!PlayerPrefs.HasKey("options.quality"))
+            return;
         int index = PlayerPrefs.GetInt("options.quality");
         QualitySettings.SetQualityLevel(index);
     }

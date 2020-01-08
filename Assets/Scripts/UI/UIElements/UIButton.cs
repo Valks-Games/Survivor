@@ -13,7 +13,6 @@ public class UIButton : UIElement
         gameObject.name = content;
         rectTransform = gameObject.AddComponent<RectTransform>();
         image = gameObject.AddComponent<Image>();
-        image.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
         image.type = Image.Type.Sliced;
         button = gameObject.AddComponent<Button>();
         rectTransform.sizeDelta = new Vector2(120, 30);

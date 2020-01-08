@@ -5,8 +5,10 @@ public class OptionDropdown : Option
 {
     public Dropdown Instance => (Dropdown)Selectable;
 
-    public OptionDropdown(string name) : base(name)
+    public OptionDropdown(string name, string path, int value = 0) : base(name)
     {
+        Save(path, value);
+        Instance.value = PlayerPrefs.GetInt(path);
     }
 
     public override void Colorize()
