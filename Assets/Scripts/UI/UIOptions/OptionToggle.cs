@@ -7,7 +7,6 @@ public class OptionToggle : Option
 
     public OptionToggle(string name) : base(name)
     {
-
     }
 
     public void Save(string path, bool value)

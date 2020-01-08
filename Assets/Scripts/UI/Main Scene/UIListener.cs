@@ -18,7 +18,8 @@ public class UIListener : MonoBehaviour
         menu.SetActive(menuActive);
     }
 
-    public void Update()   {
+    public void Update()
+    {
         //HandleUIPopUps();
 
         HandleMenu();
@@ -42,7 +43,7 @@ public class UIListener : MonoBehaviour
             Time.timeScale = CurrentGameSpeed;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha0)) 
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             CurrentGameSpeed = 1f;
             Time.timeScale = CurrentGameSpeed;

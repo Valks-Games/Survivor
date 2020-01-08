@@ -1,18 +1,19 @@
-﻿// ArrayPrefs2 v 1.4
+// ArrayPrefs2 v 1.4
 
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerPrefsX
 {
-    static private int endianDiff1;
-    static private int endianDiff2;
-    static private int idx;
-    static private byte[] byteBlock;
+    private static int endianDiff1;
+    private static int endianDiff2;
+    private static int idx;
+    private static byte[] byteBlock;
 
-    enum ArrayType { Float, Int32, Bool, String, Vector2, Vector3, Quaternion, Color }
+    private enum ArrayType
+    { Float, Int32, Bool, String, Vector2, Vector3, Quaternion, Color }
 
     public static bool SetBool(String name, bool value)
     {
@@ -39,8 +40,7 @@ public class PlayerPrefsX
 
     public static long GetLong(string key, long defaultValue)
     {
-        int lowBits, highBits;
-        SplitLong(defaultValue, out lowBits, out highBits);
+        SplitLong(defaultValue, out int lowBits, out int highBits);
         lowBits = PlayerPrefs.GetInt(key + "_lowBits", lowBits);
         highBits = PlayerPrefs.GetInt(key + "_highBits", highBits);
 
@@ -70,8 +70,7 @@ public class PlayerPrefsX
 
     public static void SetLong(string key, long value)
     {
-        int lowBits, highBits;
-        SplitLong(value, out lowBits, out highBits);
+        SplitLong(value, out int lowBits, out int highBits);
         PlayerPrefs.SetInt(key + "_lowBits", lowBits);
         PlayerPrefs.SetInt(key + "_highBits", highBits);
     }
@@ -81,7 +80,7 @@ public class PlayerPrefsX
         return SetFloatArray(key, new float[] { vector.x, vector.y });
     }
 
-    static Vector2 GetVector2(String key)
+    private static Vector2 GetVector2(String key)
     {
         var floatArray = GetFloatArray(key);
         if (floatArray.Length < 2)

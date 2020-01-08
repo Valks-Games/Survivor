@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class WorldChunkLoader : MonoBehaviour
@@ -9,7 +8,7 @@ public class WorldChunkLoader : MonoBehaviour
     private float cellSize;
 
     public static bool Started = false;
-    private bool checkChunks = true;
+    private readonly bool checkChunks = true;
 
     private Transform cameraTransform;
 
@@ -21,11 +20,13 @@ public class WorldChunkLoader : MonoBehaviour
         cameraTransform = Camera.main.transform;
     }
 
-    private GameObject GetChunk(int x, int z) {
+    private GameObject GetChunk(int x, int z)
+    {
         return GameObject.Find("Chunk " + x + " " + z);
     }
 
-    private void LoadChunk(int posX, int posZ, int offsetX, int offsetZ) {
+    private void LoadChunk(int posX, int posZ, int offsetX, int offsetZ)
+    {
         if (!GetChunk(posX + offsetX, posZ + offsetZ))
         {
             GameObject chunk = new GameObject("Chunk " + (posX + offsetX) + " " + (posZ + offsetZ));
@@ -51,15 +52,17 @@ public class WorldChunkLoader : MonoBehaviour
         {
             int childCount = transform.childCount;
 
-            for (int i = 0; i < childCount; i++) {
+            for (int i = 0; i < childCount; i++)
+            {
                 Transform chunk = transform.GetChild(i);
-                
+
                 Vector3 vecToTarget = cameraTransform.position - chunk.position;
                 vecToTarget.y = 0;
 
                 Debug.Log(vecToTarget.magnitude);
 
-                if (vecToTarget.magnitude >= dist) {
+                if (vecToTarget.magnitude >= dist)
+                {
                     Destroy(chunk.gameObject);
                 }
             }
@@ -68,16 +71,17 @@ public class WorldChunkLoader : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadChunks(int dist) {
+    private IEnumerator LoadChunks(int dist)
+    {
         while (checkChunks)
         {
             Vector3 position = cameraTransform.position;
-            int posX = (int) ((position.x / (chunkSize * cellSize)) - 0.5f);
-            int posZ = (int) ((position.z / (chunkSize * cellSize)) - 0.5f);
+            int posX = (int)((position.x / (chunkSize * cellSize)) - 0.5f);
+            int posZ = (int)((position.z / (chunkSize * cellSize)) - 0.5f);
 
-            for (int x = -dist; x < dist; x++) 
+            for (int x = -dist; x < dist; x++)
             {
-                for (int z = -dist; z < dist; z++) 
+                for (int z = -dist; z < dist; z++)
                 {
                     LoadChunk(posX, posZ, x, z);
                 }
@@ -89,7 +93,8 @@ public class WorldChunkLoader : MonoBehaviour
 
     public void Update()
     {
-        if (Started) {
+        if (Started)
+        {
             Started = false;
             StartCoroutine(LoadChunks(1));
             //StartCoroutine(UnloadChunks((chunkSize * cellSize * 3) - 0.5f));

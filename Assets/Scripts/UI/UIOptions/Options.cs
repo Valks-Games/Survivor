@@ -140,7 +140,7 @@ public class Options : MonoBehaviour
             SceneManager.LoadScene("Menu");
         });
 
-        #endregion
+        #endregion Setup
 
         InitializePlayerPrefs();
         InitializeUIValues();
