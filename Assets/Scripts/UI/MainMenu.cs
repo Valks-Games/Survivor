@@ -5,7 +5,24 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Slider slider;
+    public void Awake()
+    {
+        SetResolution();
+        SetQuality();
+    }
+
+    private void SetResolution()
+    {
+        Resolution[] resolutions = Screen.resolutions;
+        int index = PlayerPrefs.GetInt("options.resolution");
+        Screen.SetResolution(resolutions[index].width, resolutions[index].height, Screen.fullScreen);
+    }
+
+    private void SetQuality()
+    {
+        int index = PlayerPrefs.GetInt("options.quality");
+        QualitySettings.SetQualityLevel(index);
+    }
 
     public void StartGame()
     {

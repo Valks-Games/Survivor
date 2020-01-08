@@ -1,28 +1,35 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Option
 {
-    public Selectable selectable;
-    public Color32 color;
+    public static List<Option> Options = new List<Option>();
+    public Selectable Selectable;
+    public Color32 Color;
 
     public Option(string name)
     {
-        this.selectable = GameObject.Find(name).GetComponent<Selectable>();
-        this.color = new Color32(255, 255, 255, 255); // Default Color
-
-        this.selectable.gameObject.SetActive(false); // Prevents visual color flash change
+        this.Selectable = GameObject.Find(name).GetComponent<Selectable>();
+        this.Color = new Color32(255, 255, 255, 255); // Default Color
+        this.SetActive(false);
         this.Colorize();
-        this.selectable.gameObject.SetActive(true);
+
+        Option.Options.Add(this);
     }
 
     public virtual void Colorize()
     {
-        ColorBlock colorBlock = selectable.colors;
-        colorBlock.normalColor = color;
-        colorBlock.highlightedColor = color;
-        colorBlock.selectedColor = color;
-        colorBlock.pressedColor = color;
-        selectable.colors = colorBlock;
+        ColorBlock colorBlock = Selectable.colors;
+        colorBlock.normalColor = Color;
+        colorBlock.highlightedColor = Color;
+        colorBlock.selectedColor = Color;
+        colorBlock.pressedColor = Color;
+        Selectable.colors = colorBlock;
+    }
+
+    public virtual void SetActive(bool value)
+    {
+        this.Selectable.gameObject.SetActive(value);
     }
 }

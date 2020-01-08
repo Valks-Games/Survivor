@@ -68,9 +68,14 @@ public class Options : MonoBehaviour
     private Button buttonResetToDefaults;
     private Button buttonBackToMenu;
 
+    public void Awake()
+    {
+        SceneManager.sceneUnloaded += ClearStaticOptions;
+    }
+
     public void Start()
     {
-        #region Init:Post Processing
+        #region Setup
 
         goPostProcessing = DontDestroy.DontDestroyObjects[0];
 
@@ -88,10 +93,6 @@ public class Options : MonoBehaviour
             Debug.Log("Post Processing has to be loaded from the 'Menu' scene first.");
         }
 
-        #endregion Init:Post Processing
-
-        #region Init:Menu Music
-
         goMenuMusic = GameObject.Find("Menu Music");
         if (goMenuMusic != null)
         {
@@ -101,8 +102,6 @@ public class Options : MonoBehaviour
         {
             Debug.Log("Menu Music has to be loaded from the 'Menu' scene first.");
         }
-
-        #endregion Init:Menu Music
 
         optionSliderBloom = new OptionSlider("SliderBloom"); // Bloom
         optionToggleBloom = new OptionToggle("ToggleBloom");
@@ -141,95 +140,143 @@ public class Options : MonoBehaviour
             SceneManager.LoadScene("Menu");
         });
 
+        #endregion
+
+        InitializePlayerPrefs();
+        InitializeUIValues();
         InitializeOptionValues();
+    }
+
+    private void InitializePlayerPrefs()
+    {
+        optionToggleBloom.Save("options.bloom.enabled", DefaultBloomEnabled);
+        optionSliderBloom.Save("options.bloom.intensity", DefaultBloomIntensity);
+        optionSliderVolumeMusic.Save("options.volume.music", DefaultVolumeMusic);
+        optionSliderVolumeSFX.Save("options.volume.sfx", DefaultVolumeSFX);
+        optionToggleVignette.Save("options.vignette.enabled", DefaultVignetteEnabled);
+        optionSliderVignette.Save("options.vignette.intensity", DefaultVignetteIntensity);
+        optionDropdownResolution.Save("options.resolution", resolutions.Length);
+        optionDropdownQuality.Save("options.quality", QualitySettings.GetQualityLevel());
+        optionToggleFullscreen.Save("options.fullscreen", Screen.fullScreen);
+        optionToggleVSync.Save("options.vsync", QualitySettings.vSyncCount == 0 ? true : false);
+        optionSliderSensitivityPan.Save("options.sensitivity.pan", DefaultSensitivityPan);
+        optionSliderSensitivityZoom.Save("options.sensitivity.zoom", DefaultSensitivityZoom);
+    }
+
+    private void InitializeUIValues()
+    {
+        ppBloom.enabled.value = PlayerPrefsX.GetBool("options.bloom.enabled");
+        ppBloom.intensity.value = PlayerPrefs.GetFloat("options.bloom.intensity");
+        ppVignette.enabled.value = PlayerPrefsX.GetBool("options.vignette.enabled");
+        ppVignette.intensity.value = PlayerPrefs.GetFloat("options.vignette.intensity");
+        optionToggleFullscreen.Instance.isOn = PlayerPrefsX.GetBool("options.fullscreen");
+        optionToggleVSync.Instance.isOn = PlayerPrefsX.GetBool("options.vsync");
     }
 
     private void InitializeOptionValues()
     {
         // Bloom
-        optionToggleBloom.Instance.isOn = ppBloom.enabled.value;
+        optionToggleBloom.Instance.isOn = PlayerPrefsX.GetBool("options.bloom.enabled");
         optionToggleBloom.Instance.onValueChanged.AddListener(delegate
         {
             ppBloom.enabled.value = !ppBloom.enabled.value;
             optionSliderBloom.Instance.interactable = !optionSliderBloom.Instance.interactable;
+            PlayerPrefsX.SetBool("options.bloom.enabled", ppBloom.enabled.value);
         });
 
-        optionSliderBloom.Instance.value = ppBloom.intensity.value;
+        optionSliderBloom.Instance.value = PlayerPrefs.GetFloat("options.bloom.intensity");
         optionSliderBloom.Instance.interactable = optionToggleBloom.Instance.isOn;
         optionSliderBloom.Instance.onValueChanged.AddListener(delegate
         {
             ppBloom.intensity.value = optionSliderBloom.Instance.value;
+            PlayerPrefs.SetFloat("options.bloom.intensity", ppBloom.intensity.value);
         });
 
         // Volume
-        optionSliderVolumeMusic.Instance.value = audioMenuMusic.volume;
+        optionSliderVolumeMusic.Instance.value = PlayerPrefs.GetFloat("options.volume.music");
         optionSliderVolumeMusic.Instance.onValueChanged.AddListener(delegate
         {
             VolumeMusic = optionSliderVolumeMusic.Instance.value;
             audioMenuMusic.volume = VolumeMusic;
+            PlayerPrefs.SetFloat("options.volume.music", VolumeMusic);
         });
 
-        optionSliderVolumeSFX.Instance.value = VolumeSFX;
+        optionSliderVolumeSFX.Instance.value = PlayerPrefs.GetFloat("options.volume.sfx");
         optionSliderVolumeSFX.Instance.onValueChanged.AddListener(delegate
         {
             VolumeSFX = optionSliderVolumeSFX.Instance.value;
+            PlayerPrefs.SetFloat("options.volume.sfx", VolumeSFX);
         });
 
         // Vignette
-        optionToggleVignette.Instance.isOn = ppVignette.enabled.value;
+        optionToggleVignette.Instance.isOn = PlayerPrefsX.GetBool("options.vignette.enabled");
         optionToggleVignette.Instance.onValueChanged.AddListener(delegate
         {
             ppVignette.enabled.value = !ppVignette.enabled.value;
             optionSliderVignette.Instance.interactable = !optionSliderVignette.Instance.interactable;
+            PlayerPrefsX.SetBool("options.vignette.enabled", ppVignette.enabled.value);
         });
 
-        optionSliderVignette.Instance.value = ppVignette.intensity.value;
+        optionSliderVignette.Instance.value = PlayerPrefs.GetFloat("options.vignette.intensity");
+        optionSliderVignette.Instance.interactable = optionToggleVignette.Instance.isOn;
         optionSliderVignette.Instance.onValueChanged.AddListener(delegate
         {
             ppVignette.intensity.value = optionSliderVignette.Instance.value;
+            PlayerPrefs.SetFloat("options.vignette.intensity", ppVignette.intensity.value);
         });
 
         // VSync
-        optionToggleVSync.Instance.isOn = QualitySettings.vSyncCount == 0 ? false : true;
+        optionToggleVSync.Instance.isOn = PlayerPrefsX.GetBool("options.vsync");
         optionToggleVSync.Instance.onValueChanged.AddListener(delegate
         {
             QualitySettings.vSyncCount = QualitySettings.vSyncCount == 0 ? 1 : 0;
+            PlayerPrefsX.SetBool("options.vsync", QualitySettings.vSyncCount == 1 ? true : false);
         });
 
         // Fullscreen
-        optionToggleFullscreen.Instance.isOn = Screen.fullScreen;
+        optionToggleFullscreen.Instance.isOn = PlayerPrefsX.GetBool("options.fullscreen");
         optionToggleFullscreen.Instance.onValueChanged.AddListener(delegate
         {
             Screen.fullScreen = !Screen.fullScreen;
+            PlayerPrefsX.SetBool("options.fullscreen", Screen.fullScreen);
         });
 
         // Camera
-        optionSliderSensitivityPan.Instance.value = SensitivityPan;
+        optionSliderSensitivityPan.Instance.value = PlayerPrefs.GetFloat("options.sensitivity.pan");
         optionSliderSensitivityPan.Instance.onValueChanged.AddListener(delegate
         {
             SensitivityPan = optionSliderSensitivityPan.Instance.value;
+            PlayerPrefs.SetFloat("options.sensitivity.pan", SensitivityPan);
         });
 
-        optionSliderSensitivityZoom.Instance.value = SensitivityZoom;
+        optionSliderSensitivityZoom.Instance.value = PlayerPrefs.GetFloat("options.sensitivity.zoom");
         optionSliderSensitivityZoom.Instance.onValueChanged.AddListener(delegate
         {
             SensitivityZoom = optionSliderSensitivityZoom.Instance.value;
+            PlayerPrefs.SetFloat("options.sensitivity.zoom", SensitivityZoom);
         });
 
         // Resolutions
-        optionDropdownResolution.Instance.value = dropdownResolutionIndex;
+        optionDropdownResolution.Instance.value = PlayerPrefs.GetInt("options.resolution");
         optionDropdownResolution.Instance.onValueChanged.AddListener(delegate
         {
             dropdownResolutionIndex = optionDropdownResolution.Instance.value;
             Screen.SetResolution(resolutions[optionDropdownResolution.Instance.value].width, resolutions[optionDropdownResolution.Instance.value].height, Screen.fullScreen);
+            PlayerPrefs.SetInt("options.resolution", dropdownResolutionIndex);
         });
 
         // Quality
-        optionDropdownQuality.Instance.value = QualitySettings.GetQualityLevel();
+        optionDropdownQuality.Instance.value = PlayerPrefs.GetInt("options.quality");
         optionDropdownQuality.Instance.onValueChanged.AddListener(delegate
         {
             QualitySettings.SetQualityLevel(optionDropdownQuality.Instance.value);
+            PlayerPrefs.SetInt("options.quality", optionDropdownQuality.Instance.value);
         });
+
+        foreach (Option option in Option.Options)
+        {
+            option.SetActive(true);
+        }
     }
 
     private void ResetToDefaults()
@@ -282,5 +329,10 @@ public class Options : MonoBehaviour
     private string ResolutionToString(Resolution res)
     {
         return res.width + " x " + res.height + " (" + res.refreshRate + " Hz)";
+    }
+
+    private void ClearStaticOptions<Scene>(Scene scene)
+    {
+        Option.Options.Clear();
     }
 }
