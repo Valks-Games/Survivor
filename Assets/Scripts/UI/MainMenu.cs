@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
         if (!PlayerPrefs.HasKey("options.resolution"))
             return;
         Resolution[] resolutions = Screen.resolutions;
-        int index = PlayerPrefs.GetInt("options.resolution");
+        int index = PlayerPrefs.GetInt("options.resolution") - 1;
         Screen.SetResolution(resolutions[index].width, resolutions[index].height, Screen.fullScreen);
     }
 
