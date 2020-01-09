@@ -23,8 +23,18 @@ public class WorldChunk : MonoBehaviour
     public Category CategoryTrees;
     public Category CategoryBases;
 
+    private float seed;
+    private float freqX;
+    private float freqZ;
+    private float amplitude;
+
     public void Awake()
     {
+        seed = WorldGenerator.Seed;
+        freqX = WorldGenerator.FreqX;
+        freqZ = WorldGenerator.FreqZ;
+        amplitude = WorldGenerator.Amplitude;
+
         mesh = GetComponent<MeshFilter>().mesh;
         meshRenderer = GetComponent<MeshRenderer>();
         prefabTree = WorldGenerator.prefabTree;
@@ -89,7 +99,7 @@ public class WorldChunk : MonoBehaviour
         int k = 0;
         for (int g = 0; g < vertices.Length / 4; g++)
         {
-            float noise = Mathf.PerlinNoise(Random.Range(0f, 1f), Random.Range(0f, 1f));
+            float noise = amplitude * Mathf.PerlinNoise(seed + (g / freqX), seed + (g / freqZ));
             if (noise >= 0.3f)
             {
                 for (int i = 0; i < dirt1.Length; i++)
@@ -131,24 +141,20 @@ public class WorldChunk : MonoBehaviour
         {
             for (int z = posZ; z < posZ + chunkSize; z++)
             {
-                if (Mathf.PerlinNoise(Random.Range(0f, 1f), Random.Range(0f, 1f)) < 0.3f)
+                float entityFreq = 0.1f;
+                float noise = amplitude * Mathf.PerlinNoise(seed + (x / freqX), seed + (z / freqZ));
+
+                if (noise < entityFreq)
                 {
-                    if (Random.Range(0f, 1f) < 0.5f)
+                    if (noise < 0.5f)
                     {
-                        if (Random.Range(0f, 1f) < 0.1f)
-                        {
-                            GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
-                            go.transform.parent = CategoryTrees.Transform;
-                        }
+                        GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                        go.transform.parent = CategoryTrees.Transform;
                     }
                     else
                     {
-                        if (Random.Range(0f, 1f) < 0.1f)
-                        {
-                            GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
-                            go.transform.parent = CategoryRocks.Transform;
-                        }
-
+                        GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                        go.transform.parent = CategoryRocks.Transform;
                     }
                 }
             }

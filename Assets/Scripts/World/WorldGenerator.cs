@@ -23,8 +23,29 @@ public class WorldGenerator : MonoBehaviour
     public static Category CategoryChunks;
     public static Category CategoryColonists;
 
+    public string StringSeed = "";
+    [SerializeField] public static int Seed;
+    public bool RandomizeSeed;
+
+    public static float FreqX = 0.15f;
+    public static float FreqZ = 0.15f;
+    public static float Amplitude = 2f;
+
     public void Awake()
     {
+        if (StringSeed != "" || StringSeed != null)
+        {
+            // Hash too long and will not work if not divided by 100.
+            Seed = StringSeed.GetHashCode() / 100;
+        }
+
+        if (RandomizeSeed)
+        {
+            Seed = Random.Range(0, 99999);
+        }
+
+        Random.InitState(Seed);
+
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
         prefabRock = Resources.Load("Prefabs/Rock") as GameObject;
         prefabBase = Resources.Load("Prefabs/Base") as GameObject;
