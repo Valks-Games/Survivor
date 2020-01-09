@@ -8,8 +8,7 @@ public class OptionToggle : Option
 
     public OptionToggle(string name) : base(name)
     {
-        DefaultControls.Resources uiResources = new DefaultControls.Resources();
-        this.GameObject = DefaultControls.CreateToggle(uiResources);
+
     }
 
     public void Save(string path, bool value)
