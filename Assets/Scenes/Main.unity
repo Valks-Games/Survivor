@@ -1267,6 +1267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502ffda5e1386564ea2033184ba6c4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StringSeed: cat
+  RandomizeSeed: 0
 --- !u!4 &1905524197
 Transform:
   m_ObjectHideFlags: 0
