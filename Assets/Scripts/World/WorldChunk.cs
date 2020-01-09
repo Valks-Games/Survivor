@@ -89,8 +89,8 @@ public class WorldChunk : MonoBehaviour
         int k = 0;
         for (int g = 0; g < vertices.Length / 4; g++)
         {
-            float noise = Mathf.PerlinNoise(g * .9f, (Mathf.Floor(g / (float)chunkSize) + g));
-            if (noise >= .3)
+            float noise = Mathf.PerlinNoise(Random.Range(0f, 1f), Random.Range(0f, 1f));
+            if (noise >= 0.3f)
             {
                 for (int i = 0; i < dirt1.Length; i++)
                 {
@@ -140,7 +140,6 @@ public class WorldChunk : MonoBehaviour
                             GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
                             go.transform.parent = CategoryTrees.Transform;
                         }
-
                     }
                     else
                     {
