@@ -76,8 +76,8 @@ public class WorldChunkLoader : MonoBehaviour
         while (checkChunks)
         {
             Vector3 position = cameraTransform.position;
-            int posX = (int)((position.x / (chunkSize * cellSize)) - 0.5f);
-            int posZ = (int)((position.z / (chunkSize * cellSize)) - 0.5f);
+            int posX = (int)((position.x / (chunkSize * cellSize)));
+            int posZ = (int)((position.z / (chunkSize * cellSize)));
 
             for (int x = -dist; x < dist; x++)
             {
@@ -87,7 +87,7 @@ public class WorldChunkLoader : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
@@ -96,7 +96,7 @@ public class WorldChunkLoader : MonoBehaviour
         if (Started)
         {
             Started = false;
-            StartCoroutine(LoadChunks(1));
+            StartCoroutine(LoadChunks(7));
             //StartCoroutine(UnloadChunks((chunkSize * cellSize * 3) - 0.5f));
         }
     }

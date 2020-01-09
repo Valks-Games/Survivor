@@ -19,7 +19,7 @@ public abstract class StructureTask<T> : GameTask<T> where T : FactionMember<T>
 
         if (Target.TargetStructure == null)
         {
-            Debug.LogWarning("[FactionMemberTask.cs:26] Exited out of Task due to invalid (null) target structure. THIS PROBABLY WILL CAUSE AN ERROR IN COLONIST BEHAVIOUR.");
+            //Debug.LogWarning("[FactionMemberTask.cs:26] Exited out of Task due to invalid (null) target structure. THIS PROBABLY WILL CAUSE AN ERROR IN COLONIST BEHAVIOUR.");
             yield break;
         }
 

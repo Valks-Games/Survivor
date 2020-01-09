@@ -135,13 +135,21 @@ public class WorldChunk : MonoBehaviour
                 {
                     if (Random.Range(0f, 1f) < 0.5f)
                     {
-                        GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
-                        go.transform.parent = CategoryTrees.Transform;
+                        if (Random.Range(0f, 1f) < 0.1f)
+                        {
+                            GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                            go.transform.parent = CategoryTrees.Transform;
+                        }
+
                     }
                     else
                     {
-                        GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
-                        go.transform.parent = CategoryRocks.Transform;
+                        if (Random.Range(0f, 1f) < 0.1f)
+                        {
+                            GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
+                            go.transform.parent = CategoryRocks.Transform;
+                        }
+
                     }
                 }
             }
