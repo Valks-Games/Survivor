@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class Option
 {
     public static List<Option> Options = new List<Option>();
+    public GameObject GameObject;
     public Selectable Selectable;
     public Color32 Color;
 
     public Option(string name)
     {
-        //new GameObject(name);
         this.Selectable = GameObject.Find(name).GetComponent<Selectable>();
         this.Color = new Color32(255, 255, 255, 255); // Default Color
         this.SetActive(false);

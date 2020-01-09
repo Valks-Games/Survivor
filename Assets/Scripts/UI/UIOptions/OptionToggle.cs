@@ -6,10 +6,10 @@ public class OptionToggle : Option
     public Toggle Instance => (Toggle)Selectable;
     public string Path;
 
-    public OptionToggle(string name, string path, bool value = true) : base(name)
+    public OptionToggle(string name) : base(name)
     {
-        Save(path, value);
-        Instance.isOn = PlayerPrefsX.GetBool(path);
+        DefaultControls.Resources uiResources = new DefaultControls.Resources();
+        this.GameObject = DefaultControls.CreateToggle(uiResources);
     }
 
     public void Save(string path, bool value)
@@ -18,5 +18,7 @@ public class OptionToggle : Option
         {
             PlayerPrefsX.SetBool(path, value);
         }
+
+        Instance.isOn = PlayerPrefsX.GetBool(path);
     }
 }

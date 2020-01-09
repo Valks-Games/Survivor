@@ -5,10 +5,9 @@ public class OptionSlider : Option
 {
     public Slider Instance => (Slider)Selectable;
 
-    public OptionSlider(string name, string path, float value = 0f) : base(name)
+    public OptionSlider(string name) : base(name)
     {
-        Save(path, value);
-        Instance.value = PlayerPrefs.GetFloat(path);
+
     }
 
     public override void Colorize()
@@ -28,5 +27,7 @@ public class OptionSlider : Option
         {
             PlayerPrefs.SetFloat(path, value);
         }
+
+        Instance.value = PlayerPrefs.GetFloat(path);
     }
 }

@@ -104,33 +104,33 @@ public class Options : MonoBehaviour
         }
 
         // Bloom
-        optionSliderBloom = new OptionSlider("SliderBloom", "options.bloom.intensity", DefaultBloomIntensity);
-        optionToggleBloom = new OptionToggle("ToggleBloom", "options.bloom.enabled");
+        optionSliderBloom = new OptionSlider("SliderBloom");
+        optionToggleBloom = new OptionToggle("ToggleBloom");
 
         // Volume
-        optionSliderVolumeMusic = new OptionSlider("SliderVolumeMusic", "options.volume.music", DefaultVolumeMusic);
-        optionSliderVolumeSFX = new OptionSlider("SliderVolumeSFX", "options.volume.sfx", DefaultVolumeSFX);
+        optionSliderVolumeMusic = new OptionSlider("SliderVolumeMusic");
+        optionSliderVolumeSFX = new OptionSlider("SliderVolumeSFX");
 
         // Vignette
-        optionToggleVignette = new OptionToggle("ToggleVignette", "options.vignette.enabled");
-        optionSliderVignette = new OptionSlider("SliderVignette", "options.vignette.intensity", DefaultVignetteIntensity);
+        optionToggleVignette = new OptionToggle("ToggleVignette");
+        optionSliderVignette = new OptionSlider("SliderVignette");
 
         // Resolutions
-        optionDropdownResolution = new OptionDropdown("DropdownResolutions", "options.resolution", Screen.resolutions.Length);
+        optionDropdownResolution = new OptionDropdown("DropdownResolutions");
         InitializeResolutionsDropDown();
 
         // Quality
-        optionDropdownQuality = new OptionDropdown("DropdownQuality", "options.quality", QualitySettings.GetQualityLevel());
+        optionDropdownQuality = new OptionDropdown("DropdownQuality");
         InitializeQualityDropDown();
 
         // Fullscreen
-        optionToggleFullscreen = new OptionToggle("ToggleFullscreen", "options.fullscreen");
+        optionToggleFullscreen = new OptionToggle("ToggleFullscreen");
         // VSync
-        optionToggleVSync = new OptionToggle("ToggleVSync", "options.vsync");
+        optionToggleVSync = new OptionToggle("ToggleVSync");
 
         // Camera
-        optionSliderSensitivityPan = new OptionSlider("SliderSensitivityPan", "options.sensitivity.pan", DefaultSensitivityPan);
-        optionSliderSensitivityZoom = new OptionSlider("SliderSensitivityZoom", "options.sensitivity.zoom", DefaultSensitivityZoom);
+        optionSliderSensitivityPan = new OptionSlider("SliderSensitivityPan");
+        optionSliderSensitivityZoom = new OptionSlider("SliderSensitivityZoom");
 
         if (goPostProcessing == null || goMenuMusic == null)
             return;
@@ -151,7 +151,24 @@ public class Options : MonoBehaviour
         #endregion Setup
 
         InitializeUIValues();
+        InitializePlayerPrefs();
         InitializeOptionValues();
+    }
+
+    private void InitializePlayerPrefs()
+    {
+        optionToggleBloom.Save("options.bloom.enabled", DefaultBloomEnabled);
+        optionSliderBloom.Save("options.bloom.intensity", DefaultBloomIntensity);
+        optionSliderVolumeMusic.Save("options.volume.music", DefaultVolumeMusic);
+        optionSliderVolumeSFX.Save("options.volume.sfx", DefaultVolumeSFX);
+        optionToggleVignette.Save("options.vignette.enabled", DefaultVignetteEnabled);
+        optionSliderVignette.Save("options.vignette.intensity", DefaultVignetteIntensity);
+        optionDropdownResolution.Save("options.resolution", resolutions.Length);
+        optionDropdownQuality.Save("options.quality", QualitySettings.GetQualityLevel());
+        optionToggleFullscreen.Save("options.fullscreen", Screen.fullScreen);
+        optionToggleVSync.Save("options.vsync", QualitySettings.vSyncCount == 0 ? true : false);
+        optionSliderSensitivityPan.Save("options.sensitivity.pan", DefaultSensitivityPan);
+        optionSliderSensitivityZoom.Save("options.sensitivity.zoom", DefaultSensitivityZoom);
     }
 
     private void InitializeUIValues()
