@@ -7,6 +7,6 @@ public class UIButton : UISelectable
 
     public UIButton(string name, Transform parent) : base(name, parent)
     {
-
+        GameObject.transform.Find("Text").GetComponent<Text>().text = name;
     }
 }
