@@ -8,10 +8,10 @@ public class BottomPanel : MonoBehaviour
         Transform panel = screenCanvas.transform.Find("Panel");
         // Test
 
-        UIHorizontalLayout elements = new UIHorizontalLayout("Elements", panel);
+        /*UIHorizontalLayout elements = new UIHorizontalLayout("Elements", panel);
         UIVerticalLayout entityInfo = new UIVerticalLayout("Entity Information", elements.transform);
 
         UIText name = new UIText("Name", entityInfo.transform);
-        UIButton button = new UIButton("Button", entityInfo.transform);
+        UIButton button = new UIButton("Button", entityInfo.transform);*/
     }
 }

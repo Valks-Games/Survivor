@@ -1,23 +1,12 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIButton : UIElement
+public class UIButton : UISelectable
 {
-    public Button button;
-    public Image image;
-    public RectTransform rectTransform;
+    public override GameObject GameObject { get; } = DefaultControls.CreateButton(new DefaultControls.Resources());
 
-    public UIButton(string content, Transform parent) : base(parent)
+    public UIButton(string name, Transform parent) : base(name, parent)
     {
-        gameObject.name = content;
-        rectTransform = gameObject.AddComponent<RectTransform>();
-        image = gameObject.AddComponent<Image>();
-        image.type = Image.Type.Sliced;
-        button = gameObject.AddComponent<Button>();
-        rectTransform.sizeDelta = new Vector2(120, 30);
-        image.color = new Color32(50, 50, 50, 255);
 
-        UIText text = new UIText("Test", transform);
     }
 }

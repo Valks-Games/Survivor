@@ -1,13 +1,31 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIElement
+public abstract class UIElement
 {
-    public GameObject gameObject;
-    public Transform transform => gameObject.transform;
+    public static List<UIElement> UIElements = new List<UIElement>();
+    public abstract GameObject GameObject { get; }
 
-    public UIElement(Transform parent)
+    protected Color32 Color;
+
+    public UIElement(string name, Transform parent)
     {
-        gameObject = new GameObject("UI Element");
-        gameObject.transform.SetParent(parent);
+        this.Color = new Color32(255, 255, 255, 255); // Default Color
+        this.SetActive(false);
+        this.Colorize();
+        this.GameObject.transform.SetParent(parent);
+
+        UIElement.UIElements.Add(this);
+    }
+
+    public virtual void Colorize()
+    {
+
+    }
+
+    public virtual void SetActive(bool value)
+    {
+        GameObject.SetActive(value);
     }
 }

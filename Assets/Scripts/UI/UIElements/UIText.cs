@@ -1,16 +1,16 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIText : UIElement
 {
-    public TMP_Text text;
+    public override GameObject GameObject { get; } = DefaultControls.CreateText(new DefaultControls.Resources());
 
-    public UIText(string content, Transform parent) : base(parent)
+    public UIText(string name, Transform parent) : base(name, parent)
     {
-        gameObject.name = content;
-        text = gameObject.AddComponent<TextMeshProUGUI>();
-        text.text = content;
-        text.fontSize = 20;
-        text.alignment = TextAlignmentOptions.Center;
+        Text text = GameObject.GetComponent<Text>();
+        text.text = name;
+        text.color = Color;
+        text.fontSize = 16;
+        text.alignment = TextAnchor.MiddleCenter;
     }
 }

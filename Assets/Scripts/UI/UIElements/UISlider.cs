@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionSlider : Option
+public class UISlider : UISelectable
 {
-    public Slider Instance => (Slider)Selectable;
+    public override GameObject GameObject { get; } = DefaultControls.CreateSlider(new DefaultControls.Resources());
+    public Slider Instance => (Slider)GameObject.GetComponent<Selectable>();
 
-    public OptionSlider(string name) : base(name)
+    public UISlider(string name, Transform parent) : base(name, parent)
     {
 
     }
@@ -14,8 +15,8 @@ public class OptionSlider : Option
     {
         base.Colorize();
 
-        Transform fill = Selectable.transform.Find("Fill Area").Find("Fill");
-        Transform background = Selectable.transform.Find("Background");
+        Transform fill = GameObject.transform.Find("Fill Area").Find("Fill");
+        Transform background = GameObject.transform.Find("Background");
 
         fill.GetComponent<Image>().color = Utils.ModifyColor(Color, -100);
         background.GetComponent<Image>().color = Utils.ModifyColor(Color, -200);

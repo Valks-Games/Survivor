@@ -1,20 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionDropdown : Option
+public class UIDropdown : UISelectable
 {
-    public Dropdown Instance => (Dropdown)Selectable;
+    public override GameObject GameObject { get; } = DefaultControls.CreateDropdown(new DefaultControls.Resources());
+    public Dropdown Instance => (Dropdown)GameObject.GetComponent<Selectable>();
 
-    public OptionDropdown(string name) : base(name)
+    public UIDropdown(string name, Transform parent) : base(name, parent)
     {
-
+        GameObject.GetComponent<Dropdown>().options.Clear();
+        GameObject.transform.Find("Template").GetComponent<ScrollRect>().scrollSensitivity = 45;
     }
 
     public override void Colorize()
     {
         base.Colorize();
 
-        Transform template = Selectable.transform.Find("Template");
+        Transform template = GameObject.transform.Find("Template");
         Transform scrollbar = template.Find("Scrollbar");
         Transform handle = scrollbar.Find("Sliding Area").Find("Handle");
         Transform item = template.Find("Viewport").Find("Content").Find("Item");
