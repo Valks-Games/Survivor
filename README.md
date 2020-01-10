@@ -20,5 +20,9 @@ If you're interested in joining the team, please talk to **valk#3277** through D
 
 ## Roadmap
 - [x] Infinite Procedural Terrain Generation
-- [ ] Structure Grid Placement
+  - [ ] Lakes
+  - [ ] Rivers
+  - [ ] Biomes
+- [ ] Grid Structure Placement
 - [ ] Inventory Management
+- [ ] Offscreen AI Progression
