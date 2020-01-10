@@ -18,8 +18,8 @@ TagManager:
   - 
   - 
   - Post Processing
-  - Fog of War
-  - 
+  - Fog of War Main
+  - Fog of War Secondary
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Fog of War
+    uniqueID: 3215634035
     locked: 0

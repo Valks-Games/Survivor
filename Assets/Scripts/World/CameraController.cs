@@ -21,6 +21,9 @@ public class CameraController : MonoBehaviour
 
     private float lastTimeClicked;
 
+    public Transform FogOfWarMainCircle;
+    public Transform FogOfWarSecondaryCircle;
+
     public void Awake()
     {
         SpeedPan = Options.SensitivityPan;
@@ -58,6 +61,11 @@ public class CameraController : MonoBehaviour
         float horzSpeed = inputHorz * SpeedPan * (Time.unscaledDeltaTime);
         float vertSpeed = inputVert * SpeedPan * (Time.unscaledDeltaTime);
         transform.position += new Vector3(horzSpeed, 0, vertSpeed);
+
+        float fogOfWarSpeedDivider = 10f;
+
+        FogOfWarMainCircle.position += new Vector3(horzSpeed / fogOfWarSpeedDivider, 0, vertSpeed / fogOfWarSpeedDivider);
+        FogOfWarSecondaryCircle.position += new Vector3(horzSpeed / fogOfWarSpeedDivider, 0, vertSpeed / fogOfWarSpeedDivider);
     }
 
     private void HandleZoom(float inputScroll)
