@@ -95,12 +95,22 @@ public class WorldChunk : MonoBehaviour
         // UVs
         Vector2[] dirt1 = SpriteLoader.GetTileUVs("Dirt_1");
         Vector2[] dirt2 = SpriteLoader.GetTileUVs("Dirt_2");
+        Vector2[] water1 = SpriteLoader.GetTileUVs("Water_1");
 
         int k = 0;
         for (int g = 0; g < vertices.Length / 4; g++)
         {
-            float noise = amplitude * Mathf.PerlinNoise(seed + (g / freqX), seed + (g / freqZ));
-            if (noise >= 0.3f)
+            float groundNoise = amplitude * Mathf.PerlinNoise(seed + (g / freqX), seed + (g / freqZ));
+            float riverNoise = amplitude * Mathf.PerlinNoise(seed + (g / freqX * 2), seed + (g / freqZ * 2));
+            if (riverNoise <= 0.3f)
+            {
+                for (int i = 0; i < water1.Length; i++)
+                {
+                    uvs[i + k] = water1[i];
+                }
+            }
+
+            if (groundNoise < 0.5f)
             {
                 for (int i = 0; i < dirt1.Length; i++)
                 {

@@ -24,15 +24,24 @@ public class WorldGenerator : MonoBehaviour
     public static Category CategoryColonists;
 
     public string StringSeed = "";
-    [SerializeField] public static int Seed;
     public bool RandomizeSeed;
 
+    public float SetFreqX;
+    public float SetFreqZ;
+    public float SetAmplitude;
+    [ReadOnly] public int ViewSeed;
+
+    public static int Seed;
     public static float FreqX = 0.15f;
     public static float FreqZ = 0.15f;
     public static float Amplitude = 2f;
 
     public void Awake()
     {
+        FreqX = SetFreqX;
+        FreqZ = SetFreqX;
+        Amplitude = SetAmplitude;
+
         if (StringSeed != "" || StringSeed != null)
         {
             // Hash too long and will not work if not divided by 100.
@@ -45,6 +54,8 @@ public class WorldGenerator : MonoBehaviour
         }
 
         Random.InitState(Seed);
+
+        ViewSeed = Seed;
 
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
         prefabRock = Resources.Load("Prefabs/Rock") as GameObject;
