@@ -26,7 +26,10 @@ public class UIListener : MonoBehaviour
         HandleChangeGameSpeed();
 
         if (Input.GetKeyDown(KeyCode.R))
+        {
+            Time.timeScale = CurrentGameSpeed;
             SceneManager.LoadScene("Main");
+        }
     }
 
     private void HandleChangeGameSpeed()
@@ -73,6 +76,7 @@ public class UIListener : MonoBehaviour
 
     public void BackToMenu()
     {
+        Time.timeScale = CurrentGameSpeed;
         SceneManager.LoadScene("Menu");
     }
 
