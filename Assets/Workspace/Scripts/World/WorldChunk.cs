@@ -28,8 +28,6 @@ public class WorldChunk : MonoBehaviour
     public Category CategoryTrees;
     public Category CategoryBases;
 
-    public static Dictionary<string, Texture> fogOfWarTextures = new Dictionary<string, Texture>();
-
     private float seed;
     private float freqX;
     private float freqZ;
@@ -140,7 +138,6 @@ public class WorldChunk : MonoBehaviour
         UpdateMesh();
 
         InstantiateEntities(chunkX, chunkZ);
-        InstantiateFogOfWar(chunkX, chunkZ);
     }
 
     private void UpdateMesh()
@@ -179,21 +176,5 @@ public class WorldChunk : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void InstantiateFogOfWar(int chunkX, int chunkZ)
-    {
-        int posX = (chunkX * chunkSize) / 4;
-        int posZ = (chunkZ * chunkSize) / 4;
-
-        Vector3 offset = new Vector3(chunkSize / (4 * 2), 0, chunkSize / (4 * 2));
-        Vector3 pos = new Vector3(posX, 1, posZ);
-        GameObject go = Instantiate(prefabFogOfWar, pos + offset, Quaternion.identity);
-        go.transform.Rotate(new Vector3(90, 0, 0));
-        go.GetComponent<Canvas>().worldCamera = Camera.main;
-        RawImage rawImage = go.transform.Find("Fog of War").gameObject.GetComponent<RawImage>();
-        Texture tex = rawImage.texture = Instantiate(textureFogOfWarMain);
-        tex.name = "Fog " + chunkX + " " + chunkZ;
-        fogOfWarTextures[tex.name] = tex;
     }
 }

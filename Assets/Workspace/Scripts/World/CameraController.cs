@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
         lastTimeClicked = Time.time;
-        StartCoroutine(WorldGenerating());
+        //StartCoroutine(WorldGenerating());
     }
 
     public IEnumerator WorldGenerating()
@@ -46,9 +46,6 @@ public class CameraController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
         }
-
-        RenderTexture renderTexture = (RenderTexture)WorldChunk.fogOfWarTextures["Fog 0 0"];
-        CameraFogOfWarMain.targetTexture = renderTexture;
     }
 
     public void Update()
