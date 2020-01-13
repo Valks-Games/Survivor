@@ -24,8 +24,6 @@ public class CameraController : MonoBehaviour
     public Transform FogOfWarMainCircle;
     public Transform FogOfWarSecondaryCircle;
 
-    public Camera CameraFogOfWarMain;
-
     public void Awake()
     {
         SpeedPan = Options.SensitivityPan;
