@@ -19,9 +19,6 @@ public class WorldChunk : MonoBehaviour
 
     private GameObject prefabTree;
     private GameObject prefabRock;
-    private GameObject prefabFogOfWar;
-
-    private Texture textureFogOfWarMain;
 
     public Category CategoryStructures;
     public Category CategoryRocks;
@@ -43,11 +40,9 @@ public class WorldChunk : MonoBehaviour
         mesh = GetComponent<MeshFilter>().mesh;
         meshRenderer = GetComponent<MeshRenderer>();
         prefabTree = WorldGenerator.prefabTree;
-        prefabFogOfWar = Resources.Load("Prefabs/Fog of War") as GameObject;
         prefabRock = WorldGenerator.prefabRock;
         chunkSize = WorldGenerator.ChunkSize;
         cellSize = WorldGenerator.CellSize;
-        textureFogOfWarMain = Resources.Load("Render Textures/FogOfWarMain") as Texture;
 
         // Setup layout
         CategoryStructures = new Category("Structures", transform);
