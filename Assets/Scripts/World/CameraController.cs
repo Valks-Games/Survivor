@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
     public Transform FogOfWarMainCircle;
     public Transform FogOfWarSecondaryCircle;
 
+    public Camera CameraFogOfWarMain;
+
     public void Awake()
     {
         SpeedPan = Options.SensitivityPan;
@@ -35,6 +37,18 @@ public class CameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
         lastTimeClicked = Time.time;
+        StartCoroutine(WorldGenerating());
+    }
+
+    public IEnumerator WorldGenerating()
+    {
+        while (WorldGenerator.GeneratingWorld)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        RenderTexture renderTexture = (RenderTexture)WorldChunk.fogOfWarTextures["Fog 0 0"];
+        CameraFogOfWarMain.targetTexture = renderTexture;
     }
 
     public void Update()

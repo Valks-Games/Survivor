@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
@@ -82,6 +83,8 @@ public class WorldGenerator : MonoBehaviour
         //AddFactions(BaseMinimumDistance);
 
         GeneratingWorld = false;
+
+        // Start checking to see if new chunks need to be created or removed.
         WorldChunkLoader.Started = true;
     }
 

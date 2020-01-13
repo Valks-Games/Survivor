@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class WorldChunk : MonoBehaviour
@@ -19,10 +21,14 @@ public class WorldChunk : MonoBehaviour
     private GameObject prefabRock;
     private GameObject prefabFogOfWar;
 
+    private Texture textureFogOfWarMain;
+
     public Category CategoryStructures;
     public Category CategoryRocks;
     public Category CategoryTrees;
     public Category CategoryBases;
+
+    public static Dictionary<string, Texture> fogOfWarTextures = new Dictionary<string, Texture>();
 
     private float seed;
     private float freqX;
@@ -43,6 +49,7 @@ public class WorldChunk : MonoBehaviour
         prefabRock = WorldGenerator.prefabRock;
         chunkSize = WorldGenerator.ChunkSize;
         cellSize = WorldGenerator.CellSize;
+        textureFogOfWarMain = Resources.Load("Render Textures/FogOfWarMain") as Texture;
 
         // Setup layout
         CategoryStructures = new Category("Structures", transform);
@@ -184,5 +191,9 @@ public class WorldChunk : MonoBehaviour
         GameObject go = Instantiate(prefabFogOfWar, pos + offset, Quaternion.identity);
         go.transform.Rotate(new Vector3(90, 0, 0));
         go.GetComponent<Canvas>().worldCamera = Camera.main;
+        RawImage rawImage = go.transform.Find("Fog of War").gameObject.GetComponent<RawImage>();
+        Texture tex = rawImage.texture = Instantiate(textureFogOfWarMain);
+        tex.name = "Fog " + chunkX + " " + chunkZ;
+        fogOfWarTextures[tex.name] = tex;
     }
 }
