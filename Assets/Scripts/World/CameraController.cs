@@ -62,10 +62,8 @@ public class CameraController : MonoBehaviour
         float vertSpeed = inputVert * SpeedPan * (Time.unscaledDeltaTime);
         transform.position += new Vector3(horzSpeed, 0, vertSpeed);
 
-        float fogOfWarSpeedDivider = 10f;
-
-        FogOfWarMainCircle.position += new Vector3(horzSpeed / fogOfWarSpeedDivider, 0, vertSpeed / fogOfWarSpeedDivider);
-        FogOfWarSecondaryCircle.position += new Vector3(horzSpeed / fogOfWarSpeedDivider, 0, vertSpeed / fogOfWarSpeedDivider);
+        FogOfWarMainCircle.position += new Vector3(horzSpeed, 0, vertSpeed);
+        FogOfWarSecondaryCircle.position += new Vector3(horzSpeed, 0, vertSpeed);
     }
 
     private void HandleZoom(float inputScroll)
