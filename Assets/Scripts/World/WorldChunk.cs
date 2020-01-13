@@ -17,6 +17,7 @@ public class WorldChunk : MonoBehaviour
 
     private GameObject prefabTree;
     private GameObject prefabRock;
+    private GameObject prefabFogOfWar;
 
     public Category CategoryStructures;
     public Category CategoryRocks;
@@ -38,6 +39,7 @@ public class WorldChunk : MonoBehaviour
         mesh = GetComponent<MeshFilter>().mesh;
         meshRenderer = GetComponent<MeshRenderer>();
         prefabTree = WorldGenerator.prefabTree;
+        prefabFogOfWar = Resources.Load("Prefabs/Fog of War") as GameObject;
         prefabRock = WorldGenerator.prefabRock;
         chunkSize = WorldGenerator.ChunkSize;
         cellSize = WorldGenerator.CellSize;
@@ -131,6 +133,7 @@ public class WorldChunk : MonoBehaviour
         UpdateMesh();
 
         InstantiateEntities(chunkX, chunkZ);
+        InstantiateFogOfWar(chunkX, chunkZ);
     }
 
     private void UpdateMesh()
@@ -169,5 +172,17 @@ public class WorldChunk : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void InstantiateFogOfWar(int chunkX, int chunkZ)
+    {
+        int posX = (chunkX * chunkSize) / 4;
+        int posZ = (chunkZ * chunkSize) / 4;
+
+        Vector3 offset = new Vector3(chunkSize / (4 * 2), 0, chunkSize / (4 * 2));
+        Vector3 pos = new Vector3(posX, 1, posZ);
+        GameObject go = Instantiate(prefabFogOfWar, pos + offset, Quaternion.identity);
+        go.transform.Rotate(new Vector3(90, 0, 0));
+        go.GetComponent<Canvas>().worldCamera = Camera.main;
     }
 }

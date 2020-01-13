@@ -17,7 +17,7 @@ public class WorldGenerator : MonoBehaviour
     [HideInInspector] public const int Rows = 100;
     [HideInInspector] public const float BaseMinimumDistance = 32;
 
-    public static int ChunkSize = 11;
+    public static int ChunkSize = 40;
     public static float CellSize = 0.25f;
 
     public static Category CategoryChunks;
