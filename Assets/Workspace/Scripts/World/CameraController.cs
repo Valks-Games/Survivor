@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
 
     public Transform FogOfWarMainCircle;
     public Transform FogOfWarSecondaryCircle;
+    public Transform FogOfWarPlane;
 
     public void Awake()
     {
@@ -71,8 +72,8 @@ public class CameraController : MonoBehaviour
         float vertSpeed = inputVert * SpeedPan * (Time.unscaledDeltaTime);
         transform.position += new Vector3(horzSpeed, 0, vertSpeed);
 
-        FogOfWarMainCircle.position += new Vector3(horzSpeed, 0, vertSpeed);
-        FogOfWarSecondaryCircle.position += new Vector3(horzSpeed, 0, vertSpeed);
+        FogOfWarMainCircle.position -= new Vector3(horzSpeed, 0, vertSpeed);
+        FogOfWarSecondaryCircle.position -= new Vector3(horzSpeed, 0, vertSpeed);
     }
 
     private void HandleZoom(float inputScroll)
@@ -81,9 +82,13 @@ public class CameraController : MonoBehaviour
         zoom = Mathf.Clamp(zoom, 0f, 0.8f);
         currentZoom = Mathf.Lerp(currentZoom, zoom, ScrollLerp);
 
-        Vector3 pos = transform.position;
-        pos.y = 10 - currentZoom * SpeedScroll;
-        transform.position = pos;
+        // Adjust camera Y position on zoom
+        Vector3 camPos = transform.position;
+        camPos.y = 10 - currentZoom * SpeedScroll;
+        transform.position = camPos;
+
+        // Adjust Fog of War Plane Scale on zoom
+        FogOfWarPlane.localScale = new Vector3(1 + currentZoom, 1 + currentZoom, 1 + currentZoom);
     }
 
     private void HandleDrag()
