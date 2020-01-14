@@ -382,6 +382,7 @@ MonoBehaviour:
   TrackingLerp: 1
   FogOfWarMainCircle: {fileID: 870337318}
   FogOfWarSecondaryCircle: {fileID: 523814296}
+  FogOfWarPlane: {fileID: 1118611095}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1153,7 +1154,7 @@ GameObject:
   - component: {fileID: 1118611093}
   - component: {fileID: 1118611092}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Fog of War
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
