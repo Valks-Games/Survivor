@@ -160,7 +160,7 @@ public class WorldChunk : MonoBehaviour
 
                 if (noise < entityFreq)
                 {
-                    if (noise < 0.5f)
+                    if (noise < 0.001f)
                     {
                         GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
                         go.transform.parent = CategoryTrees.Transform;

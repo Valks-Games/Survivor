@@ -80,7 +80,7 @@ public class World : MonoBehaviour
         }
 
         // Generate spawn with resources first otherwise colonists will complain that they can't find resources.
-        AddFaction(GetPosition(WorldSize / 2, WorldSize / 2)); // Temp
+        AddFaction(new Vector3(0, 0, 0)); // Temp
         //AddFactions(BaseMinimumDistance);
 
         GeneratingWorld = false;
@@ -132,10 +132,5 @@ public class World : MonoBehaviour
                 location: pos,
                 faction: faction
             );
-    }
-
-    public static Vector2 GetPosition(int x, int z)
-    {
-        return new Vector2(x - WorldSize, z - WorldSize);
     }
 }

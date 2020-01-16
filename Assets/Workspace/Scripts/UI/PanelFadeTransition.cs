@@ -14,6 +14,6 @@ public class PanelFadeTransition : MonoBehaviour
 
     private void Update()
     {
-        image.CrossFadeAlpha(0f, 1f, false);
+        image.CrossFadeAlpha(0f, 0.5f, false);
     }
 }

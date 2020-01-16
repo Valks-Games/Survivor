@@ -829,6 +829,7 @@ RectTransform:
   m_Children:
   - {fileID: 1918996838}
   - {fileID: 5006512736580001042}
+  - {fileID: 782546770}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1147,16 +1148,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782546769}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1075}
-  m_LocalScale: {x: 0.00024999998, y: 0.00024999998, z: 0.00024999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5006512736580001042}
+  m_Father: {fileID: 666499455}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.018, y: 0.118}
+  m_AnchoredPosition: {x: 547, y: 168}
   m_SizeDelta: {x: 470.01, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &782546771
@@ -1194,7 +1195,14 @@ MonoBehaviour:
     their own unique sprites
 
     - Black to alpha cross fade transition after loading
-    screen'
+    screen
+
+    - Rocks now spawn as well as trees (WIP)
+
+    - Colonists no longer
+    spawn in the void
+
+    - Better grid management system'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1263,12 +1271,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 782546771}
-    characterCount: 296
+    characterCount: 409
     spriteCount: 0
-    spaceCount: 53
-    wordCount: 54
+    spaceCount: 75
+    wordCount: 76
     linkCount: 0
-    lineCount: 11
+    lineCount: 14
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -3043,7 +3051,6 @@ Transform:
   m_Children:
   - {fileID: 8778850929801811612}
   - {fileID: 7606006756427343228}
-  - {fileID: 782546770}
   m_Father: {fileID: 666499455}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
