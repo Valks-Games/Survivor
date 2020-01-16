@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UIButton : UISelectable
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateButton(new DefaultControls.Resources());
+    public override GameObject GameObject { get; } = DefaultControls.CreateButton(UIResources);
 
     public UIButton(string name, Transform parent) : base(name, parent)
     {

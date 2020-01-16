@@ -3,12 +3,17 @@ using UnityEngine.UI;
 
 public class UISlider : UISelectable
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateSlider(new DefaultControls.Resources());
+    public override GameObject GameObject { get; } = DefaultControls.CreateSlider(UIResources);
     public Slider Instance => (Slider)GameObject.GetComponent<Selectable>();
 
     public UISlider(string name, Transform parent) : base(name, parent)
     {
 
+    }
+
+    public override void SetupDefaultUI()
+    {
+        base.SetupDefaultUI();
     }
 
     public override void Colorize()

@@ -10,6 +10,11 @@ public class UISelectable : UIElement
 
     }
 
+    public override void SetupDefaultUI()
+    {
+        base.SetupDefaultUI();
+    }
+
     public override void Colorize()
     {
         base.Colorize();

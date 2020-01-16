@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UIDropdown : UISelectable
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateDropdown(new DefaultControls.Resources());
+    public override GameObject GameObject { get; } = DefaultControls.CreateDropdown(UIResources);
     public Dropdown Instance => (Dropdown)GameObject.GetComponent<Selectable>();
 
     public UIDropdown(string name, Transform parent) : base(name, parent)

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UIToggle : UISelectable
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateToggle(new DefaultControls.Resources());
+    public override GameObject GameObject { get; } = DefaultControls.CreateToggle(UIResources);
     public Toggle Instance => (Toggle)GameObject.GetComponent<Selectable>();
     public string Path;
 
@@ -12,6 +12,12 @@ public class UIToggle : UISelectable
         Text componentText = GameObject.transform.Find("Label").GetComponent<Text>();
         componentText.color = Color;
         componentText.text = name;
+    }
+
+    public override void SetupDefaultUI()
+    {
+        base.SetupDefaultUI();
+        UIResources.standard = Resources.Load<Sprite>("Sprites/UI/Background");
     }
 
     public void Save(string path, bool value)

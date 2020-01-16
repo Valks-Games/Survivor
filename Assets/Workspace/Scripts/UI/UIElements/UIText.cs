@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UIText : UIElement
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateText(new DefaultControls.Resources());
+    public override GameObject GameObject { get; } = DefaultControls.CreateText(UIResources);
 
     public UIText(string name, Transform parent) : base(name, parent)
     {
