@@ -1,5 +1,8 @@
 # Contributing
-Make sure you are on the same [Unity Project Version](https://unity3d.com/unity/beta/2019.3#downloads).
+We are currently on `Unity 2019.3.05f`, please notify the team if a [newer version](https://unity3d.com/unity/beta/2019.3#downloads) available.
+
+## Unity General Guidelines
+Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
 
 ## Setting up Visual Studio Code
 Throughout my development career, I've worked with several different editors and IDE's. JetBrains, Atom, Notepad++, and Eclipse to name a few. With experience I can now say that Visual Studio Code is my favorite editor and it's what I will be recommending you to use for contributing to this project.
@@ -38,6 +41,9 @@ Always consult the leader of the project before introducing new concepts.
 - Do not remove informative comments.
 - Keep the indentation as is, do not expand something if it's compressed.
 - Try to follow the general style the owner has laid down throughout all of the code.
+
+## Sprites
+We will be using [Gimp](https://www.gimp.org) to create Sprites. Make sure when finished creating a Sprite, export both the `.xcf` and image file into the Unity assets folder.
 
 ## Animations
 ### Mixamo Humanoids
