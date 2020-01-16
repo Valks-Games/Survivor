@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Camera cam;
-    private WorldGenerator worldGenerator;
-
     public float SpeedPan = 3f;
     public float SpeedScroll = 10f;
     public float DragSpeed = 500f;
@@ -33,18 +30,7 @@ public class CameraController : MonoBehaviour
 
     public void Start()
     {
-        cam = GetComponent<Camera>();
-        worldGenerator = GameObject.Find("World").GetComponent<WorldGenerator>();
         lastTimeClicked = Time.time;
-        //StartCoroutine(WorldGenerating());
-    }
-
-    public IEnumerator WorldGenerating()
-    {
-        while (WorldGenerator.GeneratingWorld)
-        {
-            yield return new WaitForSeconds(0.1f);
-        }
     }
 
     public void Update()

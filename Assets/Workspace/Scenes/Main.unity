@@ -1720,12 +1720,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502ffda5e1386564ea2033184ba6c4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StringSeed: cat
+  SetSeed: 
+  SeedPreview: 0
   RandomizeSeed: 1
+  SetAmplitude: 2
   SetFreqX: 0.16
   SetFreqZ: 0.15
-  SetAmplitude: 2
-  ViewSeed: 0
 --- !u!4 &1905524197
 Transform:
   m_ObjectHideFlags: 0
@@ -1779,6 +1779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8388467be7949f4390481a60b22d934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enabled: 0
 --- !u!1 &2056619433
 GameObject:
   m_ObjectHideFlags: 0

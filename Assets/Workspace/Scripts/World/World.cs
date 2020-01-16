@@ -2,21 +2,19 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
-public class WorldGenerator : MonoBehaviour
+public class World : MonoBehaviour
 {
-    [HideInInspector] public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>();
-    [HideInInspector] public static GameObject World;
+    public static Dictionary<string, List<Transform>> StructureList = new Dictionary<string, List<Transform>>();
 
-    [HideInInspector] public static GameObject prefabTree { get; private set; }
-    [HideInInspector] public static GameObject prefabRock { get; private set; }
-    [HideInInspector] public static GameObject prefabBase { get; private set; }
+    public static GameObject prefabTree { get; private set; }
+    public static GameObject prefabRock { get; private set; }
+    public static GameObject prefabBase { get; private set; }
 
-    [HideInInspector] public static GameObject[,,] WorldGrid;
-    [HideInInspector] public static bool GeneratingWorld = true;
+    public static GameObject[,,] WorldGrid;
+    public static bool GeneratingWorld = true;
 
-    [HideInInspector] public const int Columns = 100;
-    [HideInInspector] public const int Rows = 100;
-    [HideInInspector] public const float BaseMinimumDistance = 32;
+    public const int WorldSize = 10000;
+    public const float BaseMinimumDistance = 32;
 
     public static int ChunkSize = 40;
     public static float CellSize = 0.25f;
@@ -24,29 +22,33 @@ public class WorldGenerator : MonoBehaviour
     public static Category CategoryChunks;
     public static Category CategoryColonists;
 
-    public string StringSeed = "";
-    public bool RandomizeSeed;
-
-    public float SetFreqX;
-    public float SetFreqZ;
-    public float SetAmplitude;
-    [ReadOnly] public int ViewSeed;
-
     public static int Seed;
     public static float FreqX = 0.15f;
     public static float FreqZ = 0.15f;
     public static float Amplitude = 2f;
 
+    [Header("Seed")]
+    public string SetSeed = "";
+    [ReadOnly] public int SeedPreview;
+    public bool RandomizeSeed;
+
+    [Header("Settings")]
+    public float SetAmplitude;
+    public float SetFreqX;
+    public float SetFreqZ;
+
     public void Awake()
     {
+        WorldGrid = new GameObject[WorldSize, 1, WorldSize];
+
         FreqX = SetFreqX;
         FreqZ = SetFreqX;
         Amplitude = SetAmplitude;
 
-        if (StringSeed != "" || StringSeed != null)
+        if (SetSeed != "" || SetSeed != null)
         {
             // Hash too long and will not work if not divided by 100.
-            Seed = StringSeed.GetHashCode() / 100;
+            Seed = SetSeed.GetHashCode() / 100;
         }
 
         if (RandomizeSeed)
@@ -56,12 +58,11 @@ public class WorldGenerator : MonoBehaviour
 
         Random.InitState(Seed);
 
-        ViewSeed = Seed;
+        SeedPreview = Seed;
 
         prefabTree = Resources.Load("Prefabs/Tree") as GameObject;
         prefabRock = Resources.Load("Prefabs/Rock") as GameObject;
         prefabBase = Resources.Load("Prefabs/Base") as GameObject;
-        World = gameObject;
 
         CategoryChunks = new Category("Chunks", transform);
         CategoryColonists = new Category("Colonists", transform);
@@ -79,10 +80,8 @@ public class WorldGenerator : MonoBehaviour
         }
 
         // Generate spawn with resources first otherwise colonists will complain that they can't find resources.
-        AddFaction(GetPoint(Rows / 2, Columns / 2)); // Temp
+        AddFaction(GetPosition(WorldSize / 2, WorldSize / 2)); // Temp
         //AddFactions(BaseMinimumDistance);
-
-        WorldGrid = new GameObject[Rows, Columns, 1];
 
         GeneratingWorld = false;
 
@@ -94,7 +93,7 @@ public class WorldGenerator : MonoBehaviour
     {
         List<Transform> list = new List<Transform>();
 
-        Transform parent = WorldGenerator.CategoryChunks.Transform.Find("Chunk 0 0").Find("Structures").Find(type);
+        Transform parent = CategoryChunks.Transform.Find("Chunk 0 0").Find("Structures").Find(type);
 
         foreach (Transform child in parent)
             list.Add(child);
@@ -117,7 +116,7 @@ public class WorldGenerator : MonoBehaviour
 
     private void AddFactions(float minDistance)
     {
-        foreach (Vector3 point in PoissonDiscSampling.Generate(minDistance, new Vector2(Columns, Rows)))
+        foreach (Vector3 point in PoissonDiscSampling.Generate(minDistance, new Vector2(WorldSize, WorldSize)))
             AddFaction(point);
     }
 
@@ -135,8 +134,8 @@ public class WorldGenerator : MonoBehaviour
             );
     }
 
-    private Vector2 GetPoint(int i, int j)
+    public static Vector2 GetPosition(int x, int z)
     {
-        return new Vector2(i - Columns / 2, j - Rows / 2);
+        return new Vector2(x - WorldSize, z - WorldSize);
     }
 }

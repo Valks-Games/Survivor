@@ -13,7 +13,7 @@ public partial class Colonist : ResourceGatherer<Colonist>
         Health = 10 + Random.Range(0, 5);
         MaxHealth = Health;
 
-        transform.parent = WorldGenerator.CategoryColonists.Transform;
+        transform.parent = World.CategoryColonists.Transform;
 
         Damage = 1 + Random.Range(0, 3);
 
@@ -32,7 +32,7 @@ public partial class Colonist : ResourceGatherer<Colonist>
 
     private IEnumerator WaitForWorldGeneration()
     {
-        if (WorldGenerator.GeneratingWorld)
+        if (World.GeneratingWorld)
         {
             yield return new WaitForSeconds(0.01f);
         }

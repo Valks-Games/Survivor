@@ -16,6 +16,7 @@ public class WorldChunk : MonoBehaviour
 
     private float cellSize;
     private int chunkSize;
+    private int worldSize;
 
     private GameObject prefabTree;
     private GameObject prefabRock;
@@ -32,17 +33,18 @@ public class WorldChunk : MonoBehaviour
 
     public void Awake()
     {
-        seed = WorldGenerator.Seed;
-        freqX = WorldGenerator.FreqX;
-        freqZ = WorldGenerator.FreqZ;
-        amplitude = WorldGenerator.Amplitude;
+        seed = World.Seed;
+        freqX = World.FreqX;
+        freqZ = World.FreqZ;
+        amplitude = World.Amplitude;
 
         mesh = GetComponent<MeshFilter>().mesh;
         meshRenderer = GetComponent<MeshRenderer>();
-        prefabTree = WorldGenerator.prefabTree;
-        prefabRock = WorldGenerator.prefabRock;
-        chunkSize = WorldGenerator.ChunkSize;
-        cellSize = WorldGenerator.CellSize;
+        prefabTree = World.prefabTree;
+        prefabRock = World.prefabRock;
+        chunkSize = World.ChunkSize;
+        cellSize = World.CellSize;
+        worldSize = World.WorldSize;
 
         // Setup layout
         CategoryStructures = new Category("Structures", transform);
@@ -50,7 +52,7 @@ public class WorldChunk : MonoBehaviour
         CategoryRocks = new Category("Rocks", CategoryStructures.Transform);
         CategoryBases = new Category("Bases", CategoryStructures.Transform);
 
-        chunks = WorldGenerator.CategoryChunks.Transform;
+        chunks = World.CategoryChunks.Transform;
         transform.parent = chunks;
     }
 
@@ -162,11 +164,13 @@ public class WorldChunk : MonoBehaviour
                     {
                         GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
                         go.transform.parent = CategoryTrees.Transform;
+                        World.WorldGrid[(worldSize / 2) + x, 0, (worldSize / 2) + z] = go;
                     }
                     else
                     {
                         GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
                         go.transform.parent = CategoryRocks.Transform;
+                        World.WorldGrid[(worldSize / 2) + x, 0, (worldSize / 2) + z] = go;
                     }
                 }
             }

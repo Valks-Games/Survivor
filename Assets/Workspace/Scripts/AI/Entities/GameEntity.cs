@@ -22,11 +22,11 @@ public abstract class GameEntity<T> : Entity<T> where T : GameEntity<T>
 
     public Transform ClosestStructure(string type)
     {
-        WorldGenerator.StructureList[type] = WorldGenerator.StructureList[type]
+        World.StructureList[type] = World.StructureList[type]
             .Where(t => t != null)
             .ToList();
 
-        return WorldGenerator.StructureList[type]
+        return World.StructureList[type]
             .OrderBy(t => (t.position - transform.position).sqrMagnitude)
             .Where(t => t.gameObject.gameObject.GetComponent<Structure>().Workers == 0)
             .FirstOrDefault();

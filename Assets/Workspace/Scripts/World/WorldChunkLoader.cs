@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class WorldChunkLoader : MonoBehaviour
 {
-    private WorldGenerator world;
+    public bool Enabled = true;
+    private World world;
     private int chunkSize;
     private float cellSize;
 
@@ -14,9 +15,9 @@ public class WorldChunkLoader : MonoBehaviour
 
     public void Awake()
     {
-        world = GetComponent<WorldGenerator>();
-        chunkSize = WorldGenerator.ChunkSize;
-        cellSize = WorldGenerator.CellSize;
+        world = GetComponent<World>();
+        chunkSize = World.ChunkSize;
+        cellSize = World.CellSize;
         cameraTransform = Camera.main.transform;
     }
 
@@ -93,6 +94,9 @@ public class WorldChunkLoader : MonoBehaviour
 
     public void Update()
     {
+        if (!Enabled)
+            return;
+
         if (Started)
         {
             Started = false;
