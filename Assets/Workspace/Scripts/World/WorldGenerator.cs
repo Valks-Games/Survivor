@@ -11,7 +11,7 @@ public class WorldGenerator : MonoBehaviour
     [HideInInspector] public static GameObject prefabRock { get; private set; }
     [HideInInspector] public static GameObject prefabBase { get; private set; }
 
-    [HideInInspector] public GameObject[,] Grid;
+    [HideInInspector] public static GameObject[,,] WorldGrid;
     [HideInInspector] public static bool GeneratingWorld = true;
 
     [HideInInspector] public const int Columns = 100;
@@ -81,6 +81,8 @@ public class WorldGenerator : MonoBehaviour
         // Generate spawn with resources first otherwise colonists will complain that they can't find resources.
         AddFaction(GetPoint(Rows / 2, Columns / 2)); // Temp
         //AddFactions(BaseMinimumDistance);
+
+        WorldGrid = new GameObject[Rows, Columns, 1];
 
         GeneratingWorld = false;
 
