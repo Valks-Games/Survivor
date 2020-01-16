@@ -1156,7 +1156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.021118164, y: 0.09199999}
+  m_AnchoredPosition: {x: -0.018, y: 0.118}
   m_SizeDelta: {x: 470.01, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &782546771
@@ -1177,7 +1177,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Animation Update!!
+  m_text: 'Alpha 0.17
+
+
+    - Click to place structures
+
+    - You cannot place structures
+    on occupied spaces
+
+    - Added Culling and LOD to structures
+
+    - World fog
+    when you zoom higher up
+
+    - Options menu is starting to get populated with
+    their own unique sprites
+
+    - Black to alpha cross fade transition after loading
+    screen'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1205,13 +1222,13 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 16
+  m_fontStyle: 0
   m_textAlignment: 257
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1222,7 +1239,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 11
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1246,12 +1263,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 782546771}
-    characterCount: 18
+    characterCount: 296
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 53
+    wordCount: 54
     linkCount: 0
-    lineCount: 1
+    lineCount: 11
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1630,7 +1647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2f0b9be6edb2643ae4aea67d87c440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
 --- !u!4 &1184679401
 Transform:
   m_ObjectHideFlags: 0
@@ -3414,7 +3430,7 @@ GameObject:
   - component: {fileID: 5006512736580001042}
   - component: {fileID: 3166231814256029800}
   m_Layer: 0
-  m_Name: AnimationUpdate!
+  m_Name: Version Update Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
