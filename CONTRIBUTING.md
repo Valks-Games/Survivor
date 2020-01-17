@@ -1,8 +1,9 @@
 # Contributing
 We are currently on `Unity 2019.3.05f`, please notify the team if a [newer version](https://unity3d.com/unity/beta/2019.3#downloads) available.
 
-## Unity General Guidelines
-Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
+## Unity Good Practices
+- Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
+- When comparing gameObject tags use `.CompareTag` instead of `==` to avoid garbage collection.
 
 ## Setting up Visual Studio Code
 Throughout my development career, I've worked with several different editors and IDE's. JetBrains, Atom, Notepad++, and Eclipse to name a few. With experience I can now say that Visual Studio Code is my favorite editor and it's what I will be recommending you to use for contributing to this project.
