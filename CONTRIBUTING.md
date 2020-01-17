@@ -36,6 +36,8 @@ Always consult the leader of the project before introducing new concepts.
 
 ## C# Style & Guidelines
 - Private variables should be camelCase.
+- If a public variable has 2 or so characters, keep everything UPPERCASE (ID (not Id or id))
+- If a private variable has 2 or so characters, keep everything LOWERCASE (id)
 - Public variables should follow the PascalFormat
 - Methods should follow PascalFormat
 - Do not remove informative comments.
