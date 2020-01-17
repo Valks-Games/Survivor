@@ -102,6 +102,11 @@ namespace WorldAPI.Entities
 
             return closest;
         }
+
+        public override string ToString()
+        {
+            return "A entity.";
+        }
     }
 
     public partial class Entity<TType> : TaskedBehaviour<TType>

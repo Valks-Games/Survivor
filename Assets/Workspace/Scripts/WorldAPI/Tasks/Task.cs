@@ -25,5 +25,10 @@ namespace WorldAPI.Tasks
         {
             Target = target;
         }
+
+        public override string ToString()
+        {
+            return "A task.";
+        }
     }
 }

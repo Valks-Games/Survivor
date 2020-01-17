@@ -3,12 +3,18 @@ using UnityEngine.UI;
 
 public class UIToggle : UISelectable
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateToggle(UIResources);
+    public override GameObject GameObject { get; }
     public Toggle Instance => (Toggle)GameObject.GetComponent<Selectable>();
     public string Path;
 
     public UIToggle(string name, Transform parent) : base(name, parent)
     {
+        GameObject = DefaultControls.CreateToggle(UIResources);
+
+        SetActive(false);
+        Colorize();
+        GameObject.transform.SetParent(parent);
+
         Text componentText = GameObject.transform.Find("Label").GetComponent<Text>();
         componentText.color = Color;
         componentText.text = name;

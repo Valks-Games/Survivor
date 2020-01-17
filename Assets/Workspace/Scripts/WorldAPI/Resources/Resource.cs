@@ -7,5 +7,10 @@ namespace WorldAPI.Resources
         public Resource(string name) : base(name)
         {
         }
+
+        public override string ToString()
+        {
+            return "A resource.";
+        }
     }
 }

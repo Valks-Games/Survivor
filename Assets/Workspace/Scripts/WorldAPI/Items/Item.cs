@@ -8,5 +8,10 @@ namespace WorldAPI.Items
         {
             Name = name;
         }
+
+        public override string ToString()
+        {
+            return "A item.";
+        }
     }
 }

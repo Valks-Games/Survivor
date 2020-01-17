@@ -12,5 +12,10 @@ namespace WorldAPI.Items
         {
             MaxSize = maxSize;
         }
+
+        public override string ToString()
+        {
+            return "A inventory.";
+        }
     }
 }

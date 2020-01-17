@@ -3,13 +3,18 @@ using UnityEngine.UI;
 
 public class UIDropdown : UISelectable
 {
-    public override GameObject GameObject { get; } = DefaultControls.CreateDropdown(UIResources);
+    public override GameObject GameObject { get; }
     public Dropdown Instance => (Dropdown)GameObject.GetComponent<Selectable>();
 
     public UIDropdown(string name, Transform parent) : base(name, parent)
     {
+        GameObject = DefaultControls.CreateDropdown(UIResources);
         GameObject.GetComponent<Dropdown>().options.Clear();
         GameObject.transform.Find("Template").GetComponent<ScrollRect>().scrollSensitivity = 45;
+
+        SetActive(false);
+        Colorize();
+        GameObject.transform.SetParent(parent);
     }
 
     public override void Colorize()

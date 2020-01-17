@@ -133,4 +133,9 @@ public class World : MonoBehaviour
                 faction: faction
             );
     }
+
+    public override string ToString()
+    {
+        return "World Size: " + WorldSize + ", Chunk Size: " + ChunkSize + ", Cell Size: " + CellSize;
+    }
 }

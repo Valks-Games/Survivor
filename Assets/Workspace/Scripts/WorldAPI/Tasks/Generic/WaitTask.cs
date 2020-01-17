@@ -16,5 +16,10 @@ namespace WorldAPI.Tasks.Generic
         {
             yield return new WaitForSeconds(delay);
         }
+
+        public override string ToString()
+        {
+            return "A wait task.";
+        }
     }
 }

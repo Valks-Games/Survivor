@@ -4,7 +4,7 @@ public class Faction
 {
     private static int id = 0;
 
-    public int Id;
+    public int ID;
     public string Name;
     public string Description;
 
@@ -13,9 +13,14 @@ public class Faction
 
     public Faction(string name = null, string description = "No description", Base b = null)
     {
-        Id = id++;
-        Name = name ?? "Faction " + Id;
+        ID = id++;
+        Name = name ?? "Faction " + ID;
         Description = description;
         Base = b;
+    }
+
+    public override string ToString()
+    {
+        return "ID: " + ID + ", Name: " + Name + ", Description: " + Description;
     }
 }

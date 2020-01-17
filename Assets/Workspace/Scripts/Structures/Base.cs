@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class Base : Structure
 {
-    public static int id = 0;
+    public static int ID = 0;
 
-    public int costMultiplier = 10;
+    public int CostMultiplier = 10;
 
-    private int tier = 1;
+    public int Tier = 1;
 
     public Dictionary<Material, int> Resources = new Dictionary<Material, int>();
 
     public override void Awake()
     {
         base.Awake();
-        id++;
-        SetName("Base " + id);
+        ID++;
+        SetName("Base " + ID);
     }
 
     public override void Start()
@@ -36,11 +36,11 @@ public class Base : Structure
         if (!CanUpgrade)
             return;
 
-        Resources[Material.Wood] -= tier * costMultiplier;
-        Resources[Material.Stone] -= tier * costMultiplier;
+        Resources[Material.Wood] -= Tier * CostMultiplier;
+        Resources[Material.Stone] -= Tier * CostMultiplier;
 
-        tier++;
-        Debug.Log("Upgraded base to tier " + tier);
+        Tier++;
+        Debug.Log("Upgraded base to tier " + Tier);
     }
 
     public bool CanUpgrade
@@ -67,13 +67,18 @@ public class Base : Structure
         {
             Dictionary<Material, int> reqResources = new Dictionary<Material, int>();
 
-            int reqWood = (tier * costMultiplier) - Resources[Material.Wood];
-            int reqStone = (tier * costMultiplier) - Resources[Material.Stone];
+            int reqWood = (Tier * CostMultiplier) - Resources[Material.Wood];
+            int reqStone = (Tier * CostMultiplier) - Resources[Material.Stone];
 
             reqResources.Add(Material.Wood, reqWood);
             reqResources.Add(Material.Stone, reqStone);
 
             return reqResources;
         }
+    }
+
+    public override string ToString()
+    {
+        return "ID: " + ID + ", Tier: " + Tier;
     }
 }

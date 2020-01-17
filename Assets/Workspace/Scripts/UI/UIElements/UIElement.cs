@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public abstract class UIElement
 {
-    public static DefaultControls.Resources UIResources = new DefaultControls.Resources();
+    public DefaultControls.Resources UIResources = new DefaultControls.Resources();
     public static List<UIElement> UIElements = new List<UIElement>();
     public abstract GameObject GameObject { get; }
 
@@ -13,9 +13,6 @@ public abstract class UIElement
     public UIElement(string name, Transform parent)
     {
         this.Color = new Color32(255, 255, 255, 255); // Default Color
-        this.SetActive(false);
-        this.Colorize();
-        this.GameObject.transform.SetParent(parent);
         this.SetupDefaultUI();
 
         UIElement.UIElements.Add(this);

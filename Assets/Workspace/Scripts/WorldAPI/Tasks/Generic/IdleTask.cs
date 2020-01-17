@@ -19,5 +19,10 @@ namespace WorldAPI.Tasks.Generic
             if (Target.TaskQueue.Count < 1)
                 Target.QueueTask(new IdleTask<T>(tick));
         }
+
+        public override string ToString()
+        {
+            return "A idle task.";
+        }
     }
 }
