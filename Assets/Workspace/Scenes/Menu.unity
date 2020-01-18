@@ -1178,7 +1178,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Alpha 0.18
+  m_text: 'Alpha 0.19
 
 
     - Fixed issue where game would take up all your RAM
