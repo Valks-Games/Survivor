@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 486654547508018485}
   - component: {fileID: 8011771010444863675}
   - component: {fileID: 5809244339088846606}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Colonist
   m_TagString: Colonist
   m_Icon: {fileID: 0}

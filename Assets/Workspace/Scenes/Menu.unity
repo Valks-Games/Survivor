@@ -1178,31 +1178,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Alpha 0.17
+  m_text: 'Alpha 0.18
 
 
-    - Click to place structures
+    - Fixed issue where game would take up all your RAM
 
-    - You cannot place structures
-    on occupied spaces
+    -
+    All structures and units are clickable via raycasts (there''s no visual for this
+    yet)
 
-    - Added Culling and LOD to structures
-
-    - World fog
-    when you zoom higher up
-
-    - Options menu is starting to get populated with
-    their own unique sprites
-
-    - Black to alpha cross fade transition after loading
-    screen
-
-    - Rocks now spawn as well as trees (WIP)
-
-    - Colonists no longer
-    spawn in the void
-
-    - Better grid management system'
+    - Fixed fade panel blocking "Back to Menu" button in pop up menu.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1271,12 +1256,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 782546771}
-    characterCount: 409
+    characterCount: 216
     spriteCount: 0
-    spaceCount: 75
-    wordCount: 76
+    spaceCount: 41
+    wordCount: 42
     linkCount: 0
-    lineCount: 14
+    lineCount: 8
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0

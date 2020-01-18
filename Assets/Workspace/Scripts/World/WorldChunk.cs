@@ -16,7 +16,6 @@ public class WorldChunk : MonoBehaviour
 
     private float cellSize;
     private int chunkSize;
-    private int worldSize;
 
     private GameObject prefabTree;
     private GameObject prefabRock;
@@ -44,7 +43,6 @@ public class WorldChunk : MonoBehaviour
         prefabRock = World.prefabRock;
         chunkSize = World.ChunkSize;
         cellSize = World.CellSize;
-        worldSize = World.WorldSize;
 
         // Setup layout
         CategoryStructures = new Category("Structures", transform);
@@ -164,13 +162,11 @@ public class WorldChunk : MonoBehaviour
                     {
                         GameObject go = Instantiate(prefabTree, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
                         go.transform.parent = CategoryTrees.Transform;
-                        World.WorldGrid[(worldSize / 2) + x, 0, (worldSize / 2) + z] = go;
                     }
                     else
                     {
                         GameObject go = Instantiate(prefabRock, new Vector3(x * cellSize, 0, z * cellSize), Quaternion.identity);
                         go.transform.parent = CategoryRocks.Transform;
-                        World.WorldGrid[(worldSize / 2) + x, 0, (worldSize / 2) + z] = go;
                     }
                 }
             }

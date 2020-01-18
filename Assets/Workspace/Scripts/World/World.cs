@@ -10,18 +10,19 @@ public class World : MonoBehaviour
     public static GameObject prefabRock { get; private set; }
     public static GameObject prefabBase { get; private set; }
 
-    public static GameObject[,,] WorldGrid;
     public static bool GeneratingWorld = true;
 
     public const int WorldSize = 10000;
     public const float BaseMinimumDistance = 32;
 
-    public static int ChunkSize = 40;
-    public static float CellSize = 0.25f;
-
     public static Category CategoryChunks;
     public static Category CategoryColonists;
 
+    // Hardcoded Settings
+    public static int ChunkSize = 40;
+    public static float CellSize = 0.25f;
+
+    // Seed + Settings
     public static int Seed;
     public static float FreqX = 0.15f;
     public static float FreqZ = 0.15f;
@@ -39,8 +40,6 @@ public class World : MonoBehaviour
 
     public void Awake()
     {
-        WorldGrid = new GameObject[WorldSize, 1, WorldSize];
-
         FreqX = SetFreqX;
         FreqZ = SetFreqX;
         Amplitude = SetAmplitude;

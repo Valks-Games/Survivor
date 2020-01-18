@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class StructurePlacer : MonoBehaviour
 {
+    public LayerMask LayerStructures;
     private float cellSize;
-    private int worldSize;
+    private Plane rayPlane;
 
     private void Awake()
     {
         cellSize = World.CellSize;
-        worldSize = World.WorldSize;
+        rayPlane = new Plane(new Vector3(0, 0.1f, 0), 0f);
     }
 
     private void Update()
@@ -18,24 +19,28 @@ public class StructurePlacer : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            Plane rayPlane = new Plane(new Vector3(0, 0.1f, 0), 0f);
-
-            float distanceToPlane;
-
-            if (rayPlane.Raycast(ray, out distanceToPlane))
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, LayerStructures))
             {
-                Vector3 point = GetNearestPoint(ray.GetPoint(distanceToPlane), cellSize);
-                Vector3 pos = ConvertPointToPosition(point, cellSize);
+                // Structure exists here.
+                // Debug.Log(hit.transform.name);
+            }
+            else
+            {
+                // Structure does not exist here.
+                // Lets create one.
+                float distanceToPlane;
 
-                GameObject check = World.WorldGrid[(worldSize / 2) + (int)pos.x, 0, (worldSize / 2) + (int)pos.z];
-                if (!check)
+                if (rayPlane.Raycast(ray, out distanceToPlane))
                 {
+                    Vector3 point = GetNearestPoint(ray.GetPoint(distanceToPlane), cellSize);
+                    Vector3 pos = ConvertPointToPosition(point, cellSize);
+
                     GameObject structure = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     structure.transform.position = point;
                     structure.transform.localScale = new Vector3(cellSize, cellSize, cellSize);
-
-                    World.WorldGrid[(worldSize / 2) + (int)pos.x, 0, (worldSize / 2) + (int)pos.z] = structure;
+                    structure.layer = LayerMask.NameToLayer("Structures");
                 }
             }
         }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Rock : StructureResource
 {
     public static int ID = 0;
