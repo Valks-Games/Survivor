@@ -7,7 +7,8 @@ public class UIImage : UIElement
 
     public UIImage(string name, Transform parent) : base(name, parent)
     {
-        GameObject = DefaultControls.CreateImage(UIResources);
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Image");
+        GameObject = GameObject.Instantiate(prefab);
 
         SetActive(false);
         Colorize();

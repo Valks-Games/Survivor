@@ -1,15 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIDropdown : UISelectable
 {
     public override GameObject GameObject { get; }
-    public Dropdown Instance => (Dropdown)GameObject.GetComponent<Selectable>();
+    public TMP_Dropdown Instance => (TMP_Dropdown)GameObject.GetComponent<Selectable>();
 
     public UIDropdown(string name, Transform parent) : base(name, parent)
     {
-        GameObject = DefaultControls.CreateDropdown(UIResources);
-        GameObject.GetComponent<Dropdown>().options.Clear();
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Dropdown");
+        GameObject = GameObject.Instantiate(prefab);
+        GameObject.GetComponent<TMP_Dropdown>().options.Clear();
         GameObject.transform.Find("Template").GetComponent<ScrollRect>().scrollSensitivity = 45;
 
         SetActive(false);
@@ -34,7 +36,7 @@ public class UIDropdown : UISelectable
         template.GetComponent<Image>().color = Utils.ModifyColor(Color, -200);
         itemBackground.GetComponent<Image>().color = Utils.ModifyColor(Color, -200);
         itemCheckmark.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        itemLabel.GetComponent<Text>().color = Utils.ModifyColor(Color, 100);
+        itemLabel.GetComponent<TextMeshProUGUI>().color = Utils.ModifyColor(Color, 100);
     }
 
     public void Save(string path, int value)

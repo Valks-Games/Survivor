@@ -8,16 +8,12 @@ public class UISlider : UISelectable
 
     public UISlider(string name, Transform parent) : base(name, parent)
     {
-        GameObject = DefaultControls.CreateSlider(UIResources);
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Slider");
+        GameObject = GameObject.Instantiate(prefab);
 
         SetActive(false);
         Colorize();
         GameObject.transform.SetParent(parent);
-    }
-
-    public override void SetupDefaultUI()
-    {
-        base.SetupDefaultUI();
     }
 
     public override void Colorize()

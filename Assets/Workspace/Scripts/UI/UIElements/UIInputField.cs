@@ -7,7 +7,8 @@ public class UIInputField : UISelectable
 
     public UIInputField(string name, Transform parent) : base(name, parent)
     {
-        GameObject = DefaultControls.CreateInputField(UIResources);
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/InputField");
+        GameObject = GameObject.Instantiate(prefab);
 
         SetActive(false);
         Colorize();

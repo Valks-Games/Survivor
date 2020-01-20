@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public abstract class UIElement
 {
-    public DefaultControls.Resources UIResources = new DefaultControls.Resources();
     public static List<UIElement> UIElements = new List<UIElement>();
     public abstract GameObject GameObject { get; }
 
@@ -13,7 +12,6 @@ public abstract class UIElement
     public UIElement(string name, Transform parent)
     {
         this.Color = new Color32(255, 255, 255, 255); // Default Color
-        this.SetupDefaultUI();
 
         UIElement.UIElements.Add(this);
     }
@@ -26,11 +24,5 @@ public abstract class UIElement
     public virtual void SetActive(bool value)
     {
         GameObject.SetActive(value);
-    }
-
-    public virtual void SetupDefaultUI()
-    {
-        UIResources.knob = Resources.Load<Sprite>("Sprites/UI/Knob");
-        UIResources.checkmark = Resources.Load<Sprite>("Sprites/UI/Checkmark");
     }
 }

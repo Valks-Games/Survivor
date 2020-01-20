@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Options : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class Options : MonoBehaviour
 
     #endregion Inspector:Default Values
 
+    [Header("Links")]
+    public Transform SectionVolume;
+    public Transform SectionMsc;
+    public Transform SectionGame;
+    public Transform SectionButtons;
+
     [HideInInspector] public static float VolumeSFX = 1.0f;
     [HideInInspector] public static float VolumeMusic = 1.0f;
     [HideInInspector] public static float SensitivityPan = 3f;
@@ -65,8 +72,8 @@ public class Options : MonoBehaviour
     private UISlider uiSliderSensitivityPan;
     private UISlider uiSliderSensitivityZoom;
 
-    private Button buttonResetToDefaults;
-    private Button buttonBackToMenu;
+    private UIButton buttonResetToDefaults;
+    private UIButton buttonBackToMenu;
 
     public void Awake()
     {
@@ -103,58 +110,56 @@ public class Options : MonoBehaviour
             Debug.Log("Menu Music has to be loaded from the 'Menu' scene first.");
         }
 
-        Transform sectionVolume = GameObject.Find("SectionVolume").transform;
-        Transform sectionMsc = GameObject.Find("SectionMsc").transform;
-        Transform sectionGame = GameObject.Find("SectionGame").transform;
-
         // --Msc--
         // Vignette
-        uiToggleVignette = new UIToggle("Vignette", sectionMsc);
-        uiSliderVignette = new UISlider("Vignette", sectionMsc);
+        uiToggleVignette = new UIToggle("Vignette", SectionMsc);
+        uiSliderVignette = new UISlider("Vignette", SectionMsc);
 
         // Bloom
-        uiToggleBloom = new UIToggle("Bloom", sectionMsc);
-        uiSliderBloom = new UISlider("Bloom", sectionMsc);
+        uiToggleBloom = new UIToggle("Bloom", SectionMsc);
+        uiSliderBloom = new UISlider("Bloom", SectionMsc);
 
         // Fullscreen
-        uiToggleFullscreen = new UIToggle("Fullscreen", sectionMsc);
+        uiToggleFullscreen = new UIToggle("Fullscreen", SectionMsc);
         // VSync
-        uiToggleVSync = new UIToggle("VSync", sectionMsc);
+        uiToggleVSync = new UIToggle("VSync", SectionMsc);
 
         // Resolutions
-        uiDropdownResolution = new UIDropdown("Resolution", sectionMsc);
+        uiDropdownResolution = new UIDropdown("Resolution", SectionMsc);
         InitializeResolutionsDropDown();
 
         // Quality
-        uiDropdownQuality = new UIDropdown("Quality", sectionMsc);
+        uiDropdownQuality = new UIDropdown("Quality", SectionMsc);
         InitializeQualityDropDown();
 
         // --Volume--
         // Volume
-        new UIText("Music", sectionVolume);
-        uiSliderVolumeMusic = new UISlider("Music", sectionVolume);
-        new UIText("SFX", sectionVolume);
-        uiSliderVolumeSFX = new UISlider("SFX", sectionVolume);
+        new UIText("Music", SectionVolume);
+        uiSliderVolumeMusic = new UISlider("Music", SectionVolume);
+        new UIText("SFX", SectionVolume);
+        uiSliderVolumeSFX = new UISlider("SFX", SectionVolume);
 
         // --Game--
         // Camera
-        new UIText("Zoom Sensitivity", sectionGame);
-        uiSliderSensitivityZoom = new UISlider("Sensitivity Zoom", sectionGame);
-        new UIText("Pan Sensitivity", sectionGame);
-        uiSliderSensitivityPan = new UISlider("Sensitivity Pan", sectionGame);
+        new UIText("Zoom Sensitivity", SectionGame);
+        uiSliderSensitivityZoom = new UISlider("Sensitivity Zoom", SectionGame);
+        new UIText("Pan Sensitivity", SectionGame);
+        uiSliderSensitivityPan = new UISlider("Sensitivity Pan", SectionGame);
 
         if (goPostProcessing == null || goMenuMusic == null)
             return;
 
-        buttonResetToDefaults = GameObject.Find("ButtonReset").GetComponent<Button>();
-        buttonBackToMenu = GameObject.Find("ButtonMenu").GetComponent<Button>();
+        //buttonResetToDefaults = GameObject.Find("ButtonReset").GetComponent<Button>();
+        buttonResetToDefaults = new UIButton("Reset To Defaults", SectionButtons);
+        //buttonBackToMenu = GameObject.Find("ButtonMenu").GetComponent<Button>();
+        buttonBackToMenu = new UIButton("Back to Menu", SectionButtons);
 
-        buttonResetToDefaults.onClick.AddListener(delegate
+        buttonResetToDefaults.Instance.onClick.AddListener(delegate
         {
             ResetToDefaults();
         });
 
-        buttonBackToMenu.onClick.AddListener(delegate
+        buttonBackToMenu.Instance.onClick.AddListener(delegate
         {
             SceneManager.LoadScene("Menu");
         });
@@ -317,7 +322,7 @@ public class Options : MonoBehaviour
             Resolution res = resolutions[i];
             int refreshRate = res.refreshRate;
 
-            uiDropdownResolution.Instance.options.Add(new Dropdown.OptionData(ResolutionToString(res)));
+            uiDropdownResolution.Instance.options.Add(new TMP_Dropdown.OptionData(ResolutionToString(res)));
         }
 
         uiDropdownResolution.Instance.value = PlayerPrefs.GetInt("uis.resolution");
@@ -329,7 +334,7 @@ public class Options : MonoBehaviour
 
         for (int i = 0; i < names.Length; i++)
         {
-            uiDropdownQuality.Instance.options.Add(new Dropdown.OptionData(names[i]));
+            uiDropdownQuality.Instance.options.Add(new TMP_Dropdown.OptionData(names[i]));
         }
 
         uiDropdownQuality.Instance.value = PlayerPrefs.GetInt("uis.quality");

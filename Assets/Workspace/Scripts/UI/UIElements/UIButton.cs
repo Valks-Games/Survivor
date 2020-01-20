@@ -1,14 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIButton : UISelectable
 {
     public override GameObject GameObject { get; }
+    public Button Instance => (Button)GameObject.GetComponent<Selectable>();
 
     public UIButton(string name, Transform parent) : base(name, parent)
     {
-        GameObject = DefaultControls.CreateButton(UIResources);
-        GameObject.transform.Find("Text").GetComponent<Text>().text = name;
+        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Button");
+        GameObject = GameObject.Instantiate(prefab);
+        GameObject.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = name;
 
         SetActive(false);
         Colorize();
