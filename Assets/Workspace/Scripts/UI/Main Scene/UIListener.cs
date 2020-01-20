@@ -6,16 +6,32 @@ public class UIListener : MonoBehaviour
 {
     public static float CurrentGameSpeed = 1f;
 
+    public GameObject SectionMenu;
+
+    private UIButton buttonBackToMenu;
+    private UIButton buttonOptions;
+
     private bool baseUICreated;
     private GameObject canvas;
-    private GameObject menu;
     private bool menuActive;
 
     public void Start()
     {
         canvas = GameObject.Find("World Canvas");
-        menu = GameObject.Find("Menu");
-        menu.SetActive(menuActive);
+        SectionMenu.SetActive(menuActive);
+
+        buttonBackToMenu = new UIButton("Back to Menu", SectionMenu.transform);
+        buttonBackToMenu.Instance.onClick.AddListener(delegate
+        {
+            Time.timeScale = CurrentGameSpeed;
+            SceneManager.LoadScene("Menu");
+        });
+
+        buttonOptions = new UIButton("Options", SectionMenu.transform);
+        buttonOptions.Instance.onClick.AddListener(delegate
+        {
+            Debug.Log("TODO: Create options menu here.");
+        });
     }
 
     public void Update()
@@ -61,7 +77,7 @@ public class UIListener : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             menuActive = !menuActive;
-            menu.SetActive(menuActive);
+            Utils.SetChildrenActive(SectionMenu.transform, menuActive);
 
             if (Time.timeScale == 0)
             {
@@ -72,12 +88,6 @@ public class UIListener : MonoBehaviour
                 Time.timeScale = 0;
             }
         }
-    }
-
-    public void BackToMenu()
-    {
-        Time.timeScale = CurrentGameSpeed;
-        SceneManager.LoadScene("Menu");
     }
 
     private void HandleUIPopUps()
