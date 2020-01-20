@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class UIListener : MonoBehaviour
 {
     public static float CurrentGameSpeed = 1f;
-
+    public static bool GamePaused;
     public GameObject SectionMenu;
 
     private UIButton buttonBackToMenu;
@@ -13,12 +13,11 @@ public class UIListener : MonoBehaviour
 
     private bool baseUICreated;
     private GameObject canvas;
-    private bool menuActive;
 
     public void Start()
     {
         canvas = GameObject.Find("World Canvas");
-        SectionMenu.SetActive(menuActive);
+        SectionMenu.SetActive(GamePaused);
 
         buttonBackToMenu = new UIButton("Back to Menu", SectionMenu.transform);
         buttonBackToMenu.Instance.onClick.AddListener(delegate
@@ -76,8 +75,8 @@ public class UIListener : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            menuActive = !menuActive;
-            Utils.SetChildrenActive(SectionMenu.transform, menuActive);
+            GamePaused = !GamePaused;
+            Utils.SetChildrenActive(SectionMenu.transform, GamePaused);
 
             if (Time.timeScale == 0)
             {
