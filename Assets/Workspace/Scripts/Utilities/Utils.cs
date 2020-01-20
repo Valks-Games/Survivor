@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Utils : MonoBehaviour
 {
@@ -18,5 +19,21 @@ public class Utils : MonoBehaviour
     public static Color32 ModifyColor(Color32 color, int offset)
     {
         return new Color32((byte)Mathf.Clamp(color.r + offset, 0, 255), (byte)Mathf.Clamp(color.g + offset, 0, 255), (byte)Mathf.Clamp(color.b + offset, 0, 255), color.a);
+    }
+
+    public static IEnumerator LoadAsynchronously(string scene)
+    {
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        asyncOperation.allowSceneActivation = false;
+
+        while (!asyncOperation.isDone)
+        {
+            if (asyncOperation.progress >= 0.9f)
+            {
+                asyncOperation.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
     }
 }

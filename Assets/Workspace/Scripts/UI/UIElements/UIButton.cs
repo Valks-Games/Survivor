@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UIButton : UISelectable
 {
@@ -16,5 +17,15 @@ public class UIButton : UISelectable
         SetActive(false);
         Colorize();
         GameObject.transform.SetParent(parent);
+
+        SetActive(true);
+    }
+
+    public void AddListener(Action action)
+    {
+        Instance.onClick.AddListener(delegate
+        {
+            action?.Invoke();
+        });
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class UISlider : UISelectable
 {
@@ -14,6 +15,16 @@ public class UISlider : UISelectable
         SetActive(false);
         Colorize();
         GameObject.transform.SetParent(parent);
+
+        SetActive(true);
+    }
+
+    public void AddListener(Action action)
+    {
+        Instance.onValueChanged.AddListener(delegate
+        {
+            action?.Invoke();
+        });
     }
 
     public override void Colorize()

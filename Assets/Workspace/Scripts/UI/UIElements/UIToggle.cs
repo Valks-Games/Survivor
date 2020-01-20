@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,16 @@ public class UIToggle : UISelectable
         Text componentText = GameObject.transform.Find("Label").GetComponent<Text>();
         componentText.color = Color;
         componentText.text = name;
+
+        SetActive(true);
+    }
+
+    public void AddListener(Action action)
+    {
+        Instance.onValueChanged.AddListener(delegate
+        {
+            action?.Invoke();
+        });
     }
 
     public void Save(string path, bool value)

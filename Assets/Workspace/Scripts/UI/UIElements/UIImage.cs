@@ -13,5 +13,7 @@ public class UIImage : UIElement
         SetActive(false);
         Colorize();
         GameObject.transform.SetParent(parent);
+
+        SetActive(true);
     }
 }

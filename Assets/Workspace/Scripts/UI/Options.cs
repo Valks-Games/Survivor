@@ -200,7 +200,7 @@ public class Options : MonoBehaviour
     private void InitializeOptionValues()
     {
         // Bloom
-        uiToggleBloom.Instance.onValueChanged.AddListener(delegate
+        uiToggleBloom.AddListener(() =>
         {
             ppBloom.enabled.value = !ppBloom.enabled.value;
             uiSliderBloom.Instance.interactable = !uiSliderBloom.Instance.interactable;
@@ -208,28 +208,28 @@ public class Options : MonoBehaviour
         });
 
         uiSliderBloom.Instance.interactable = uiToggleBloom.Instance.isOn;
-        uiSliderBloom.Instance.onValueChanged.AddListener(delegate
+        uiSliderBloom.AddListener(() =>
         {
             ppBloom.intensity.value = uiSliderBloom.Instance.value;
             PlayerPrefs.SetFloat("uis.bloom.intensity", ppBloom.intensity.value);
         });
 
         // Volume
-        uiSliderVolumeMusic.Instance.onValueChanged.AddListener(delegate
+        uiSliderVolumeMusic.AddListener(() =>
         {
             VolumeMusic = uiSliderVolumeMusic.Instance.value;
             audioMenuMusic.volume = VolumeMusic;
             PlayerPrefs.SetFloat("uis.volume.music", VolumeMusic);
         });
 
-        uiSliderVolumeSFX.Instance.onValueChanged.AddListener(delegate
+        uiSliderVolumeSFX.AddListener(() =>
         {
             VolumeSFX = uiSliderVolumeSFX.Instance.value;
             PlayerPrefs.SetFloat("uis.volume.sfx", VolumeSFX);
         });
 
         // Vignette
-        uiToggleVignette.Instance.onValueChanged.AddListener(delegate
+        uiToggleVignette.AddListener(() =>
         {
             ppVignette.enabled.value = !ppVignette.enabled.value;
             uiSliderVignette.Instance.interactable = !uiSliderVignette.Instance.interactable;
@@ -237,41 +237,41 @@ public class Options : MonoBehaviour
         });
 
         uiSliderVignette.Instance.interactable = uiToggleVignette.Instance.isOn;
-        uiSliderVignette.Instance.onValueChanged.AddListener(delegate
+        uiSliderVignette.AddListener(() =>
         {
             ppVignette.intensity.value = uiSliderVignette.Instance.value;
             PlayerPrefs.SetFloat("uis.vignette.intensity", ppVignette.intensity.value);
         });
 
         // VSync
-        uiToggleVSync.Instance.onValueChanged.AddListener(delegate
+        uiToggleVSync.AddListener(() =>
         {
             QualitySettings.vSyncCount = QualitySettings.vSyncCount == 0 ? 1 : 0;
             PlayerPrefsX.SetBool("uis.vsync", QualitySettings.vSyncCount == 1 ? true : false);
         });
 
         // Fullscreen
-        uiToggleFullscreen.Instance.onValueChanged.AddListener(delegate
+        uiToggleFullscreen.AddListener(() =>
         {
             Screen.fullScreen = !Screen.fullScreen;
             PlayerPrefsX.SetBool("uis.fullscreen", Screen.fullScreen);
         });
 
         // Camera
-        uiSliderSensitivityPan.Instance.onValueChanged.AddListener(delegate
+        uiSliderSensitivityPan.AddListener(() =>
         {
             SensitivityPan = uiSliderSensitivityPan.Instance.value;
             PlayerPrefs.SetFloat("uis.sensitivity.pan", SensitivityPan);
         });
 
-        uiSliderSensitivityZoom.Instance.onValueChanged.AddListener(delegate
+        uiSliderSensitivityZoom.AddListener(() =>
         {
             SensitivityZoom = uiSliderSensitivityZoom.Instance.value;
             PlayerPrefs.SetFloat("uis.sensitivity.zoom", SensitivityZoom);
         });
 
         // Resolutions
-        uiDropdownResolution.Instance.onValueChanged.AddListener(delegate
+        uiDropdownResolution.AddListener(() =>
         {
             dropdownResolutionIndex = uiDropdownResolution.Instance.value;
             Screen.SetResolution(resolutions[uiDropdownResolution.Instance.value].width, resolutions[uiDropdownResolution.Instance.value].height, Screen.fullScreen);
@@ -279,7 +279,7 @@ public class Options : MonoBehaviour
         });
 
         // Quality
-        uiDropdownQuality.Instance.onValueChanged.AddListener(delegate
+        uiDropdownQuality.AddListener(() =>
         {
             QualitySettings.SetQualityLevel(uiDropdownQuality.Instance.value);
             PlayerPrefs.SetInt("uis.quality", uiDropdownQuality.Instance.value);

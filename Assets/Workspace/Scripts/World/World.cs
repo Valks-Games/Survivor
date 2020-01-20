@@ -23,15 +23,14 @@ public class World : MonoBehaviour
     public static float CellSize = 0.25f;
 
     // Seed + Settings
+    public static string StringSeed = "";
     public static int Seed;
     public static float FreqX = 0.15f;
     public static float FreqZ = 0.15f;
     public static float Amplitude = 2f;
 
-    [Header("Seed")]
-    public string SetSeed = "";
     [ReadOnly] public int SeedPreview;
-    public bool RandomizeSeed;
+    public static bool RandomizeSeed = true;
 
     [Header("Settings")]
     public float SetAmplitude;
@@ -44,10 +43,10 @@ public class World : MonoBehaviour
         FreqZ = SetFreqX;
         Amplitude = SetAmplitude;
 
-        if (SetSeed != "" || SetSeed != null)
+        if (StringSeed != "" || StringSeed != null)
         {
-            // Hash too long and will not work if not divided by 100.
-            Seed = SetSeed.GetHashCode() / 100;
+            // Hash too long and will not work if not divided by at least 100.
+            Seed = Mathf.Abs(StringSeed.GetHashCode() / 100000);
         }
 
         if (RandomizeSeed)

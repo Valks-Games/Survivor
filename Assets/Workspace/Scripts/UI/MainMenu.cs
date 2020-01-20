@@ -43,23 +43,23 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        LoadSceneAsync("Loading");
+        StartCoroutine(Utils.LoadAsynchronously("World Options"));
         Destroy(MenuMusicManager.MenuMusic);
     }
 
     public void LoadRoadmap()
     {
-        LoadSceneAsync("Roadmap");
+        StartCoroutine(Utils.LoadAsynchronously("Roadmap"));
     }
 
     public void LoadOptions()
     {
-        LoadSceneAsync("Options");
+        StartCoroutine(Utils.LoadAsynchronously("Options"));
     }
 
     public void LoadCredits()
     {
-        LoadSceneAsync("Credits");
+        StartCoroutine(Utils.LoadAsynchronously("Credits"));
     }
 
     public void QuitGame()
@@ -69,26 +69,5 @@ public class MainMenu : MonoBehaviour
 #else
         Application.Quit();
 #endif
-    }
-
-    private void LoadSceneAsync(string scene)
-    {
-        StartCoroutine(LoadAsynchronously(scene));
-    }
-
-    private IEnumerator LoadAsynchronously(string scene)
-    {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
-        asyncOperation.allowSceneActivation = false;
-
-        while (!asyncOperation.isDone)
-        {
-            if (asyncOperation.progress >= 0.9f)
-            {
-                asyncOperation.allowSceneActivation = true;
-            }
-
-            yield return null;
-        }
     }
 }

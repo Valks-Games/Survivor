@@ -20,5 +20,7 @@ public class UIText : UIElement
         text.color = Color;
         text.fontSize = 16;
         text.alignment = TextAlignmentOptions.Center;
+
+        SetActive(true);
     }
 }

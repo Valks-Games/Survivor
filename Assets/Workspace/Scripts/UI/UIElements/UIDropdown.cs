@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UIDropdown : UISelectable
 {
@@ -17,6 +18,16 @@ public class UIDropdown : UISelectable
         SetActive(false);
         Colorize();
         GameObject.transform.SetParent(parent);
+
+        SetActive(true);
+    }
+
+    public void AddListener(Action action)
+    {
+        Instance.onValueChanged.AddListener(delegate
+        {
+            action?.Invoke();
+        });
     }
 
     public override void Colorize()
