@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 public class World : MonoBehaviour
@@ -20,10 +19,12 @@ public class World : MonoBehaviour
 
     // Hardcoded Settings
     public static int ChunkSize = 40;
+
     public static float CellSize = 0.25f;
 
     // Seed + Settings
     public static string StringSeed = "";
+
     public static int Seed;
     public static float FreqX = 0.15f;
     public static float FreqZ = 0.15f;
@@ -34,6 +35,7 @@ public class World : MonoBehaviour
 
     [Header("Settings")]
     public float SetAmplitude;
+
     public float SetFreqX;
     public float SetFreqZ;
 

@@ -1,5 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StructurePlacer : MonoBehaviour
@@ -19,9 +17,8 @@ public class StructurePlacer : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !UIListener.GamePaused)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, LayerStructures))
+            if (Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, Mathf.Infinity, LayerStructures))
             {
                 // Structure exists here.
                 // Debug.Log(hit.transform.name);
@@ -30,9 +27,8 @@ public class StructurePlacer : MonoBehaviour
             {
                 // Structure does not exist here.
                 // Lets create one.
-                float distanceToPlane;
 
-                if (rayPlane.Raycast(ray, out distanceToPlane))
+                if (rayPlane.Raycast(ray, out float distanceToPlane))
                 {
                     Vector3 point = GetNearestPoint(ray.GetPoint(distanceToPlane), cellSize);
                     Vector3 pos = ConvertPointToPosition(point, cellSize);

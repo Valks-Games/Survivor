@@ -7,7 +7,6 @@ public class UISelectable : UIElement
 
     public UISelectable(string name, Transform parent) : base(name, parent)
     {
-
     }
 
     public override void Colorize()

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +20,7 @@ public class Build : MonoBehaviour
 
     [Header("Links")]
     public GameObject TVersion;
+
     public GameObject TTitleNewFeatures;
     public GameObject TContentNewFeatures;
     public GameObject TTitleChanges;

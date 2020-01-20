@@ -1,8 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
 
 public class Options : MonoBehaviour
 {
@@ -38,6 +37,7 @@ public class Options : MonoBehaviour
 
     [Header("Links")]
     public Transform SectionVolume;
+
     public Transform SectionMsc;
     public Transform SectionGame;
     public Transform SectionButtons;

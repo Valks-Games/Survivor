@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public abstract class UIElement
 {
@@ -18,7 +17,6 @@ public abstract class UIElement
 
     public virtual void Colorize()
     {
-
     }
 
     public virtual void SetActive(bool value)
