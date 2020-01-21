@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
-    public static List<GameObject> DontDestroyObjects = new List<GameObject>(); // <-- this should eventually be a list of some sorts to make it useful for more then one gameobject
+    public static List<GameObject> DontDestroyObjects = new List<GameObject>();
 
     public void Awake()
     {

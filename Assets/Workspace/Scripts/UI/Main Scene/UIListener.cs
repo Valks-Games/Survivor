@@ -14,22 +14,34 @@ public class UIListener : MonoBehaviour
     private bool baseUICreated;
     private GameObject canvas;
 
+    public static bool inOptions = false;
+    public static UIVerticalLayoutGroup layoutGroup;
+
+    public void Awake()
+    {
+        GamePaused = false;
+    }
+
     public void Start()
     {
         canvas = GameObject.Find("World Canvas");
-        SectionMenu.SetActive(GamePaused);
+        SectionMenu.SetActive(false);
 
-        buttonBackToMenu = new UIButton("Back to Menu", SectionMenu.transform);
+        layoutGroup = new UIVerticalLayoutGroup("Group", SectionMenu.transform);
+
+        buttonBackToMenu = new UIButton("Back to Menu", layoutGroup.GameObject.transform);
         buttonBackToMenu.Instance.onClick.AddListener(delegate
         {
             Time.timeScale = CurrentGameSpeed;
             SceneManager.LoadScene("Menu");
         });
 
-        buttonOptions = new UIButton("Options", SectionMenu.transform);
+        buttonOptions = new UIButton("Options", layoutGroup.GameObject.transform);
         buttonOptions.Instance.onClick.AddListener(delegate
         {
-            Debug.Log("TODO: Create options menu here.");
+            new Options().Initialize(GameObject.Find("Menu").transform);
+            inOptions = !inOptions;
+            layoutGroup.SetActive(!inOptions); // We are in the options so we hide the first buttons.
         });
     }
 

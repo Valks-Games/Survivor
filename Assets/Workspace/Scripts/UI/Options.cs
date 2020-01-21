@@ -3,58 +3,46 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
-public class Options : MonoBehaviour
+public class Options
 {
     #region Inspector:Default Values
 
     // Inspector UIs
     [Header("Vignette")]
-    [SerializeField] public float DefaultVignetteIntensity = 0.25f;
-
-    [SerializeField] public bool DefaultVignetteEnabled = true;
+    public float DefaultVignetteIntensity = 0.25f;
+    public bool DefaultVignetteEnabled = true;
 
     [Header("Bloom")]
-    [SerializeField] public float DefaultBloomIntensity = 30f;
-
-    [SerializeField] public bool DefaultBloomEnabled = true;
+    public float DefaultBloomIntensity = 30f;
+    public bool DefaultBloomEnabled = true;
 
     [Header("Volume")]
-    [SerializeField] public float DefaultVolumeMusic = 1f;
-
-    [SerializeField] public float DefaultVolumeSFX = 1f;
+    public float DefaultVolumeMusic = 1f;
+    public float DefaultVolumeSFX = 1f;
 
     [Header("VSync")]
-    [SerializeField] public int DefaultVSyncValue = 1;
-
-    [SerializeField] public bool DefaultVSyncEnabled = true;
+    public int DefaultVSyncValue = 1;
+    public bool DefaultVSyncEnabled = true;
 
     [Header("Camera")]
-    [SerializeField] public float DefaultSensitivityPan = 3f;
-
-    [SerializeField] public float DefaultSensitivityZoom = 10f;
+    public float DefaultSensitivityPan = 3f;
+    public float DefaultSensitivityZoom = 10f;
 
     #endregion Inspector:Default Values
 
-    [Header("Links")]
-    public Transform SectionVolume;
-
-    public Transform SectionMsc;
-    public Transform SectionGame;
-    public Transform SectionButtons;
-
-    [HideInInspector] public static float VolumeSFX = 1.0f;
-    [HideInInspector] public static float VolumeMusic = 1.0f;
-    [HideInInspector] public static float SensitivityPan = 3f;
-    [HideInInspector] public static float SensitivityZoom = 10f;
+    public static float VolumeSFX = 1.0f;
+    public static float VolumeMusic = 1.0f;
+    public static float SensitivityPan = 3f;
+    public static float SensitivityZoom = 10f;
 
     private GameObject goPostProcessing;
-    private GameObject goMenuMusic;
+    private GameObject goMusic;
 
     private PostProcessVolume ppVolume;
     private Bloom ppBloom;
     private Vignette ppVignette;
 
-    private AudioSource audioMenuMusic;
+    private AudioSource musicAudioSource;
 
     private Resolution[] resolutions;
     private static int dropdownResolutionIndex = -1;
@@ -80,11 +68,32 @@ public class Options : MonoBehaviour
         SceneManager.sceneUnloaded += ClearStaticUIs;
     }
 
-    public void Start()
+    public void Initialize(Transform panel)
     {
+        GameObject goOptions = new GameObject("Options");
+        goOptions.transform.SetParent(panel);
+        goOptions.transform.localPosition = Vector3.zero;
+
+        UIHorizontalLayoutGroup layoutOptions = new UIHorizontalLayoutGroup("UI Options", goOptions.transform, -300);
+        layoutOptions.GameObject.transform.localPosition = new Vector3(0, 70, 0);
+
+        UIVerticalLayoutGroup layoutVolume = new UIVerticalLayoutGroup("Section Volume", layoutOptions.GameObject.transform);
+        UIVerticalLayoutGroup layoutMsc = new UIVerticalLayoutGroup("Section Msc", layoutOptions.GameObject.transform);
+        UIVerticalLayoutGroup layoutGame = new UIVerticalLayoutGroup("Section Game", layoutOptions.GameObject.transform);
+
+        UIVerticalLayoutGroup layoutButtons = new UIVerticalLayoutGroup("Section Buttons", goOptions.transform);
+        layoutButtons.GameObject.transform.localPosition = new Vector3(0, -120, 0);
+
+        Transform sectionVolume = layoutVolume.GameObject.transform;
+        Transform sectionMsc = layoutMsc.GameObject.transform;
+        Transform sectionGame = layoutGame.GameObject.transform;
+        Transform sectionButtons = layoutButtons.GameObject.transform;
+
+        //
+
         #region Setup
 
-        goPostProcessing = DontDestroy.DontDestroyObjects[0];
+        goPostProcessing = DontDestroy.DontDestroyObjects[0]; // Referencing by index[0] seems too abstract
 
         if (goPostProcessing != null)
         {
@@ -100,59 +109,57 @@ public class Options : MonoBehaviour
             Debug.Log("Post Processing has to be loaded from the 'Menu' scene first.");
         }
 
-        goMenuMusic = GameObject.Find("Menu Music");
-        if (goMenuMusic != null)
-        {
-            audioMenuMusic = goMenuMusic.GetComponent<AudioSource>();
-        }
-        else
-        {
-            Debug.Log("Menu Music has to be loaded from the 'Menu' scene first.");
-        }
+        GameObject goMenuMusic = GameObject.Find("Menu Music");
+        GameObject goGameMusic = GameObject.Find("Game Music");
+
+        goMusic = goMenuMusic == null ? goGameMusic : goMenuMusic;
+        musicAudioSource = goMusic.GetComponent<AudioSource>();
 
         // --Msc--
         // Vignette
-        uiToggleVignette = new UIToggle("Vignette", SectionMsc);
-        uiSliderVignette = new UISlider("Vignette", SectionMsc);
+        uiToggleVignette = new UIToggle("Vignette", sectionMsc);
+        uiSliderVignette = new UISlider("Vignette", sectionMsc);
 
         // Bloom
-        uiToggleBloom = new UIToggle("Bloom", SectionMsc);
-        uiSliderBloom = new UISlider("Bloom", SectionMsc);
+        uiToggleBloom = new UIToggle("Bloom", sectionMsc);
+        uiSliderBloom = new UISlider("Bloom", sectionMsc);
 
         // Fullscreen
-        uiToggleFullscreen = new UIToggle("Fullscreen", SectionMsc);
+        uiToggleFullscreen = new UIToggle("Fullscreen", sectionMsc);
         // VSync
-        uiToggleVSync = new UIToggle("VSync", SectionMsc);
+        uiToggleVSync = new UIToggle("VSync", sectionMsc);
 
         // Resolutions
-        uiDropdownResolution = new UIDropdown("Resolution", SectionMsc);
+        uiDropdownResolution = new UIDropdown("Resolution", sectionMsc);
         InitializeResolutionsDropDown();
 
         // Quality
-        uiDropdownQuality = new UIDropdown("Quality", SectionMsc);
+        uiDropdownQuality = new UIDropdown("Quality", sectionMsc);
         InitializeQualityDropDown();
 
         // --Volume--
         // Volume
-        new UIText("Music", SectionVolume);
-        uiSliderVolumeMusic = new UISlider("Music", SectionVolume);
-        new UIText("SFX", SectionVolume);
-        uiSliderVolumeSFX = new UISlider("SFX", SectionVolume);
+        new UIText("Music", sectionVolume);
+        uiSliderVolumeMusic = new UISlider("Music", sectionVolume);
+        new UIText("SFX", sectionVolume);
+        uiSliderVolumeSFX = new UISlider("SFX", sectionVolume);
 
         // --Game--
         // Camera
-        new UIText("Zoom Sensitivity", SectionGame);
-        uiSliderSensitivityZoom = new UISlider("Sensitivity Zoom", SectionGame);
-        new UIText("Pan Sensitivity", SectionGame);
-        uiSliderSensitivityPan = new UISlider("Sensitivity Pan", SectionGame);
+        new UIText("Zoom Sensitivity", sectionGame);
+        uiSliderSensitivityZoom = new UISlider("Sensitivity Zoom", sectionGame);
+        new UIText("Pan Sensitivity", sectionGame);
+        uiSliderSensitivityPan = new UISlider("Sensitivity Pan", sectionGame);
 
-        if (goPostProcessing == null || goMenuMusic == null)
+        if (goPostProcessing == null || goMusic == null)
+        {
+            Debug.Log("Post Processing Null: " + goPostProcessing == null);
+            Debug.Log("Music Null: " + goMusic == null);
             return;
+        }
 
-        //buttonResetToDefaults = GameObject.Find("ButtonReset").GetComponent<Button>();
-        buttonResetToDefaults = new UIButton("Reset To Defaults", SectionButtons);
-        //buttonBackToMenu = GameObject.Find("ButtonMenu").GetComponent<Button>();
-        buttonBackToMenu = new UIButton("Back to Menu", SectionButtons);
+        buttonResetToDefaults = new UIButton("Reset To Defaults", sectionButtons);
+        buttonBackToMenu = new UIButton("Back to Menu", sectionButtons);
 
         buttonResetToDefaults.Instance.onClick.AddListener(delegate
         {
@@ -161,7 +168,16 @@ public class Options : MonoBehaviour
 
         buttonBackToMenu.Instance.onClick.AddListener(delegate
         {
-            SceneManager.LoadScene("Menu");
+            if (SceneManager.GetActiveScene().name == "Options")
+            {
+                SceneManager.LoadScene("Menu");
+            }
+            else
+            {
+                GameObject.Find("Options").SetActive(false);
+                UIListener.inOptions = false;
+                UIListener.layoutGroup.SetActive(true);
+            }
         });
 
         #endregion Setup
@@ -218,7 +234,7 @@ public class Options : MonoBehaviour
         uiSliderVolumeMusic.AddListener(() =>
         {
             VolumeMusic = uiSliderVolumeMusic.Instance.value;
-            audioMenuMusic.volume = VolumeMusic;
+            musicAudioSource.volume = VolumeMusic;
             PlayerPrefs.SetFloat("uis.volume.music", VolumeMusic);
         });
 
@@ -285,10 +301,10 @@ public class Options : MonoBehaviour
             PlayerPrefs.SetInt("uis.quality", uiDropdownQuality.Instance.value);
         });
 
-        foreach (UIElement ui in UIElement.UIElements)
+        /*foreach (UIElement ui in UIElement.UIElements)
         {
             ui.SetActive(true);
-        }
+        }*/
     }
 
     private void ResetToDefaults()

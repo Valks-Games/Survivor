@@ -1085,7 +1085,6 @@ GameObject:
   - component: {fileID: 1125001845}
   - component: {fileID: 1125001847}
   - component: {fileID: 1125001846}
-  - component: {fileID: 1125001848}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -1148,31 +1147,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125001844}
   m_CullTransparentMesh: 0
---- !u!114 &1125001848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125001844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
 --- !u!1001 &1247816857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1631,9 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502ffda5e1386564ea2033184ba6c4f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SetSeed: 
   SeedPreview: 0
-  RandomizeSeed: 1
   SetAmplitude: 2
   SetFreqX: 0.16
   SetFreqZ: 0.15

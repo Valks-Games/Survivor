@@ -62,10 +62,6 @@ public class MainMenu : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITYEDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
         Application.Quit();
-#endif
     }
 }
