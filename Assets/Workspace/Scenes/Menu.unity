@@ -2643,15 +2643,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8223c16ef599a134fb1d6ea1feae8997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: Alpha 0.21.1
+  version: Alpha 0.21.2
   notesNewFeatures: '- Added duplicate of options to main game scene under popup
     menu
 
     - Added random tips to loading screen
 
     - Added random game titles
-    to loading screen until the game gets an official name'
-  notesChanges: '- Rock model redone'
+    to loading screen until the game gets an official name
+
+    - Hotkey Menu'
+  notesChanges: '- Rock model redone
+
+    - Spacing in popup menu set from 10 to
+    0
+
+    - All UIElements converted to prefabs'
   notesBugFixes: '- UIElement prefabs moved from Resources folder to Workspace folder
     to reduce game RAM usage'
   TVersion: {fileID: 1445318667}
@@ -2710,7 +2717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 500, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1445318669
