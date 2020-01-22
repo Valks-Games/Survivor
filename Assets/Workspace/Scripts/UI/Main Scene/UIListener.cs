@@ -8,6 +8,7 @@ public class UIListener : MonoBehaviour
     public GameObject MenuPanel;
     public GameObject ButtonBackToMenu;
     public GameObject ButtonGoToOptions;
+    public GameObject ButtonResume;
     public GameObject IMenuMain;
     public GameObject IMenuOptions;
 
@@ -19,6 +20,7 @@ public class UIListener : MonoBehaviour
 
     private UIButton buttonBackToMenu;
     private UIButton buttonOptions;
+    private UIButton buttonResume;
 
     private bool baseUICreated;
     private GameObject canvas;
@@ -37,18 +39,24 @@ public class UIListener : MonoBehaviour
         MenuPanel.SetActive(false);
 
         buttonBackToMenu = new UIButton(ButtonBackToMenu);
-        buttonBackToMenu.Instance.onClick.AddListener(delegate
+        buttonBackToMenu.AddListener(() =>
         {
             Time.timeScale = CurrentGameSpeed;
             SceneManager.LoadScene("Menu");
         });
 
         buttonOptions = new UIButton(ButtonGoToOptions);
-        buttonOptions.Instance.onClick.AddListener(delegate
+        buttonOptions.AddListener(() =>
         {
             InOptions = !InOptions;
             MenuMain.SetActive(!InOptions);
             MenuOptions.SetActive(InOptions);
+        });
+
+        buttonResume = new UIButton(ButtonResume);
+        buttonResume.AddListener(() =>
+        {
+            ToggleMenu();
         });
     }
 
@@ -94,17 +102,22 @@ public class UIListener : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GamePaused = !GamePaused;
-            MenuPanel.SetActive(GamePaused);
+            ToggleMenu();
+        }
+    }
 
-            if (Time.timeScale == 0)
-            {
-                Time.timeScale = CurrentGameSpeed;
-            }
-            else
-            {
-                Time.timeScale = 0;
-            }
+    private void ToggleMenu()
+    {
+        GamePaused = !GamePaused;
+        MenuPanel.SetActive(GamePaused);
+
+        if (Time.timeScale == 0)
+        {
+            Time.timeScale = CurrentGameSpeed;
+        }
+        else
+        {
+            Time.timeScale = 0;
         }
     }
 

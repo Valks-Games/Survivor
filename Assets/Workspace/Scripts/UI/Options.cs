@@ -27,7 +27,7 @@ public class Options : MonoBehaviour
     public float DefaultSensitivityZoom = 10f;
 
     // Links
-    [Header("Links")]
+    [Header("Links Options General")]
     public GameObject ToggleVignette;
     public GameObject SliderVignette;
     public GameObject ToggleBloom;
@@ -42,6 +42,13 @@ public class Options : MonoBehaviour
     public GameObject SliderSensitivityPan;
     public GameObject ButtonResetToDefaults;
     public GameObject ButtonBackToMenu;
+    public GameObject ButtonControls;
+    public GameObject OptionsGeneral;
+    public GameObject OptionsControls;
+    public GameObject ButtonBackToOptionsGeneral;
+
+    [Header("Links Options Hotkeys")]
+    public GameObject HotkeyEscape;
 
     public static float VolumeSFX = 1.0f;
     public static float VolumeMusic = 1.0f;
@@ -75,6 +82,12 @@ public class Options : MonoBehaviour
 
     private UIButton buttonResetToDefaults;
     private UIButton buttonBackToMenu;
+    private UIButton buttonGoToControls;
+    private UIButton buttonGoToOptionsGeneral;
+
+    private UIHotkey hotkeyEscape;
+
+    private bool inControls;
 
     public void Awake()
     {
@@ -147,14 +160,13 @@ public class Options : MonoBehaviour
         uiSliderSensitivityPan = new UISlider(SliderSensitivityPan);
 
         buttonResetToDefaults = new UIButton(ButtonResetToDefaults);
-        buttonBackToMenu = new UIButton(ButtonBackToMenu);
-
-        buttonResetToDefaults.Instance.onClick.AddListener(delegate
+        buttonResetToDefaults.AddListener(() =>
         {
             ResetToDefaults();
         });
 
-        buttonBackToMenu.Instance.onClick.AddListener(delegate
+        buttonBackToMenu = new UIButton(ButtonBackToMenu);
+        buttonBackToMenu.AddListener(() =>
         {
             if (SceneManager.GetActiveScene().name == "Options")
             {
@@ -168,11 +180,57 @@ public class Options : MonoBehaviour
             }
         });
 
+        buttonGoToControls = new UIButton(ButtonControls);
+        buttonGoToControls.AddListener(() =>
+        {
+            inControls = !inControls;
+            OptionsGeneral.SetActive(!inControls);
+            OptionsControls.SetActive(inControls);
+        });
+
+        buttonGoToOptionsGeneral = new UIButton(ButtonBackToOptionsGeneral);
+        buttonGoToOptionsGeneral.AddListener(() =>
+        {
+            inControls = !inControls;
+            OptionsGeneral.SetActive(!inControls);
+            OptionsControls.SetActive(inControls);
+        });
+
+        hotkeyEscape = new UIHotkey(HotkeyEscape);
+
         #endregion Setup
 
         InitializeUIValues();
         InitializePlayerPrefs();
         InitializeOptionValues();
+    }
+
+    private bool keyHeldDown;
+
+    public void OnGUI()
+    {
+        if (Event.current.keyCode != KeyCode.None)
+        {
+            if (Event.current.type == EventType.KeyDown)
+            {
+                if (!keyHeldDown)
+                {
+                    for (int i = 0; i < UIHotkey.UIHotkeys.Count; i++)
+                    {
+                        if (UIHotkey.UIHotkeys[i].Selected)
+                        {
+                            keyHeldDown = true;
+                            UIHotkey.UIHotkeys[i].UpdateText(Event.current.keyCode.ToString());
+                        }
+                    }
+                }
+            }
+
+            if (Event.current.type == EventType.KeyUp)
+            {
+                keyHeldDown = false;
+            }
+        }
     }
 
     private void InitializePlayerPrefs()
