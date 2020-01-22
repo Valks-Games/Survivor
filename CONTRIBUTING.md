@@ -5,6 +5,7 @@ We are currently on `Unity 2019.3.05f`, please notify the team if a [newer versi
 - Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
 - When comparing gameObject tags use `.CompareTag` instead of `==` to avoid garbage collection.
 - Objects at the very bottom of the game hierarchy will be layered over objects above. (e.g. If a panel is above a button, the panel will block the raycast to the button)
+- Avoid searching for inactive gameObjects, instead create a public variable in the inspector for the gameObject.
 
 ## Setting up Visual Studio Code
 Throughout my development career, I've worked with several different editors and IDE's. JetBrains, Atom, Notepad++, and Eclipse to name a few. With experience I can now say that Visual Studio Code is my favorite editor and it's what I will be recommending you to use for contributing to this project.
