@@ -17,6 +17,8 @@ public class CameraSelectionManager : MonoBehaviour
     public float SelectedCircleRadius = 0.1f;
     public Color SelectedCircleColor = Color.cyan;
 
+    public static bool SelectionEnabled;
+
     [Header("Textures")]
     private Texture2D _Border;
 
@@ -38,7 +40,6 @@ public class CameraSelectionManager : MonoBehaviour
 
     private readonly GameObject colliderEntity;
 
-    private bool selectionEnabled;
     private Vector3 initialMousePosition;
     private readonly GUIStyle style;
 
@@ -47,17 +48,23 @@ public class CameraSelectionManager : MonoBehaviour
 
     private void Update()
     {
+        if (UIListener.GamePaused)
+        {
+            SelectionEnabled = false;
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            selectionEnabled = true;
+            SelectionEnabled = true;
             initialMousePosition = Input.mousePosition;
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            selectionEnabled = false;
+            SelectionEnabled = false;
         }
 
-        if (selectionEnabled)
+        if (SelectionEnabled)
         {
             List<GameObject> clone = new List<GameObject>(Selected);
 
@@ -86,7 +93,7 @@ public class CameraSelectionManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if (selectionEnabled)
+        if (SelectionEnabled)
         {
             Rect selectionPane = GetSelectionRect(initialMousePosition, Input.mousePosition);
             DrawBorder(selectionPane, SelectionBoxThickness, SelectionBoxColor);
