@@ -41,7 +41,6 @@ public class Build : MonoBehaviour
     public void Start()
     {
         TPatchNotes = GameObject.Find("Patch Notes").transform;
-        StartCoroutine(UpdateVerticalLayoutSpacing());
 
         textVersion = TVersion.GetComponent<TextMeshProUGUI>();
         textVersion.text = version;
@@ -69,12 +68,5 @@ public class Build : MonoBehaviour
             TTitleBugFixes.SetActive(false);
             TContentBugFixes.SetActive(false);
         }
-    }
-
-    // Obviously a temporary measure..
-    private IEnumerator UpdateVerticalLayoutSpacing()
-    {
-        yield return new WaitForSeconds(0.001f);
-        TPatchNotes.GetComponent<VerticalLayoutGroup>().spacing = 11;
     }
 }
