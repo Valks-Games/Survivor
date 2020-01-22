@@ -5,21 +5,12 @@ using UnityEngine.UI;
 
 public class UIDropdown : UISelectable
 {
-    public override GameObject GameObject { get; }
     public TMP_Dropdown Instance => (TMP_Dropdown)GameObject.GetComponent<Selectable>();
 
-    public UIDropdown(string name, Transform parent) : base(name, parent)
+    public UIDropdown(GameObject gameObject) : base(gameObject)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Dropdown");
-        GameObject = GameObject.Instantiate(prefab);
         GameObject.GetComponent<TMP_Dropdown>().options.Clear();
         GameObject.transform.Find("Template").GetComponent<ScrollRect>().scrollSensitivity = 45;
-
-        SetActive(false);
-        Colorize();
-        GameObject.transform.SetParent(parent);
-
-        SetActive(true);
     }
 
     public void AddListener(Action action)

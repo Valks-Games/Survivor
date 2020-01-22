@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class WorldOptionsUIListener : MonoBehaviour
 {
-    public Transform SectionMenu;
+    public GameObject InputFieldSeed;
+    public GameObject ToggleRandomizeSeed;
+    public GameObject ButtonCreateWorld;
 
     private UIInputField inputFieldSeed;
     private UIToggle toggleRandomizeSeed;
@@ -10,9 +12,9 @@ public class WorldOptionsUIListener : MonoBehaviour
 
     public void Start()
     {
-        inputFieldSeed = new UIInputField("Input Seed", SectionMenu);
-        toggleRandomizeSeed = new UIToggle("Randomize Seed", SectionMenu);
-        buttonStart = new UIButton("Create World", SectionMenu);
+        inputFieldSeed = new UIInputField(InputFieldSeed);
+        toggleRandomizeSeed = new UIToggle(ToggleRandomizeSeed);
+        buttonStart = new UIButton(ButtonCreateWorld);
 
         inputFieldSeed.UpdatePlaceholder("Enter world seed...");
         inputFieldSeed.AddListener(() =>

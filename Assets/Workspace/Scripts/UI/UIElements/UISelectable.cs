@@ -3,9 +3,7 @@ using UnityEngine.UI;
 
 public class UISelectable : UIElement
 {
-    public override GameObject GameObject { get; }
-
-    public UISelectable(string name, Transform parent) : base(name, parent)
+    public UISelectable(GameObject gameObject) : base(gameObject)
     {
     }
 

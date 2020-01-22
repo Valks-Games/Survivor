@@ -3,11 +3,9 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
-public class Options
+public class Options : MonoBehaviour
 {
-    #region Inspector:Default Values
-
-    // Inspector UIs
+    // Default Values
     [Header("Vignette")]
     public float DefaultVignetteIntensity = 0.25f;
     public bool DefaultVignetteEnabled = true;
@@ -28,7 +26,22 @@ public class Options
     public float DefaultSensitivityPan = 3f;
     public float DefaultSensitivityZoom = 10f;
 
-    #endregion Inspector:Default Values
+    // Links
+    [Header("Links")]
+    public GameObject ToggleVignette;
+    public GameObject SliderVignette;
+    public GameObject ToggleBloom;
+    public GameObject SliderBloom;
+    public GameObject ToggleFullscreen;
+    public GameObject ToggleVSync;
+    public GameObject DropdownResolution;
+    public GameObject DropdownQuality;
+    public GameObject SliderVolumeMusic;
+    public GameObject SliderVolumeSFX;
+    public GameObject SliderSensitivityZoom;
+    public GameObject SliderSensitivityPan;
+    public GameObject ButtonResetToDefaults;
+    public GameObject ButtonBackToMenu;
 
     public static float VolumeSFX = 1.0f;
     public static float VolumeMusic = 1.0f;
@@ -68,34 +81,17 @@ public class Options
         SceneManager.sceneUnloaded += ClearStaticUIs;
     }
 
-    public void Initialize(Transform panel)
+    public void Start()
     {
-        GameObject goOptions = new GameObject("Options");
-        goOptions.transform.SetParent(panel);
-        goOptions.transform.localPosition = Vector3.zero;
-
-        UIHorizontalLayoutGroup layoutOptions = new UIHorizontalLayoutGroup("UI Options", goOptions.transform, -300);
-        layoutOptions.GameObject.transform.localPosition = new Vector3(0, 70, 0);
-
-        UIVerticalLayoutGroup layoutVolume = new UIVerticalLayoutGroup("Section Volume", layoutOptions.GameObject.transform);
-        UIVerticalLayoutGroup layoutMsc = new UIVerticalLayoutGroup("Section Msc", layoutOptions.GameObject.transform);
-        UIVerticalLayoutGroup layoutGame = new UIVerticalLayoutGroup("Section Game", layoutOptions.GameObject.transform);
-
-        UIVerticalLayoutGroup layoutButtons = new UIVerticalLayoutGroup("Section Buttons", goOptions.transform);
-        layoutButtons.GameObject.transform.localPosition = new Vector3(0, -120, 0);
-
-        Transform sectionVolume = layoutVolume.GameObject.transform;
-        Transform sectionMsc = layoutMsc.GameObject.transform;
-        Transform sectionGame = layoutGame.GameObject.transform;
-        Transform sectionButtons = layoutButtons.GameObject.transform;
-
-        //
-
         #region Setup
 
         goPostProcessing = DontDestroy.DontDestroyObjects[0]; // Referencing by index[0] seems too abstract
 
-        if (goPostProcessing != null)
+        if (goPostProcessing == null)
+        {
+            Debug.Log("Post Processing has to be loaded from the 'Menu' scene first.");
+        }
+        else
         {
             ppVolume = goPostProcessing.GetComponent<PostProcessVolume>();
 
@@ -104,10 +100,6 @@ public class Options
             ppProfile.TryGetSettings(out ppBloom);
             ppProfile.TryGetSettings(out ppVignette);
         }
-        else
-        {
-            Debug.Log("Post Processing has to be loaded from the 'Menu' scene first.");
-        }
 
         GameObject goMenuMusic = GameObject.Find("Menu Music");
         GameObject goGameMusic = GameObject.Find("Game Music");
@@ -115,51 +107,47 @@ public class Options
         goMusic = goMenuMusic == null ? goGameMusic : goMenuMusic;
         musicAudioSource = goMusic.GetComponent<AudioSource>();
 
+        if (goPostProcessing == null || goMusic == null)
+        {
+            Debug.Log(goPostProcessing == null ? "Post Processing is not loaded." : "Post Processing is loaded.");
+            Debug.Log(goMusic == null ? "Music is not loaded." : "Music is loaded.");
+            return;
+        }
+
         // --Msc--
         // Vignette
-        uiToggleVignette = new UIToggle("Vignette", sectionMsc);
-        uiSliderVignette = new UISlider("Vignette", sectionMsc);
+        uiToggleVignette = new UIToggle(ToggleVignette);
+        uiSliderVignette = new UISlider(SliderVignette);
 
         // Bloom
-        uiToggleBloom = new UIToggle("Bloom", sectionMsc);
-        uiSliderBloom = new UISlider("Bloom", sectionMsc);
+        uiToggleBloom = new UIToggle(ToggleBloom);
+        uiSliderBloom = new UISlider(SliderBloom);
 
         // Fullscreen
-        uiToggleFullscreen = new UIToggle("Fullscreen", sectionMsc);
+        uiToggleFullscreen = new UIToggle(ToggleFullscreen);
         // VSync
-        uiToggleVSync = new UIToggle("VSync", sectionMsc);
+        uiToggleVSync = new UIToggle(ToggleVSync);
 
         // Resolutions
-        uiDropdownResolution = new UIDropdown("Resolution", sectionMsc);
+        uiDropdownResolution = new UIDropdown(DropdownResolution);
         InitializeResolutionsDropDown();
 
         // Quality
-        uiDropdownQuality = new UIDropdown("Quality", sectionMsc);
+        uiDropdownQuality = new UIDropdown(DropdownQuality);
         InitializeQualityDropDown();
 
         // --Volume--
         // Volume
-        new UIText("Music", sectionVolume);
-        uiSliderVolumeMusic = new UISlider("Music", sectionVolume);
-        new UIText("SFX", sectionVolume);
-        uiSliderVolumeSFX = new UISlider("SFX", sectionVolume);
+        uiSliderVolumeMusic = new UISlider(SliderVolumeMusic);
+        uiSliderVolumeSFX = new UISlider(SliderVolumeSFX);
 
         // --Game--
         // Camera
-        new UIText("Zoom Sensitivity", sectionGame);
-        uiSliderSensitivityZoom = new UISlider("Sensitivity Zoom", sectionGame);
-        new UIText("Pan Sensitivity", sectionGame);
-        uiSliderSensitivityPan = new UISlider("Sensitivity Pan", sectionGame);
+        uiSliderSensitivityZoom = new UISlider(SliderSensitivityZoom);
+        uiSliderSensitivityPan = new UISlider(SliderSensitivityPan);
 
-        if (goPostProcessing == null || goMusic == null)
-        {
-            Debug.Log("Post Processing Null: " + goPostProcessing == null);
-            Debug.Log("Music Null: " + goMusic == null);
-            return;
-        }
-
-        buttonResetToDefaults = new UIButton("Reset To Defaults", sectionButtons);
-        buttonBackToMenu = new UIButton("Back to Menu", sectionButtons);
+        buttonResetToDefaults = new UIButton(ButtonResetToDefaults);
+        buttonBackToMenu = new UIButton(ButtonBackToMenu);
 
         buttonResetToDefaults.Instance.onClick.AddListener(delegate
         {
@@ -174,9 +162,9 @@ public class Options
             }
             else
             {
-                GameObject.Find("Options").SetActive(false);
-                UIListener.inOptions = false;
-                UIListener.layoutGroup.SetActive(true);
+                UIListener.InOptions = false;
+                UIListener.MenuMain.SetActive(true);
+                UIListener.MenuOptions.SetActive(false);
             }
         });
 

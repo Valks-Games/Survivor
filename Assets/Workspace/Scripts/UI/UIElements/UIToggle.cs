@@ -4,23 +4,19 @@ using UnityEngine.UI;
 
 public class UIToggle : UISelectable
 {
-    public override GameObject GameObject { get; }
     public Toggle Instance => (Toggle)GameObject.GetComponent<Selectable>();
 
-    public UIToggle(string name, Transform parent) : base(name, parent)
+    public UIToggle(GameObject gameObject) : base(gameObject)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Toggle");
-        GameObject = GameObject.Instantiate(prefab);
 
-        SetActive(false);
-        Colorize();
-        GameObject.transform.SetParent(parent);
+    }
+
+    public override void Colorize()
+    {
+        base.Colorize();
 
         Text componentText = GameObject.transform.Find("Label").GetComponent<Text>();
         componentText.color = Color;
-        componentText.text = name;
-
-        SetActive(true);
     }
 
     public void AddListener(Action action)

@@ -4,19 +4,11 @@ using UnityEngine.UI;
 
 public class UISlider : UISelectable
 {
-    public override GameObject GameObject { get; }
     public Slider Instance => (Slider)GameObject.GetComponent<Selectable>();
 
-    public UISlider(string name, Transform parent) : base(name, parent)
+    public UISlider(GameObject gameObject) : base(gameObject)
     {
-        GameObject prefab = Resources.Load<GameObject>("Prefabs/UI/Slider");
-        GameObject = GameObject.Instantiate(prefab);
 
-        SetActive(false);
-        Colorize();
-        GameObject.transform.SetParent(parent);
-
-        SetActive(true);
     }
 
     public void AddListener(Action action)

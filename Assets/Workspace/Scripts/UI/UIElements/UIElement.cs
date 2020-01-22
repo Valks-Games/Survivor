@@ -1,16 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class UIElement
 {
     public static List<UIElement> UIElements = new List<UIElement>();
-    public abstract GameObject GameObject { get; }
+    public GameObject GameObject;
 
     protected Color32 Color;
 
-    public UIElement(string name, Transform parent)
+    public UIElement(GameObject gameObject)
     {
-        this.Color = new Color32(255, 255, 255, 255); // Default Color
+        if (gameObject == null)
+        {
+            Debug.Log("A UIElement has not been setup properly in the '" + SceneManager.GetActiveScene().name + "' scene.");
+            return;
+        }
+
+        GameObject = gameObject;
+        Color = new Color32(255, 255, 255, 255); // Default Color
+
+        SetActive(false);
+        Colorize();
+        SetActive(true);
 
         UIElement.UIElements.Add(this);
     }

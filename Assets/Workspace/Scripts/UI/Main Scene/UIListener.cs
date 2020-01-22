@@ -4,18 +4,24 @@ using UnityEngine.SceneManagement;
 
 public class UIListener : MonoBehaviour
 {
+    [Header("Links")]
+    public GameObject MenuPanel;
+    public GameObject ButtonBackToMenu;
+    public GameObject ButtonGoToOptions;
+    public GameObject IMenuMain;
+    public GameObject IMenuOptions;
+
+    public static GameObject MenuMain;
+    public static GameObject MenuOptions;
     public static float CurrentGameSpeed = 1f;
     public static bool GamePaused;
-    public GameObject SectionMenu;
+    public static bool InOptions = false;
 
     private UIButton buttonBackToMenu;
     private UIButton buttonOptions;
 
     private bool baseUICreated;
     private GameObject canvas;
-
-    public static bool inOptions = false;
-    public static UIVerticalLayoutGroup layoutGroup;
 
     public void Awake()
     {
@@ -24,24 +30,25 @@ public class UIListener : MonoBehaviour
 
     public void Start()
     {
+        MenuMain = IMenuMain;
+        MenuOptions = IMenuOptions;
+
         canvas = GameObject.Find("World Canvas");
-        SectionMenu.SetActive(false);
+        MenuPanel.SetActive(false);
 
-        layoutGroup = new UIVerticalLayoutGroup("Group", SectionMenu.transform);
-
-        buttonBackToMenu = new UIButton("Back to Menu", layoutGroup.GameObject.transform);
+        buttonBackToMenu = new UIButton(ButtonBackToMenu);
         buttonBackToMenu.Instance.onClick.AddListener(delegate
         {
             Time.timeScale = CurrentGameSpeed;
             SceneManager.LoadScene("Menu");
         });
 
-        buttonOptions = new UIButton("Options", layoutGroup.GameObject.transform);
+        buttonOptions = new UIButton(ButtonGoToOptions);
         buttonOptions.Instance.onClick.AddListener(delegate
         {
-            new Options().Initialize(GameObject.Find("Menu").transform);
-            inOptions = !inOptions;
-            layoutGroup.SetActive(!inOptions); // We are in the options so we hide the first buttons.
+            InOptions = !InOptions;
+            MenuMain.SetActive(!InOptions);
+            MenuOptions.SetActive(InOptions);
         });
     }
 
@@ -88,7 +95,7 @@ public class UIListener : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             GamePaused = !GamePaused;
-            Utils.SetChildrenActive(SectionMenu.transform, GamePaused);
+            MenuPanel.SetActive(GamePaused);
 
             if (Time.timeScale == 0)
             {
