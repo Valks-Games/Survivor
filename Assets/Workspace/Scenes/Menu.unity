@@ -2660,7 +2660,9 @@ MonoBehaviour:
 
     - All UIElements converted to prefabs'
   notesBugFixes: '- UIElement prefabs moved from Resources folder to Workspace folder
-    to reduce game RAM usage'
+    to reduce game RAM usage
+
+    - Selection manager disabled while game is pasued.'
   TVersion: {fileID: 1445318667}
   TTitleNewFeatures: {fileID: 706346546}
   TContentNewFeatures: {fileID: 782546769}
