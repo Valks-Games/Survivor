@@ -2658,11 +2658,19 @@ MonoBehaviour:
     - Spacing in popup menu set from 10 to
     0
 
-    - All UIElements converted to prefabs'
+    - All UIElements converted to prefabs
+
+    - Directional Light use to
+    effect everything but now only effects the Structures, Units, Terrain and Default
+    layers'
   notesBugFixes: '- UIElement prefabs moved from Resources folder to Workspace folder
     to reduce game RAM usage
 
-    - Selection manager disabled while game is pasued.'
+    - Selection manager disabled while game is paused
+
+    -
+    Fixed blue vertical line tearing on terrain mesh by offsetting tile X from 1
+    to 0.99999'
   TVersion: {fileID: 1445318667}
   TTitleNewFeatures: {fileID: 706346546}
   TContentNewFeatures: {fileID: 782546769}

@@ -9,13 +9,13 @@ public class Build : MonoBehaviour
     public string version;
 
     [Header("Patch Notes")]
-    [TextArea(5, 20)]
+    [TextArea(15, 20)]
     public string notesNewFeatures;
 
-    [TextArea(5, 20)]
+    [TextArea(15, 20)]
     public string notesChanges;
 
-    [TextArea(5, 20)]
+    [TextArea(15, 20)]
     public string notesBugFixes;
 
     [Header("Links")]

@@ -50,6 +50,8 @@ public class WorldChunk : MonoBehaviour
 
         chunks = World.CategoryChunks.Transform;
         transform.parent = chunks;
+
+        gameObject.layer = LayerMask.NameToLayer("Terrain");
     }
 
     public void Start()
