@@ -1636,6 +1636,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button Back (Main Menu)
       objectReference: {fileID: 0}
+    - target: {fileID: 5830791600681325059, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830791600681325059, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1936,12 +1946,12 @@ PrefabInstance:
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 17
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
@@ -1956,12 +1966,37 @@ PrefabInstance:
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
       propertyPath: m_text
-      value: Reset to Defaults
+      value: Reset
       objectReference: {fileID: 0}
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_fontSizeMin
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99e1b2c834807d5468d4753ebefdbe55, type: 3}
@@ -3406,6 +3441,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Button Controls
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830791600681325059, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830791600681325059, guid: 99e1b2c834807d5468d4753ebefdbe55,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7809816801680642915, guid: 99e1b2c834807d5468d4753ebefdbe55,
         type: 3}
