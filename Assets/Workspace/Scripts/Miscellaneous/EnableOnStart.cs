@@ -7,8 +7,6 @@ public class EnableOnStart : MonoBehaviour
     public void Awake()
     {
         foreach (GameObject go in activate)
-        {
             go.SetActive(true);
-        }
     }
 }

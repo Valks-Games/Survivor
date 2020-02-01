@@ -1,6 +1,5 @@
-using System.Collections;
+using GameAPI.Tasks;
 using UnityEngine;
-using WorldAPI.Tasks.Generic;
 
 public partial class Colonist : ResourceGatherer<Colonist>
 {
@@ -17,8 +16,6 @@ public partial class Colonist : ResourceGatherer<Colonist>
 
         Damage = 1 + Random.Range(0, 3);
 
-        StartCoroutine(WaitForWorldGeneration());
-
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -26,18 +23,8 @@ public partial class Colonist : ResourceGatherer<Colonist>
     {
         base.Update();
 
-        float speedPercent = Mathf.Clamp01(rb.velocity.magnitude * 10);
+        float speedPercent = Mathf.Clamp01(body.velocity.magnitude * 10);
         animator.SetFloat("speedPercent", speedPercent, 0.1f, Time.deltaTime);
-    }
-
-    private IEnumerator WaitForWorldGeneration()
-    {
-        if (World.GeneratingWorld)
-        {
-            yield return new WaitForSeconds(0.01f);
-        }
-
-        QueueTask(new IdleTask<Colonist>());
     }
 }
 
@@ -54,7 +41,7 @@ public partial class Colonist
 
         colonist.gameObject.name = name;
         colonist.Faction = faction;
-        colonist.QueueTask(new GatherResourceTask<Colonist>(Material.Stone));
+        colonist.Queue(new GatherResourceTask<Colonist>(Material.Stone));
 
         return colonist;
     }

@@ -1,7 +1,7 @@
-using System.Collections;
+using GameAPI.Async.Generic;
+using GameAPI.Tasks;
 using System.Collections.Generic;
-using UnityEngine;
-using WorldAPI.Items;
+using System.Threading.Tasks;
 
 public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGatherer<T>
 {
@@ -9,32 +9,22 @@ public class DropOffResourcesTask<T> : StructureTask<T> where T : ResourceGather
     {
     }
 
-    protected override IEnumerator Run()
+    protected override async Task Run()
     {
-        yield return TaskLoop();
-        yield return new WaitForSeconds(1);
+        await MoveToStructure();
+        await new Delay(1f);
 
-        List<Item> keys = new List<Item>(Target.Inventory.Items.Keys);
-
-        foreach (Material key in keys)
-        {
-            Target.Base.DepositResource(key, Target.Inventory.Items[key]);
-            Target.Inventory.Items[key] = 0;
-        }
+        Target.Base.Inventory.DepositAll(Target.Inventory.WithdrawAll());
 
         if (Target.Base.CanUpgrade)
-        {
             Target.Base.Upgrade();
-            Target.QueueTask(new DropOffResourcesTask<T>());
-            yield break;
-        }
 
         Dictionary<Material, int> reqResources = Target.Base.ResourcesRequired;
 
         if (reqResources[Material.Wood] > reqResources[Material.Stone])
-            Target.QueueTask(new GatherResourceTask<T>(Material.Wood));
+            Target.Queue(new GatherResourceTask<T>(Material.Wood));
         else
-            Target.QueueTask(new GatherResourceTask<T>(Material.Stone));
+            Target.Queue(new GatherResourceTask<T>(Material.Stone));
 
         Target.TargetStructure.GetComponent<Structure>().Workers--;
     }

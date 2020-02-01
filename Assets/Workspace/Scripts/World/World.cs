@@ -1,3 +1,4 @@
+using GameAPI.Editor.Attributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class World : MonoBehaviour
     public static float FreqZ = 0.15f;
     public static float Amplitude = 2f;
 
-    [ReadOnly] public int SeedPreview;
+    [Disabled] public int SeedPreview;
     public static bool RandomizeSeed = true;
 
     [Header("Settings")]

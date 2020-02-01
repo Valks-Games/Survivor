@@ -21,10 +21,8 @@ public class WorldChunkLoader : MonoBehaviour
         cameraTransform = Camera.main.transform;
     }
 
-    private GameObject GetChunk(int x, int z)
-    {
-        return GameObject.Find("Chunk " + x + " " + z);
-    }
+    private GameObject GetChunk(int x, int z) =>
+        GameObject.Find("Chunk " + x + " " + z);
 
     private void LoadChunk(int posX, int posZ, int offsetX, int offsetZ)
     {
@@ -41,10 +39,9 @@ public class WorldChunkLoader : MonoBehaviour
     private void UnloadChunk(int posX, int posZ, int offsetX, int offsetZ)
     {
         GameObject chunk = GetChunk(posX + offsetX, posZ + offsetZ);
+
         if (chunk)
-        {
             Destroy(chunk);
-        }
     }
 
     private IEnumerator UnloadChunks(float dist)
@@ -63,9 +60,7 @@ public class WorldChunkLoader : MonoBehaviour
                 Debug.Log(vecToTarget.magnitude);
 
                 if (vecToTarget.magnitude >= dist)
-                {
                     Destroy(chunk.gameObject);
-                }
             }
 
             yield return new WaitForSeconds(1f);
@@ -81,12 +76,8 @@ public class WorldChunkLoader : MonoBehaviour
             int posZ = (int)((position.z / (chunkSize * cellSize)));
 
             for (int x = -dist; x < dist; x++)
-            {
                 for (int z = -dist; z < dist; z++)
-                {
                     LoadChunk(posX, posZ, x, z);
-                }
-            }
 
             yield return new WaitForSeconds(0.2f);
         }
@@ -94,14 +85,11 @@ public class WorldChunkLoader : MonoBehaviour
 
     public void Update()
     {
-        if (!Enabled)
+        if (!Enabled || !Started)
             return;
 
-        if (Started)
-        {
-            Started = false;
-            StartCoroutine(LoadChunks(7));
-            //StartCoroutine(UnloadChunks((chunkSize * cellSize * 3) - 0.5f));
-        }
+        Started = false;
+        StartCoroutine(LoadChunks(7));
+        //StartCoroutine(UnloadChunks((chunkSize * cellSize * 3) - 0.5f));
     }
 }

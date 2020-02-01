@@ -1,34 +1,36 @@
-using System.Collections;
-using UnityEngine;
+using GameAPI.Async.Generic;
+using GameAPI.Items;
+using GameAPI.Tasks;
+using System.Threading.Tasks;
 
 public class GatherResourceTask<T> : StructureTask<T> where T : ResourceGatherer<T>
 {
     private readonly Material type;
 
-    public GatherResourceTask(Material type) : base(type.AssociatedStructure, "GatherResource")
-    {
+    public GatherResourceTask(Material type) : base(type.AssociatedStructure, "GatherResource") =>
         this.type = type;
-    }
 
-    protected override IEnumerator Run()
+    protected override async Task Run()
     {
-        yield return TaskLoop();
-        yield return new WaitForSeconds(type.GatherTime);
+        await MoveToStructure();
+        await new Delay(type.GatherTime);
 
         if (Target.TargetStructure == null)
         {
-            Target.AssignTask(new DropOffResourcesTask<T>());
-            yield break;
+            Target.Queue(new DropOffResourcesTask<T>());
+            return;
         }
 
-        Structure structureComponent = Target.TargetStructure.gameObject.GetComponent<Structure>();
-        Target.Inventory.Items[type] += ((StructureResource)structureComponent).GatherResource(Target.AxePower, Target.Inventory.Items[type], Target.Inventory.MaxSize);
+        StructureResource structure = Target.TargetStructure.gameObject.GetComponent<Structure>() as StructureResource;
 
-        if (Target.Inventory.Items[type] < Target.Inventory.MaxSize)
-            Target.QueueTask(new GatherResourceTask<T>(type));
+        int amount = structure.GatherResource(Target.AxePower, Target.Inventory[type]?.Amount ?? 0, Target.Inventory.MaxSize);
+        Target.Inventory.Deposit(new Item(type, amount));
+
+        if (Target.Inventory[type].Amount < Target.Inventory.MaxSize)
+            Target.Queue(new GatherResourceTask<T>(type));
         else
-            Target.QueueTask(new DropOffResourcesTask<T>());
+            Target.Queue(new DropOffResourcesTask<T>());
 
-        structureComponent.Workers--;
+        structure.Workers--;
     }
 }

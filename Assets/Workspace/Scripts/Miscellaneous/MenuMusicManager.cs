@@ -14,9 +14,7 @@ public class MenuMusicManager : MonoBehaviour
         else
         {
             if (MenuMusic != this)
-            {
                 Destroy(gameObject);
-            }
         }
     }
 }

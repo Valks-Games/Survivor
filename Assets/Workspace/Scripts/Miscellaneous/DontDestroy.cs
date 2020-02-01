@@ -17,13 +17,9 @@ public class DontDestroy : MonoBehaviour
         GameObject foundObject = DontDestroyObjects.Where(t => t.name == gameObject.name).First();
 
         if (foundObject != null)
-        {
             Destroy(this);
-        }
         else
-        {
             AddSelf();
-        }
     }
 
     private void AddSelf()

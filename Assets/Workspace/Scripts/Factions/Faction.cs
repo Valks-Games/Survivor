@@ -19,8 +19,6 @@ public class Faction
         Base = b;
     }
 
-    public override string ToString()
-    {
-        return "ID: " + ID + ", Name: " + Name + ", Description: " + Description;
-    }
+    public override string ToString() =>
+        $"ID: {ID}, Name: {Name}, Description: {Description}";
 }

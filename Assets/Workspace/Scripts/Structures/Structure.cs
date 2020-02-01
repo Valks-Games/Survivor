@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class Structure : MonoBehaviour
+public class Structure : GameAPI.Structures.Structure
 {
     private GameObject _world;
     public int Resource { get; set; } = 3;
     public int Workers { get; set; } = 0;
 
-    public virtual void Awake()
-    {
+    public virtual void Awake() =>
         SetName("Structure");
-    }
 
     public virtual void Start()
     {
@@ -17,18 +15,12 @@ public class Structure : MonoBehaviour
         _world = GameObject.Find("World");
     }
 
-    public void SetParent(string parent)
-    {
+    public void SetParent(string parent) =>
         transform.parent = _world.transform.Find(parent);
-    }
 
-    public void SetName(string name)
-    {
+    public void SetName(string name) =>
         transform.name = name;
-    }
 
-    public void Destroy()
-    {
+    public void Destroy() =>
         Destroy(gameObject);
-    }
 }
