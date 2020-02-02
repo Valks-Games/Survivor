@@ -1,15 +1,8 @@
-# Contributing
-We're currently on `Unity 2019.3.06f`, please notify the team if a newer version is available on the Unity Hub.
-
-## Local Setup
+# Getting Started
+## Project Setup
 1. Clone and extract the project
-2. Use [Unity Hub](https://unity3d.com/get-unity/download) to install the version we're currently using and to launch the project
-
-## Unity Good Practices
-- Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
-- When comparing gameObject tags use `.CompareTag` instead of `==` to avoid garbage collection.
-- Objects at the very bottom of the game hierarchy will be layered over objects above. (e.g. If a panel is above a button, the panel will block the raycast to the button)
-- Avoid searching for inactive gameObjects, instead create a public variable in the inspector for the gameObject.
+2. Use [Unity Hub](https://unity3d.com/get-unity/download) to launch the project
+3. Make sure your using `Unity 2019.3.06f` (please notify the team if a newer version is available)
 
 ## Setting up Visual Studio Code
 Throughout my development career, I've worked with several different editors and IDE's. JetBrains, Atom, Notepad++, and Eclipse to name a few. With experience I can now say that Visual Studio Code is my favorite editor and it's what I will be recommending you to use for contributing to this project.
@@ -28,6 +21,7 @@ Not all extensions are required for development but I highly recommend you at le
 - [Discord Presence](https://marketplace.visualstudio.com/items?itemName=icrawl.discord-vscode) (Shows others what your working on)
 - [Material Theme](https://marketplace.visualstudio.com/items?itemName=Equinusocio.vsc-material-theme) (Legacy material themes work the best in my opinion)
 
+# Issues and Pull Requests
 ## Opening an Issue
 1. Gather as much information as you can about the topic (excl. questions)
 2. Read the General Guidelines ([#54](https://github.com/valkyrienyanko/Survivor/issues/54))
@@ -38,8 +32,15 @@ Not all extensions are required for development but I highly recommend you at le
 1. Always test the application to see if it works as intended with no additional bugs you may be adding!
 2. State all the changes you made in the PR, not everyone will understand what you've done!
 
+# Notes
 ## New Concepts
 Always consult the leader of the project before introducing new concepts.
+
+## Unity Good Practices
+- Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
+- When comparing gameObject tags use `.CompareTag` instead of `==` to avoid garbage collection.
+- Objects at the very bottom of the game hierarchy will be layered over objects above. (e.g. If a panel is above a button, the panel will block the raycast to the button)
+- Avoid searching for inactive gameObjects, instead create a public variable in the inspector for the gameObject.
 
 ## C# Style & Guidelines
 - Private variables should be camelCase.
