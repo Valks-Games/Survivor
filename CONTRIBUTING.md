@@ -1,5 +1,5 @@
 # Contributing
-We are currently on `Unity 2019.3.05f`, please notify the team if a [newer version](https://unity3d.com/unity/beta/2019.3#downloads) available.
+We're currently on `Unity 2019.3.06f`, please notify the team if a newer version is available in the Unity Hub.
 
 ## Unity Good Practices
 - Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
