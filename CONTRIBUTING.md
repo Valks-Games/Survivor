@@ -1,6 +1,11 @@
 # Contributing
 We're currently on `Unity 2019.3.06f`, please notify the team if a newer version is available on the Unity Hub.
 
+## Local Setup
+1. Clone and extract the project
+2. Install [Unity Hub](https://unity3d.com/get-unity/download)
+3. Use Unity Hub to install the version we're currently using and to launch the project
+
 ## Unity Good Practices
 - Try to avoid putting assets in the Resources folder as much as possible as it increases game startup time and ram usage.
 - When comparing gameObject tags use `.CompareTag` instead of `==` to avoid garbage collection.
